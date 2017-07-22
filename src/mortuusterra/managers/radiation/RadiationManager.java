@@ -1,47 +1,50 @@
 package mortuusterra.managers.radiation;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
 import mortuusterra.Main;
-import net.md_5.bungee.api.ChatColor;
+import mortuusterra.managers.player.PlayerManager;
 
 public class RadiationManager {
-	
-	protected int playerX;
-	protected int playerZ;
-	protected int playerY;
-	
-	protected boolean playerInBuilding = false;
-	
-	protected Location highestLocationAtPlayer;
 
+	private int playerX;
+	private int playerZ;
+	private int playerY;
+
+	private Location highestLocationAtPlayer;
+	private PlayerManager playerMan;
+
+	Main main;
 	public void CheckEachPlayerLocation() {
-		if (Main.plugin.getServer().getOnlinePlayers().isEmpty()) {
-			Main.plugin.getServer().getConsoleSender()
+		if (main.getServer().getOnlinePlayers().isEmpty()) {
+			main.getServer().getConsoleSender()
 					.sendMessage(ChatColor.DARK_GREEN + "There are no online players right now!");
 		} else {
-			for (Player p : Main.plugin.getServer().getOnlinePlayers()) {
+			for (Player p : main.getServer().getOnlinePlayers()) {
+				playerMan.addPlayer(p);
+				String uuid = p.getUniqueId().toString();
+
 				Location playerLocation = p.getLocation();
 				playerX = playerLocation.getBlockX();
 				playerZ = playerLocation.getBlockZ();
 				playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
-				
+
 				highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
-				
-				if((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
-					isPlayerInBuilding(true);
-				}else {
-					isPlayerInBuilding(false);
+
+				if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
+					playerMan.getPlayer(uuid).isPlayerInBuilding(true);
+				} else {
+					playerMan.getPlayer(uuid).isPlayerInBuilding(false);
+					main.getServer().getConsoleSender()
+					.sendMessage(ChatColor.DARK_GREEN + "Apply Rads!");
 				}
 			}
 		}
 	}
 
-	public void isPlayerInBuilding(boolean bool) {
-		this.playerInBuilding = bool;
-	}
-	
 	public void givePlayerRads(Player p) {
-		//calculate the rads for the player according to the elapsed time.
+		// calculate the rads for the player according to the elapsed time.
 	}
 }

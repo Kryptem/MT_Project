@@ -3,7 +3,6 @@ package mortuusterra;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -17,26 +16,27 @@ public class Main extends JavaPlugin {
 
 	public Logger logger;
 
-	protected SpawnListener spawnListener;
+	private SpawnListener spawnListener;
 
-	protected ElapsedTime elapsedTime;
+	private ElapsedTime elapsedTime;
 
-	protected PlayerManager playerMan;
-	protected RadiationManager radMan;
-	protected RadiationTimer radiationTimer;
+	private PlayerManager playerMan;
+	private RadiationManager radMan;
+	private RadiationTimer radiationTimer;
 
-	protected BukkitTask radTimer;
+	private BukkitTask radTimer;
 
 	@Override
 	public void onEnable() {
 		logger = Logger.getLogger("Minecraft");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-		initiateManagers();
-		registerListeners();
 		initiateOther();
+		elapsedTime.setupStartTime();
+		registerListeners();
+		initiateManagers();
 		registerRadiationTimer();
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
-		elapsedTime.setupStartTime();
+		
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
@@ -63,8 +63,8 @@ public class Main extends JavaPlugin {
 	}
 
 	private void initiateOther() {
-		elapsedTime = new ElapsedTime();
 		radMan = new RadiationManager();
+		elapsedTime = new ElapsedTime();
 	}
 
 	public SpawnListener getSpawnListener() {
@@ -82,5 +82,8 @@ public class Main extends JavaPlugin {
 	}
 	public RadiationTimer getRadaionTimer() {
 		return radiationTimer;
+	}
+	public RadiationManager getRadiationManager() {
+		return radMan;
 	}
 }

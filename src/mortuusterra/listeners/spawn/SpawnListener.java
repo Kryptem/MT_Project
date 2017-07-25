@@ -12,12 +12,14 @@ public class SpawnListener implements Listener {
 
 	@EventHandler
 	public void onEntitySpawn(EntitySpawnEvent e) {
-		type = e.getEntityType();
-		if (type == EntityType.PLAYER) {
-			playerLocation = e.getLocation();
+		if (e.getEntityType().isAlive()) {
+			type = e.getEntityType();
+			if (type == EntityType.PLAYER) {
+				playerLocation = e.getLocation();
 
-		} else if (!(type == EntityType.ZOMBIE || type == EntityType.ENDERMAN)) {
-			e.setCancelled(true);
+			} else if (!(type == EntityType.ZOMBIE || type == EntityType.ENDERMAN)) {
+				e.setCancelled(true);
+			}
 		}
 	}
 

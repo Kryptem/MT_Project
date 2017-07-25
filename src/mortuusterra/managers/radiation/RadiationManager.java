@@ -3,6 +3,7 @@ package mortuusterra.managers.radiation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import mortuusterra.Main;
 import mortuusterra.managers.player.PlayerManager;
@@ -12,11 +13,16 @@ public class RadiationManager {
 	private int playerX;
 	private int playerZ;
 	private int playerY;
+	
+	private long elapsedTime;
+	private long radStrangth;
+	private long radDecrement;
+	private long seconds;
 
 	private Location highestLocationAtPlayer;
 	private PlayerManager playerMan;
 
-	Main main;
+	Main main  = JavaPlugin.getPlugin(Main.class);
 	public void CheckEachPlayerLocation() {
 		if (main.getServer().getOnlinePlayers().isEmpty()) {
 			main.getServer().getConsoleSender()
@@ -46,5 +52,13 @@ public class RadiationManager {
 
 	public void givePlayerRads(Player p) {
 		// calculate the rads for the player according to the elapsed time.
+		main.getElapsedTime().setupElapsedtime();
+		elapsedTime = main.getElapsedTime().getElapsedTime();
+		seconds = (elapsedTime / 1000000000); // 1 second = 1e+9 or 1000000000 nanoseconds. 
+		radDecrement = (seconds / 30);
+		radStrangth = 1 - (radDecrement);
+		main.getServer().getConsoleSender().sendMessage("giving " + radStrangth + "much rads");
+		
+		p.damage(radStrangth);
 	}
 }

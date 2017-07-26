@@ -6,40 +6,55 @@ public class ElapsedTime {
 	private long timeStop;
 	private long timeNow;
 	private long elapsedTime;
+	private long serverStartTime;
 	
 	public long getTimeStart() {
-		return timeStart;
+		return this.timeStart;
 	}
 	public void setTimeStart(long timeStart) {
 		this.timeStart = System.nanoTime();
+		timeStart = this.timeStart;
 	}
 	public long getTimeStop() {
-		return timeStop;
+		return this.timeStop;
 	}
 	public void setTimeStop(long timeStop) {
 		this.timeStop = System.nanoTime();
+		timeStop = this.timeStop;
 	}
 	public long getTimeNow() {
-		return timeNow;
+		return this.timeNow;
 	}
 	public void setTimeNow(long timeNow) {
 		this.timeNow = System.nanoTime();
+		timeNow = this.timeNow;
 	}
 	public long getElapsedTime() {
-		return elapsedTime;
+		return this.elapsedTime;
 	}
 	public void setElapsedtime(long elapsedTime) {
-		setTimeNow(timeNow);
-		this.elapsedTime = (timeStart - timeNow);
+		setTimeNow(this.timeNow);
+		this.elapsedTime = (this.timeStart - this.timeNow);
+		elapsedTime = this.elapsedTime;
 	}
 	
 	public void setupStartTime() {
-		setTimeStart(timeStart);
+		setTimeStart(this.timeStart);
 	}
 	public void setupStopTime() {
-		setTimeStop(timeStop);
+		setTimeStop(this.timeStop);
 	}
 	public void setupElapsedtime() {
-		setElapsedtime(elapsedTime);
+		setElapsedtime(this.elapsedTime);
+	}
+	public long getServerStartTime() {
+		return this.serverStartTime;
+	}
+	public void setServerStartTime(long serverStartTime) {
+		this.serverStartTime = System.nanoTime();
+		serverStartTime = this.serverStartTime;
+	}
+	public void setupServerStartTime() {
+		setServerStartTime(this.serverStartTime);
 	}
 }

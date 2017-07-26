@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 public class SpawnListener implements Listener {
 	private EntityType type;
 	private Location playerLocation;
+	private Location entityLocation;
 
 	@EventHandler
 	public void onEntitySpawn(EntitySpawnEvent e) {
@@ -18,7 +19,9 @@ public class SpawnListener implements Listener {
 				playerLocation = e.getLocation();
 
 			} else if (!(type == EntityType.ZOMBIE || type == EntityType.ENDERMAN)) {
+				this.entityLocation = e.getLocation();
 				e.setCancelled(true);
+				e.getLocation().getWorld().spawnEntity(entityLocation, EntityType.ZOMBIE);
 			}
 		}
 	}

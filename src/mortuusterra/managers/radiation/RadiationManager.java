@@ -1,6 +1,7 @@
 package mortuusterra.managers.radiation;
 
-import org.bukkit.ChatColor;
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,7 +14,7 @@ public class RadiationManager {
 	private int playerX;
 	private int playerZ;
 	private int playerY;
-	
+
 	private long elapsedTime;
 	private long radStrangth;
 	private long radDecrement;
@@ -22,30 +23,27 @@ public class RadiationManager {
 	private Location highestLocationAtPlayer;
 	private PlayerManager playerMan;
 
-	Main main  = JavaPlugin.getPlugin(Main.class);
+	Main main = JavaPlugin.getPlugin(Main.class);
+
 	public void CheckEachPlayerLocation() {
-		if (main.getServer().getOnlinePlayers().isEmpty()) {
-			main.getServer().getConsoleSender()
-					.sendMessage(ChatColor.DARK_GREEN + "There are no online players right now!");
-		} else {
-			for (Player p : main.getServer().getOnlinePlayers()) {
-				playerMan.addPlayer(p);
-				String uuid = p.getUniqueId().toString();
+		//check if player is outside or under a building. 
+		for (Player p : main.getServer().getOnlinePlayers()) {
+			playerMan = main.getPlayerManager();
+			playerMan.addPlayer(p);
+			String uuid = p.getUniqueId().toString();
 
-				Location playerLocation = p.getLocation();
-				playerX = playerLocation.getBlockX();
-				playerZ = playerLocation.getBlockZ();
-				playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
+			Location playerLocation = p.getLocation();
+			playerX = playerLocation.getBlockX();
+			playerZ = playerLocation.getBlockZ();
+			playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
 
-				highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
+			highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
 
-				if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
-					playerMan.getPlayer(uuid).isPlayerInBuilding(true);
-				} else {
-					playerMan.getPlayer(uuid).isPlayerInBuilding(false);
-					main.getServer().getConsoleSender()
-					.sendMessage(ChatColor.DARK_GREEN + "Apply Rads!");
-				}
+			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
+				playerMan.getPlayer(uuid).isPlayerInBuilding(true);
+			} else {
+				playerMan.getPlayer(uuid).isPlayerInBuilding(false);
+				givePlayerRads(p);
 			}
 		}
 	}
@@ -54,11 +52,15 @@ public class RadiationManager {
 		// calculate the rads for the player according to the elapsed time.
 		main.getElapsedTime().setupElapsedtime();
 		elapsedTime = main.getElapsedTime().getElapsedTime();
-		seconds = (elapsedTime / 1000000000); // 1 second = 1e+9 or 1000000000 nanoseconds. 
-		radDecrement = (seconds / 30);
-		radStrangth = 1 - (radDecrement);
-		main.getServer().getConsoleSender().sendMessage("giving " + radStrangth + "much rads");
-		
+		seconds = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+		radDecrement = 0;
+		radStrangth = 1 - ((seconds / 50) - radDecrement);
 		p.damage(radStrangth);
+		if (radStrangth < 3) {
+			return;
+		} else if (radStrangth >= 3) {
+			main.getElapsedTime().setTimeStart(0L);
+			radDecrement = (radDecrement - 1);
+		}
 	}
 }

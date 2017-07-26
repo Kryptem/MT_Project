@@ -10,7 +10,7 @@ public class PlayerListener implements Listener{
 	Main main;
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		main.getPlayerManager().addPlayer(e.getPlayer());
+		main.getPlayerManager().addRadPlayer(e.getPlayer());
 		main.getRadaionTimer().run();
 	}
 }

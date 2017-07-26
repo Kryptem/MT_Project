@@ -7,8 +7,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import mortuusterra.listeners.spawn.SpawnListener;
+import mortuusterra.managers.crafting.CellTowerRecipe;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.RadiationManager;
+import mortuusterra.managers.tower.CellTowerManager;
 import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
 
@@ -23,6 +25,8 @@ public class Main extends JavaPlugin {
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
 	private RadiationTimer radiationTimer;
+	private CellTowerRecipe cellTowerRecipe;
+	private CellTowerManager cellTowerManager;
 
 	private BukkitTask radTimer;
 
@@ -30,13 +34,13 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		logger = Logger.getLogger("Minecraft");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
+		registerResipes();
 		initiateOther();
 		elapsedTime.setupStartTime();
 		registerListeners();
 		initiateManagers();
 		registerRadiationTimer();
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
-		
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
@@ -51,6 +55,10 @@ public class Main extends JavaPlugin {
 	public void registerRadiationTimer() {
 		radTimer = new RadiationTimer().runTaskTimer(this, 0L, 80L);
 	}
+	private void registerResipes() {
+		cellTowerRecipe = new CellTowerRecipe();
+		cellTowerRecipe.setRecipe();
+	}
 
 	private void registerListeners() {
 		spawnListener = new SpawnListener();
@@ -60,10 +68,11 @@ public class Main extends JavaPlugin {
 
 	private void initiateManagers() {
 		playerMan = new PlayerManager();
+		cellTowerManager = new CellTowerManager();
+		radMan = new RadiationManager();
 	}
 
 	private void initiateOther() {
-		radMan = new RadiationManager();
 		elapsedTime = new ElapsedTime();
 	}
 
@@ -85,5 +94,11 @@ public class Main extends JavaPlugin {
 	}
 	public RadiationManager getRadiationManager() {
 		return radMan;
+	}
+	public CellTowerRecipe getCellTowerRecipe() {
+		return cellTowerRecipe;
+	}
+	public CellTowerManager getCellTowerManager() {
+		return cellTowerManager;
 	}
 }

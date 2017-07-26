@@ -29,7 +29,7 @@ public class RadiationManager {
 		//check if player is outside or under a building. 
 		for (Player p : main.getServer().getOnlinePlayers()) {
 			playerMan = main.getPlayerManager();
-			playerMan.addPlayer(p);
+			playerMan.addRadPlayer(p);
 			String uuid = p.getUniqueId().toString();
 
 			Location playerLocation = p.getLocation();
@@ -40,9 +40,9 @@ public class RadiationManager {
 			highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
 
 			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
-				playerMan.getPlayer(uuid).isPlayerInBuilding(true);
+				playerMan.getRadPlayer(uuid).isPlayerInBuilding(true);
 			} else {
-				playerMan.getPlayer(uuid).isPlayerInBuilding(false);
+				playerMan.getRadPlayer(uuid).isPlayerInBuilding(false);
 				givePlayerRads(p);
 			}
 		}
@@ -56,9 +56,10 @@ public class RadiationManager {
 		radDecrement = 0;
 		radStrangth = 1 - ((seconds / 50) - radDecrement);
 		p.damage(radStrangth);
-		if (radStrangth < 3) {
+		
+		if (radStrangth < 2) {
 			return;
-		} else if (radStrangth >= 3) {
+		} else if (radStrangth >= 2) {
 			main.getElapsedTime().setTimeStart(0L);
 			radDecrement = (radDecrement - 1);
 		}

@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import mortuusterra.listeners.chat.PlayerChatListener;
 import mortuusterra.listeners.spawn.SpawnListener;
 import mortuusterra.managers.crafting.CellTowerRecipe;
 import mortuusterra.managers.player.PlayerManager;
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin {
 	private RadiationTimer radiationTimer;
 	private CellTowerRecipe cellTowerRecipe;
 	private CellTowerManager cellTowerManager;
+	private PlayerChatListener playerChatListener;
 
 	private BukkitTask radTimer;
 
@@ -62,8 +64,10 @@ public class Main extends JavaPlugin {
 
 	private void registerListeners() {
 		spawnListener = new SpawnListener();
+		playerChatListener = new PlayerChatListener();
 
 		getServer().getPluginManager().registerEvents(this.spawnListener, this);
+		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 	}
 
 	private void initiateManagers() {
@@ -100,5 +104,8 @@ public class Main extends JavaPlugin {
 	}
 	public CellTowerManager getCellTowerManager() {
 		return cellTowerManager;
+	}
+	public PlayerChatListener getPlayerChatListener() {
+		return playerChatListener;
 	}
 }

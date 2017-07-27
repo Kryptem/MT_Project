@@ -14,18 +14,6 @@ public final class RadiationDamageEvent extends Event implements Cancellable {
 	private boolean isCancelled = false;
 
 	public RadiationDamageEvent() {
-		
-		/**if(main.getPlayerManager().containsRadPlayer(p.getUniqueId().toString())) {		}**/
-		
-			main.getRadiationManager().CheckEachPlayerLocation();
-			
-			/**
-			if (main.getGeckPowerListener().isIncorrect() == false && main.getGeckPowerListener().isPowered()) {
-				this.setCancelled(true);
-			} else {
-				main.getRadiationManager().CheckEachPlayerLocation();
-			} **/
-			
 	}
 
 	@Override

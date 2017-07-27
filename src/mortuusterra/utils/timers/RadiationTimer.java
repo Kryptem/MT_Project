@@ -7,7 +7,7 @@ import mortuusterra.Main;
 
 public class RadiationTimer extends BukkitRunnable {
 
-	private long timeout = 30L;
+	private long timeout = 35L;
 
 	Main main = JavaPlugin.getPlugin(Main.class);
 
@@ -19,7 +19,16 @@ public class RadiationTimer extends BukkitRunnable {
 				e.printStackTrace();
 			}
 		} else {
-			main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
+			if (main.GetRadiationDamageEvent().isCancelled()) {
+				try {
+					Thread.sleep(timeout);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} else {
+				main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
+				main.getRadiationManager().CheckEachPlayerLocation();
+			}
 		}
 
 	}

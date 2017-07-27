@@ -69,6 +69,7 @@ public class Main extends JavaPlugin {
 		cellTowerRecipe.setRecipe();
 	}
 	private void registerEvents() {
+		radDamageEvent = new RadiationDamageEvent();
 	}
 
 	private void registerListeners() {

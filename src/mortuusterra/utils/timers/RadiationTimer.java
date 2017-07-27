@@ -1,14 +1,15 @@
 package mortuusterra.utils.timers;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import mortuusterra.Main;
 
-public class RadiationTimer extends BukkitRunnable{
-	
+public class RadiationTimer extends BukkitRunnable {
+
 	private long timeout = 30L;
-	
+
 	Main main = JavaPlugin.getPlugin(Main.class);
 
 	public void run() {
@@ -18,9 +19,10 @@ public class RadiationTimer extends BukkitRunnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		} else {
-				main.getRadiationManager().CheckEachPlayerLocation();
+		}else {
+			for(Player p : main.getServer().getOnlinePlayers()) {
+				main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
+			}
 		}
-
 	}
 }

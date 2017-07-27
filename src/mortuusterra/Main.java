@@ -6,10 +6,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.chat.PlayerChatListener;
+import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.SpawnListener;
 import mortuusterra.managers.crafting.CellTowerRecipe;
 import mortuusterra.managers.player.PlayerManager;
+import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 import mortuusterra.managers.tower.CellTowerManager;
 import mortuusterra.utils.ElapsedTime;
@@ -29,6 +32,9 @@ public class Main extends JavaPlugin {
 	private CellTowerRecipe cellTowerRecipe;
 	private CellTowerManager cellTowerManager;
 	private PlayerChatListener playerChatListener;
+	private RadiationDamageEvent radDamageEvent;
+	private GeckObjectManager geckObjectManager;
+	private GeckPowerListener geckPowerListener;
 
 	private BukkitTask radTimer;
 
@@ -38,6 +44,7 @@ public class Main extends JavaPlugin {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		registerResipes();
 		initiateOther();
+		registerEvents();
 		elapsedTime.setupStartTime();
 		registerListeners();
 		initiateManagers();
@@ -60,6 +67,9 @@ public class Main extends JavaPlugin {
 	private void registerResipes() {
 		cellTowerRecipe = new CellTowerRecipe();
 		cellTowerRecipe.setRecipe();
+	}
+	private void registerEvents() {
+		radDamageEvent = new RadiationDamageEvent();
 	}
 
 	private void registerListeners() {
@@ -107,5 +117,14 @@ public class Main extends JavaPlugin {
 	}
 	public PlayerChatListener getPlayerChatListener() {
 		return playerChatListener;
+	}
+	public RadiationDamageEvent GetRadiationDamageEvent() {
+		return radDamageEvent;
+	}
+	public GeckObjectManager getGeckObjectManager() {
+		return geckObjectManager;
+	}
+	public GeckPowerListener getGeckPowerListener() {
+		return geckPowerListener;
 	}
 }

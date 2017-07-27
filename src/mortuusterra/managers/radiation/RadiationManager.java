@@ -40,6 +40,7 @@ public class RadiationManager {
 			highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
 
 			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
+				playerMan.addRadPlayer(p);
 				playerMan.getRadPlayer(uuid).isPlayerInBuilding(true);
 			} else {
 				playerMan.getRadPlayer(uuid).isPlayerInBuilding(false);

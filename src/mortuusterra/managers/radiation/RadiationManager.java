@@ -44,7 +44,12 @@ public class RadiationManager {
 				playerMan.getRadPlayer(uuid).isPlayerInBuilding(true);
 			} else {
 				playerMan.getRadPlayer(uuid).isPlayerInBuilding(false);
-				givePlayerRads(p);
+				if(main.getGeckPowerListener().isPowered() && main.getGeckPowerListener().isIncorrect() == false) {
+					main.GetRadiationDamageEvent().setCancelled(true);
+				}else {
+					givePlayerRads(p);
+				}
+				
 			}
 		}
 	}

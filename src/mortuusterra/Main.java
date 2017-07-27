@@ -44,11 +44,11 @@ public class Main extends JavaPlugin {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		registerResipes();
 		initiateOther();
-		registerEvents();
 		elapsedTime.setupStartTime();
+		registerRadiationTimer();
 		registerListeners();
 		initiateManagers();
-		registerRadiationTimer();
+		registerEvents();
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
@@ -69,7 +69,6 @@ public class Main extends JavaPlugin {
 		cellTowerRecipe.setRecipe();
 	}
 	private void registerEvents() {
-		radDamageEvent = new RadiationDamageEvent();
 	}
 
 	private void registerListeners() {
@@ -78,6 +77,7 @@ public class Main extends JavaPlugin {
 
 		getServer().getPluginManager().registerEvents(this.spawnListener, this);
 		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
+		
 	}
 
 	private void initiateManagers() {

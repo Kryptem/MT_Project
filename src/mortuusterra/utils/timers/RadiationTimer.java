@@ -1,6 +1,5 @@
 package mortuusterra.utils.timers;
 
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -19,10 +18,9 @@ public class RadiationTimer extends BukkitRunnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}else {
-			for(Player p : main.getServer().getOnlinePlayers()) {
-				main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
-			}
+		} else {
+			main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
 		}
+
 	}
 }

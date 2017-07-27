@@ -1,6 +1,5 @@
 package mortuusterra.events.radiation;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,19 +13,19 @@ public final class RadiationDamageEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean isCancelled = false;
 
-	public RadiationDamageEvent(Player p) {
-		if(main.getPlayerManager().containsRadPlayer(p.getUniqueId().toString())) {
+	public RadiationDamageEvent() {
+		
+		/**if(main.getPlayerManager().containsRadPlayer(p.getUniqueId().toString())) {		}**/
+		
+			main.getRadiationManager().CheckEachPlayerLocation();
 			
-		}
-		if (this.isCancelled) {
-			return;
-		} else {
+			/**
 			if (main.getGeckPowerListener().isIncorrect() == false && main.getGeckPowerListener().isPowered()) {
 				this.setCancelled(true);
 			} else {
 				main.getRadiationManager().CheckEachPlayerLocation();
-			}
-		}
+			} **/
+			
 	}
 
 	@Override

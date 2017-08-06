@@ -13,22 +13,15 @@ public class RadiationTimer extends BukkitRunnable {
 
 	public void run() {
 		if (main.getServer().getOnlinePlayers().isEmpty()) {
+			//if the server is empty then wait
 			try {
 				Thread.sleep(timeout);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		} else {
-			if (main.GetRadiationDamageEvent().isCancelled()) {
-				try {
-					Thread.sleep(timeout);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			} else {
-				main.getServer().getPluginManager().callEvent(main.GetRadiationDamageEvent());
+			//if the server is not empty then run the check for all players
 				main.getRadiationManager().CheckEachPlayerLocation();
-			}
 		}
 
 	}

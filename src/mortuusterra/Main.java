@@ -10,6 +10,7 @@ import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.chat.PlayerChatListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.SpawnListener;
+import mortuusterra.managers.Geck.GeckRangeManager;
 import mortuusterra.managers.crafting.CellTowerRecipe;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
@@ -35,6 +36,7 @@ public class Main extends JavaPlugin {
 	private RadiationDamageEvent radDamageEvent;
 	private GeckObjectManager geckObjectManager;
 	private GeckPowerListener geckPowerListener;
+	private GeckRangeManager geckRangeManager;
 
 	private BukkitTask radTimer;
 
@@ -44,11 +46,10 @@ public class Main extends JavaPlugin {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		registerResipes();
 		initiateOther();
-		elapsedTime.setupStartTime();
-		registerRadiationTimer();
 		registerListeners();
 		initiateManagers();
 		registerEvents();
+		registerRadiationTimer();
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
@@ -75,20 +76,25 @@ public class Main extends JavaPlugin {
 	private void registerListeners() {
 		spawnListener = new SpawnListener();
 		playerChatListener = new PlayerChatListener();
+		geckPowerListener = new GeckPowerListener();
 
 		getServer().getPluginManager().registerEvents(this.spawnListener, this);
 		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
-		
+		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
 	}
 
 	private void initiateManagers() {
 		playerMan = new PlayerManager();
+		geckObjectManager = new GeckObjectManager();
+		playerMan = new PlayerManager();
 		cellTowerManager = new CellTowerManager();
+		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();
 	}
 
 	private void initiateOther() {
 		elapsedTime = new ElapsedTime();
+		elapsedTime.setupStartTime();
 	}
 
 	public SpawnListener getSpawnListener() {
@@ -127,5 +133,9 @@ public class Main extends JavaPlugin {
 	}
 	public GeckPowerListener getGeckPowerListener() {
 		return geckPowerListener;
+	}
+
+	public GeckRangeManager getGeckRangeManager() {
+		return geckRangeManager;
 	}
 }

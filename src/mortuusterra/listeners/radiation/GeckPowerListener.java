@@ -7,50 +7,64 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.Lever;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import mortuusterra.Main;
 
 public class GeckPowerListener implements Listener {
+	Main main = JavaPlugin.getPlugin(Main.class);
 
-	private boolean incorrect = false;
+	private boolean correct = false;
 	private boolean isPowered = false;
 	private Location blockLocation;
 
+	// Every time a player interacts with a block
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent e) {
-		if (e.getClickedBlock() != null) {
-			Block block = e.getClickedBlock();
+		// if the block is not null then get the block location
+		if (e.getClickedBlock()!= null && e.getClickedBlock().getType().equals(Material.LEVER)) {
 
-			if (block.getType() == Material.LEVER) {
-				Lever lever = (Lever) block;
+			Block lever = e.getClickedBlock();
+			Block sponge = lever.getRelative(BlockFace.DOWN);
+			
+			if (sponge.getType().equals(Material.SPONGE) && (!sponge.isBlockPowered())) {
+				
+				Block piston1 = sponge.getRelative(BlockFace.EAST);
+				Block piston2 = sponge.getRelative(BlockFace.WEST);
+				Block piston3 = sponge.getRelative(BlockFace.NORTH);
+				Block piston4 = sponge.getRelative(BlockFace.SOUTH);
 
-				if (block.getRelative(lever.getFacing().getOppositeFace()).getType() == Material.SPONGE) {
-					setBlockLocation(block.getRelative(lever.getFacing().getOppositeFace()).getLocation());
+				if (!(piston1.getType().equals(Material.PISTON_BASE) && piston2.getType().equals(Material.PISTON_BASE)
+						&& piston3.getType().equals(Material.PISTON_BASE)
+						&& piston4.getType().equals(Material.PISTON_BASE))) {
 
-					if (block.getRelative(lever.getFacing().getOppositeFace()).isBlockPowered()) {
-						this.setPowered(true);
+					main.getServer().getConsoleSender().sendMessage("You must build the GECK corectly.");
+					return;
+				} else {
 
-						for (BlockFace face : new BlockFace[] { BlockFace.NORTH, BlockFace.WEST, BlockFace.EAST,
-								BlockFace.SOUTH }) {
-
-							Block faced = e.getClickedBlock().getRelative(face);
-							if (faced.getType() != Material.PISTON_BASE) {
-								this.setIncorrect(true);
-							} else {
-								this.setIncorrect(false);
-							}
-						}
-					}
+					this.blockLocation = sponge.getLocation();
+					
+					main.getGeckObjectManager().addGeckLocation(blockLocation);
+					main.getGeckObjectManager().getGeckObject(blockLocation).setCorrect(true);
+					main.getGeckObjectManager().getGeckObject(blockLocation).setGeckLocation(blockLocation);
+					
+					main.getServer().getConsoleSender()
+							.sendMessage("Saved GECK Location at: " + blockLocation.toString());
+					
+					return;
 				}
+			}else {
+				return;
 			}
 		}
 	}
 
-	public boolean isIncorrect() {
-		return incorrect;
+	public boolean isCorrect() {
+		return correct;
 	}
 
-	public void setIncorrect(boolean incorrect) {
-		this.incorrect = incorrect;
+	public void setIncorrect(boolean correct) {
+		this.correct = correct;
 	}
 
 	public Location getBlockLocation() {
@@ -59,6 +73,7 @@ public class GeckPowerListener implements Listener {
 
 	public void setBlockLocation(Location blockLocation) {
 		this.blockLocation = blockLocation;
+		return;
 	}
 
 	public boolean isPowered() {
@@ -67,5 +82,6 @@ public class GeckPowerListener implements Listener {
 
 	public void setPowered(boolean isPowered) {
 		this.isPowered = isPowered;
+		return;
 	}
 }

@@ -19,37 +19,46 @@ public class RadiationManager {
 	private long radStrangth;
 	private long radDecrement;
 	private long seconds;
+	
+	private String uuid;
 
 	private Location highestLocationAtPlayer;
+	private Location  playerLocation;
+	
 	private PlayerManager playerMan;
+	
+	
 
 	Main main = JavaPlugin.getPlugin(Main.class);
 
 	public void CheckEachPlayerLocation() {
-		//check if player is outside or under a building. 
+		//check if player is outside or under a building. or in range of a GECK
 		for (Player p : main.getServer().getOnlinePlayers()) {
 			playerMan = main.getPlayerManager();
 			playerMan.addRadPlayer(p);
-			String uuid = p.getUniqueId().toString();
-
-			Location playerLocation = p.getLocation();
+			
+			uuid = p.getUniqueId().toString();
+			playerLocation = p.getLocation();
 			playerX = playerLocation.getBlockX();
 			playerZ = playerLocation.getBlockZ();
 			playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
 
 			highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
 
+			//check if player is under a block/building
 			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
-				playerMan.addRadPlayer(p);
-				playerMan.getRadPlayer(uuid).isPlayerInBuilding(true);
+				playerMan.getRadPlayer(uuid).setPlayerInBuilding(true);
 			} else {
-				playerMan.getRadPlayer(uuid).isPlayerInBuilding(false);
-				if(main.getGeckPowerListener().isPowered() && main.getGeckPowerListener().isIncorrect() == false) {
-					main.GetRadiationDamageEvent().setCancelled(true);
+				playerMan.getRadPlayer(uuid).setPlayerInBuilding(false);
+				main.getGeckRangeManager().checkAllPlayers();
+				
+				if(main.getPlayerManager().getGeckPlayer(uuid).getplayerInRangeOfGeck()) {
+					p.sendMessage("you are in range and not recieving rads");
+					return;
 				}else {
+					p.sendMessage("you are not in range and are recieving rads");
 					givePlayerRads(p);
 				}
-				
 			}
 		}
 	}

@@ -9,9 +9,17 @@ import mortuusterra.objects.player.PlayerObject;
 
 public class PlayerManager {
 
+	/*
+	 * radsPlayerMap is for all players in Radiation
+	 * GeckPlayerMap is for all players in range of a GECK
+	 */
+	
 	private Map<String, PlayerObject> radsPlayerMap = new HashMap<>();
-	private Map<String, PlayerObject> chatPlayermap = new HashMap<>();
+	private Map<String, PlayerObject> GeckPlayerMap = new HashMap<>();
 
+	
+	// radsPlayerMap
+	
 	public Map<String, PlayerObject> getPlayerMap() {
 		return radsPlayerMap;
 	}
@@ -21,14 +29,14 @@ public class PlayerManager {
 	}
 
 	public void addRadPlayer(Player p) {
-		if (containsChatPlayer(p.getUniqueId().toString())) {
+		if (containsRadPlayer(p.getUniqueId().toString())) {
 			return;
 		}
 		radsPlayerMap.put(p.getUniqueId().toString(), new PlayerObject(p.getUniqueId()));
 	}
 
 	public void removeRadPlayer(Player p) {
-		if (!containsChatPlayer(p.getUniqueId().toString())) {
+		if (!containsRadPlayer(p.getUniqueId().toString())) {
 			return;
 		}
 		radsPlayerMap.remove(p.getUniqueId().toString());
@@ -38,35 +46,32 @@ public class PlayerManager {
 		return radsPlayerMap.containsKey(uuid);
 	}
 	
+	// GeckPlayerMap
 	
-	
-	
-	
-	
-	public Map<String, PlayerObject> chatPlayermap() {
-		return chatPlayermap;
+	public Map<String, PlayerObject> GeckPlayerMap() {
+		return GeckPlayerMap;
 	}
 
-	public PlayerObject getChatPlayer(String uuid) {
-		return chatPlayermap.get(uuid);
+	public PlayerObject getGeckPlayer(String uuid) {
+		return GeckPlayerMap.get(uuid);
 	}
 
-	public void addChatPlayer(Player p) {
-		if (containsChatPlayer(p.getUniqueId().toString())) {
+	public void addGeckPlayer(Player p) {
+		if (containsGeckPlayer(p.getUniqueId().toString())) {
 			return;
 		}
-		chatPlayermap.put(p.getUniqueId().toString(), new PlayerObject(p.getUniqueId()));
+		GeckPlayerMap.put(p.getUniqueId().toString(), new PlayerObject(p.getUniqueId()));
 	}
 
-	public void removeChatPlayer(Player p) {
-		if (!containsChatPlayer(p.getUniqueId().toString())) {
+	public void removeGeckPlayer(Player p) {
+		if (!containsGeckPlayer(p.getUniqueId().toString())) {
 			return;
 		}
-		chatPlayermap.remove(p.getUniqueId().toString());
+		GeckPlayerMap.remove(p.getUniqueId().toString());
 	}
 
-	public boolean containsChatPlayer(String uuid) {
-		return chatPlayermap.containsKey(uuid);
+	public boolean containsGeckPlayer(String uuid) {
+		return GeckPlayerMap.containsKey(uuid);
 	}
 
 }

@@ -8,24 +8,25 @@ import org.bukkit.entity.Player;
 import mortuusterra.objects.player.PlayerObject;
 
 public class PlayerManager {
+	public PlayerManager() {
 
-	/*
-	 * radsPlayerMap is for all players in Radiation
-	 * GeckPlayerMap is for all players in range of a GECK
-	 */
-	
+	}
+
 	private Map<String, PlayerObject> radsPlayerMap = new HashMap<>();
 	private Map<String, PlayerObject> GeckPlayerMap = new HashMap<>();
+	/*
+	 * radsPlayerMap is for all players in Radiation GeckPlayerMap is for all
+	 * players in range of a GECK
+	 */
 
-	
 	// radsPlayerMap
-	
+
 	public Map<String, PlayerObject> getPlayerMap() {
 		return radsPlayerMap;
 	}
 
 	public PlayerObject getRadPlayer(String uuid) {
-		return radsPlayerMap.get(uuid);
+			return radsPlayerMap.get(uuid);
 	}
 
 	public void addRadPlayer(Player p) {
@@ -45,9 +46,9 @@ public class PlayerManager {
 	public boolean containsRadPlayer(String uuid) {
 		return radsPlayerMap.containsKey(uuid);
 	}
-	
+
 	// GeckPlayerMap
-	
+
 	public Map<String, PlayerObject> GeckPlayerMap() {
 		return GeckPlayerMap;
 	}

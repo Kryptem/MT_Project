@@ -15,26 +15,21 @@ public class GeckRangeManager {
 
 	private double distance;
 
-	public void checkAllPlayers() {
-		for (Player p : main.getServer().getOnlinePlayers()) {
-			p.sendMessage("adding you to RadPlayermap");
+	public void checkPlayers(Player p) {
 			main.getPlayerManager().addRadPlayer(p);
+			setPlayerLocation(p, p.getLocation());
 			checkRange(p);
-		}
 	}
 
 	private void checkRange(Player p) {
-		p.sendMessage("checkRange has ran");
 		for (GeckObject geckObject : main.getGeckObjectManager().getGecklocationMap().values()) {
 			this.geckLocation = geckObject.getGeckLocation();
 			this.playerLocation = p.getLocation();
-			setPlayerLocation(p, p.getLocation());
 
 			this.distance = this.geckLocation.distance(playerLocation);
 
 			// if the distance is less than x then you are in range of the geck
 			if (this.distance < 3) {
-				p.sendMessage("you are in range");
 				if (main.getPlayerManager().containsGeckPlayer(p.getUniqueId().toString())) {
 					main.getPlayerManager().getGeckPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(true);
 				} else {
@@ -42,9 +37,7 @@ public class GeckRangeManager {
 					main.getPlayerManager().getGeckPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(true);
 				}
 			} else {
-				p.sendMessage("you are not in range");
 				if (main.getPlayerManager().containsGeckPlayer(p.getUniqueId().toString())) {
-					p.sendMessage("removing you from GeckPlayerMap");
 					main.getPlayerManager().removeGeckPlayer(p);
 				}
 			}
@@ -52,7 +45,6 @@ public class GeckRangeManager {
 	}
 
 	private void setPlayerLocation(Player p, Location l) {
-		p.sendMessage("setting you location");
 		main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).setPlayerLocation(l);
 	}
 }

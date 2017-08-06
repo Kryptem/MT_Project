@@ -16,27 +16,29 @@ import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 import mortuusterra.managers.tower.CellTowerManager;
+import mortuusterra.objects.player.PlayerObject;
 import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
 
 public class Main extends JavaPlugin {
 
 	public Logger logger;
-
-	private SpawnListener spawnListener;
-
-	private ElapsedTime elapsedTime;
-
+	
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
+	private CellTowerManager cellTowerManager;
+	private GeckObjectManager geckObjectManager;
+	private GeckRangeManager geckRangeManager;
+
+	private PlayerChatListener playerChatListener;
+	private GeckPowerListener geckPowerListener;
+	private SpawnListener spawnListener;
+	
+	private RadiationDamageEvent radDamageEvent;
+	
 	private RadiationTimer radiationTimer;
 	private CellTowerRecipe cellTowerRecipe;
-	private CellTowerManager cellTowerManager;
-	private PlayerChatListener playerChatListener;
-	private RadiationDamageEvent radDamageEvent;
-	private GeckObjectManager geckObjectManager;
-	private GeckPowerListener geckPowerListener;
-	private GeckRangeManager geckRangeManager;
+	private ElapsedTime elapsedTime;
 
 	private BukkitTask radTimer;
 
@@ -95,6 +97,7 @@ public class Main extends JavaPlugin {
 	private void initiateOther() {
 		elapsedTime = new ElapsedTime();
 		elapsedTime.setupStartTime();
+		
 	}
 
 	public SpawnListener getSpawnListener() {

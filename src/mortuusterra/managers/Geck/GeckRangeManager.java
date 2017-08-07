@@ -16,9 +16,9 @@ public class GeckRangeManager {
 	private double distance;
 
 	public void checkPlayers(Player p) {
-			main.getPlayerManager().addRadPlayer(p);
-			setPlayerLocation(p, p.getLocation());
-			checkRange(p);
+		main.getPlayerManager().addRadPlayer(p);
+		setPlayerLocation(p, p.getLocation());
+		checkRange(p);
 	}
 
 	private void checkRange(Player p) {
@@ -37,8 +37,11 @@ public class GeckRangeManager {
 					main.getPlayerManager().getGeckPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(true);
 				}
 			} else {
-				if (main.getPlayerManager().containsGeckPlayer(p.getUniqueId().toString())) {
-					main.getPlayerManager().removeGeckPlayer(p);
+				if (main.getGeckObjectManager().containsGeckLocation(geckLocation)) {
+					if (main.getPlayerManager().containsGeckPlayer(p.getUniqueId().toString())) {
+						main.getPlayerManager().getGeckPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(false);
+						main.getPlayerManager().removeGeckPlayer(p);
+					}
 				}
 			}
 		}

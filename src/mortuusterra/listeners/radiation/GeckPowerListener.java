@@ -1,5 +1,6 @@
 package mortuusterra.listeners.radiation;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,13 +23,13 @@ public class GeckPowerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent e) {
 		// if the block is not null then get the block location
-		if (e.getClickedBlock()!= null && e.getClickedBlock().getType().equals(Material.LEVER)) {
+		if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.LEVER)) {
 
 			Block lever = e.getClickedBlock();
 			Block sponge = lever.getRelative(BlockFace.DOWN);
-			
+
 			if (sponge.getType().equals(Material.SPONGE) && (!sponge.isBlockPowered())) {
-				
+
 				Block piston1 = sponge.getRelative(BlockFace.EAST);
 				Block piston2 = sponge.getRelative(BlockFace.WEST);
 				Block piston3 = sponge.getRelative(BlockFace.NORTH);
@@ -38,23 +39,22 @@ public class GeckPowerListener implements Listener {
 						&& piston3.getType().equals(Material.PISTON_BASE)
 						&& piston4.getType().equals(Material.PISTON_BASE))) {
 
-					main.getServer().getConsoleSender().sendMessage("You must build the GECK corectly.");
+					e.getPlayer().sendMessage(ChatColor.RED + "You must build the GECK corectly!");
 					return;
 				} else {
-
 					this.blockLocation = sponge.getLocation();
-					
+
 					main.getGeckObjectManager().addGeckLocation(blockLocation);
 					main.getGeckObjectManager().getGeckObject(blockLocation).setCorrect(true);
 					main.getGeckObjectManager().getGeckObject(blockLocation).setGeckLocation(blockLocation);
-					
-					main.getServer().getConsoleSender()
-							.sendMessage("Saved GECK Location at: " + blockLocation.toString());
-					
 					return;
 				}
-			}else {
-				return;
+			} else if (sponge.getType().equals(Material.SPONGE) && (sponge.isBlockPowered())) {
+
+				main.getGeckObjectManager().getGeckObject(blockLocation).setIspowered(false);
+				main.getPlayerManager().getRadPlayer(e.getPlayer().getUniqueId().toString()).setPlayerInRangeOfGeck(false);
+				main.getGeckObjectManager().removeGeckLocation(blockLocation);
+				main.getPlayerManager().removeGeckPlayer(e.getPlayer());
 			}
 		}
 	}

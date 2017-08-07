@@ -46,6 +46,7 @@ public class RadiationManager {
 			// check if player is under a block/building
 			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
 				playerMan.getRadPlayer(uuid).setPlayerInBuilding(true);
+				return;
 			} else {
 				playerMan.getRadPlayer(uuid).setPlayerInBuilding(false);
 				main.getGeckRangeManager().checkPlayers(p);

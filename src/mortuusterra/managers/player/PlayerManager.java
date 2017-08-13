@@ -8,9 +8,6 @@ import org.bukkit.entity.Player;
 import mortuusterra.objects.player.PlayerObject;
 
 public class PlayerManager {
-	public PlayerManager() {
-
-	}
 
 	private Map<String, PlayerObject> radsPlayerMap = new HashMap<>();
 	private Map<String, PlayerObject> GeckPlayerMap = new HashMap<>();

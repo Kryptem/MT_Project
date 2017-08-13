@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import mortuusterra.Main;
-import mortuusterra.managers.player.PlayerManager;
 
 public class RadiationManager {
 
@@ -25,34 +24,24 @@ public class RadiationManager {
 	private Location highestLocationAtPlayer;
 	private Location playerLocation;
 
-	private PlayerManager playerMan;
-
 	Main main = JavaPlugin.getPlugin(Main.class);
 
 	public void CheckEachPlayerLocation() {
 		// check if player is outside or under a building. or in range of a GECK
 		for (Player p : main.getServer().getOnlinePlayers()) {
-			playerMan = main.getPlayerManager();
-			playerMan.addRadPlayer(p);
+			main.getPlayerManager().addRadPlayer(p);
 
-			uuid = p.getUniqueId().toString();
-			playerLocation = p.getLocation();
-			playerX = playerLocation.getBlockX();
-			playerZ = playerLocation.getBlockZ();
-			playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
-
-			highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
-
-			// check if player is under a block/building
-			if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
-				playerMan.getRadPlayer(uuid).setPlayerInBuilding(true);
+			if (isPlayerInBuilding(p)) {
 				return;
 			} else {
-				playerMan.getRadPlayer(uuid).setPlayerInBuilding(false);
+				main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(false);
 				main.getGeckRangeManager().checkPlayers(p);
-				playerMan.addGeckPlayer(p);
-				if (playerMan.getGeckPlayer(uuid).getplayerInRangeOfGeck()) {
-					return;
+				if (main.getPlayerManager().containsGeckPlayer(uuid)) {
+					if (main.getPlayerManager().getGeckPlayer(uuid).getplayerInRangeOfGeck()) {
+						return;
+					} else {
+						givePlayerRads(p);
+					}
 				} else {
 					givePlayerRads(p);
 				}
@@ -75,5 +64,20 @@ public class RadiationManager {
 			main.getElapsedTime().setTimeStart(0L);
 			radDecrement = (radDecrement - 1);
 		}
+	}
+
+	private boolean isPlayerInBuilding(Player p) {
+		this.uuid = p.getUniqueId().toString();
+		this.playerLocation = p.getLocation();
+		this.playerX = playerLocation.getBlockX();
+		this.playerZ = playerLocation.getBlockZ();
+		this.playerY = playerLocation.getWorld().getHighestBlockYAt(playerX, playerZ);
+		this.highestLocationAtPlayer = new Location(p.getWorld(), playerX, playerY, playerZ);
+
+		if ((playerLocation.getBlockY() - highestLocationAtPlayer.getBlockY()) < 0) {
+			main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(true);
+			return true;
+		}
+		return false;
 	}
 }

@@ -7,16 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import mortuusterra.events.radiation.RadiationDamageEvent;
-import mortuusterra.listeners.chat.PlayerChatListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
-import mortuusterra.listeners.spawn.SpawnListener;
+import mortuusterra.listeners.spawn.MobListener;
 import mortuusterra.managers.Geck.GeckRangeManager;
 import mortuusterra.managers.crafting.CellTowerRecipe;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 import mortuusterra.managers.tower.CellTowerManager;
-import mortuusterra.objects.player.PlayerObject;
 import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
 
@@ -30,9 +28,9 @@ public class Main extends JavaPlugin {
 	private GeckObjectManager geckObjectManager;
 	private GeckRangeManager geckRangeManager;
 
-	private PlayerChatListener playerChatListener;
+	//private PlayerChatListener playerChatListener;
 	private GeckPowerListener geckPowerListener;
-	private SpawnListener spawnListener;
+	private MobListener mobListener;
 	
 	private RadiationDamageEvent radDamageEvent;
 	
@@ -65,7 +63,8 @@ public class Main extends JavaPlugin {
 	}
 
 	public void registerRadiationTimer() {
-		radTimer = new RadiationTimer().runTaskTimer(this, 0L, 80L);
+		radTimer = new RadiationTimer().runTaskTimerAsynchronously(this, 0L, 80L);
+		
 	}
 	private void registerResipes() {
 		cellTowerRecipe = new CellTowerRecipe();
@@ -74,17 +73,15 @@ public class Main extends JavaPlugin {
 	private void registerEvents() {
 		radDamageEvent = new RadiationDamageEvent();
 	}
-
 	private void registerListeners() {
-		spawnListener = new SpawnListener();
-		playerChatListener = new PlayerChatListener();
+		mobListener = new MobListener();
+		//playerChatListener = new PlayerChatListener();
 		geckPowerListener = new GeckPowerListener();
 
-		getServer().getPluginManager().registerEvents(this.spawnListener, this);
-		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
+		getServer().getPluginManager().registerEvents(this.mobListener, this);
+		//getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
 	}
-
 	private void initiateManagers() {
 		playerMan = new PlayerManager();
 		geckObjectManager = new GeckObjectManager();
@@ -93,17 +90,14 @@ public class Main extends JavaPlugin {
 		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();
 	}
-
 	private void initiateOther() {
 		elapsedTime = new ElapsedTime();
 		elapsedTime.setupStartTime();
 		
 	}
-
-	public SpawnListener getSpawnListener() {
-		return spawnListener;
+	public MobListener getMobListener() {
+		return mobListener;
 	}
-
 	public ElapsedTime getElapsedTime() {
 		return elapsedTime;
 	}
@@ -125,9 +119,11 @@ public class Main extends JavaPlugin {
 	public CellTowerManager getCellTowerManager() {
 		return cellTowerManager;
 	}
+	/**
 	public PlayerChatListener getPlayerChatListener() {
 		return playerChatListener;
 	}
+	**/
 	public RadiationDamageEvent GetRadiationDamageEvent() {
 		return radDamageEvent;
 	}
@@ -137,7 +133,6 @@ public class Main extends JavaPlugin {
 	public GeckPowerListener getGeckPowerListener() {
 		return geckPowerListener;
 	}
-
 	public GeckRangeManager getGeckRangeManager() {
 		return geckRangeManager;
 	}

@@ -15,6 +15,7 @@ import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
+import mortuusterra.managers.supplydrops.SupplyDropManager;
 import mortuusterra.managers.tower.CellTowerManager;
 import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
@@ -29,6 +30,7 @@ public class Main extends JavaPlugin {
 	private GeckObjectManager geckObjectManager;
 	private GeckRangeManager geckRangeManager;
 	private MobManager mobManager;
+	private SupplyDropManager supplyDropManager;
 
 	// private PlayerChatListener playerChatListener;
 	private GeckPowerListener geckPowerListener;
@@ -102,6 +104,7 @@ public class Main extends JavaPlugin {
 		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
+		supplyDropManager = new SupplyDropManager();
 	}
 
 	private void initiateOther() {

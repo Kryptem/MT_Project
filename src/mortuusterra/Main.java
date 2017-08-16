@@ -1,5 +1,9 @@
 package mortuusterra;
 
+/**
+ * Created by Kadeska23
+ */
+
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -100,7 +104,6 @@ public class Main extends JavaPlugin {
 	private void initiateManagers() {
 		playerMan = new PlayerManager();
 		geckObjectManager = new GeckObjectManager();
-		playerMan = new PlayerManager();
 		cellTowerManager = new CellTowerManager();
 		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();

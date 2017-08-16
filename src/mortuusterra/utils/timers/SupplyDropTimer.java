@@ -5,12 +5,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import mortuusterra.Main;
 
-public class RadiationTimer extends BukkitRunnable {
+public class SupplyDropTimer  extends BukkitRunnable {
 
 	private long timeout = 40L;
 
 	Main main = JavaPlugin.getPlugin(Main.class);
-
+	
 	@Override
 	public void run() {
 		if (main.getServer().getOnlinePlayers().isEmpty()) {
@@ -21,8 +21,9 @@ public class RadiationTimer extends BukkitRunnable {
 				e.printStackTrace();
 			}
 		} else {
-				main.getRadiationManager().CheckEachPlayerLocation();
+			main.getSupplyDropManager().deliverSupplyDrop();
 		}
-
+		
 	}
+
 }

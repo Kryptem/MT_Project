@@ -1,6 +1,7 @@
 package mortuusterra.managers.supplydrops;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,6 +33,8 @@ public class SupplyDropManager {
 
 	private Map<Location, SupplyDropObject> supplyDropObjectMap = new HashMap<>();
 	
+	private List<ItemStack> chestInv;
+	
 	private ItemStack test;
 	
 	public void deliverSupplyDrop() {
@@ -43,7 +46,7 @@ public class SupplyDropManager {
 		main.getServer().getConsoleSender().sendMessage("Delivering Supply Drop at" + this.randomLocation.toString());
 	}
 	
-	public void makeSupplyDrop() {
+	private void makeSupplyDrop() {
 		this.randomLocation = getRandomLocation(Xmin, Xmax, Zmin, Zmax, Y, world);
 	}
 	private Location getRandomLocation(int Xmin, int Xmax, int Zmin, int Zmax, int Y, World world) {
@@ -55,12 +58,15 @@ public class SupplyDropManager {
 	}
 	private int getHighestBlock(int X, int Z, World world) {
 		Location loc = new Location(world, X, 0, Z);
-		return loc.getWorld().getHighestBlockYAt(X, Z);
+		int highestBlock = loc.getWorld().getHighestBlockYAt(X, Z);
+		return highestBlock;
 	}
 	private void setChestInventory(Location l) {
 		Chest chest = (Chest) Bukkit.getWorld("world").getBlockAt(randomLocation).getState();
 		chest.setCustomName("Supply Drop");
+		
 		test = new ItemStack(Material.ANVIL);
+		
 		chest.getInventory().addItem(test);
 		chest.update();
 	}

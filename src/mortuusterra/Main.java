@@ -19,6 +19,7 @@ import mortuusterra.managers.supplydrops.SupplyDropManager;
 import mortuusterra.managers.tower.CellTowerManager;
 import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
+import mortuusterra.utils.timers.SupplyDropTimer;
 
 public class Main extends JavaPlugin {
 
@@ -38,11 +39,11 @@ public class Main extends JavaPlugin {
 
 	private RadiationDamageEvent radDamageEvent;
 
-	private RadiationTimer radiationTimer;
 	private CellTowerRecipe cellTowerRecipe;
 	private ElapsedTime elapsedTime;
 
 	private BukkitTask radTimer;
+	private BukkitTask supplyDropTimer;
 
 	@Override
 	public void onEnable() {
@@ -73,8 +74,8 @@ public class Main extends JavaPlugin {
 	}
 
 	public void registerRadiationTimer() {
-		radTimer = new RadiationTimer().runTaskTimerAsynchronously(this, 0L, 80L);
-
+		this.radTimer = new RadiationTimer().runTaskTimerAsynchronously(this, 0L, 80L);
+		this.supplyDropTimer = new SupplyDropTimer().runTaskTimer(this, 1L, 500L);
 	}
 
 	private void registerResipes() {
@@ -121,16 +122,8 @@ public class Main extends JavaPlugin {
 		return elapsedTime;
 	}
 
-	public BukkitTask radiationTimer() {
-		return radTimer;
-	}
-
 	public PlayerManager getPlayerManager() {
 		return playerMan;
-	}
-
-	public RadiationTimer getRadaionTimer() {
-		return radiationTimer;
 	}
 
 	public RadiationManager getRadiationManager() {
@@ -163,5 +156,16 @@ public class Main extends JavaPlugin {
 
 	public GeckRangeManager getGeckRangeManager() {
 		return geckRangeManager;
+	}
+	public SupplyDropManager getSupplyDropManager() {
+		return supplyDropManager;
+	}
+
+	public BukkitTask getRadTimer() {
+		return radTimer;
+	}
+
+	public BukkitTask getSupplyDropTimer() {
+		return supplyDropTimer;
 	}
 }

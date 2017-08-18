@@ -1,68 +1,61 @@
 package mortuusterra.managers.supplydrops;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import mortuusterra.Main;
 import mortuusterra.objects.supplydrop.SupplyDropObject;
+import net.md_5.bungee.api.ChatColor;
 
 public class SupplyDropManager {
 	
 	Main main = JavaPlugin.getPlugin(Main.class);
 	
 	private Location randomLocation;
-	private int randomX;
-	private int randomZ;
-	private int Y;
-	
-	private int Xmax = 1000;
-	private int Xmin = -1000;
-	private int Zmax = 1000;
-	private int Zmin = -1000;
 	private World world = main.getServer().getWorld("world");
 
 	private Map<Location, SupplyDropObject> supplyDropObjectMap = new HashMap<>();
 	
-	private List<ItemStack> chestInv;
-	
 	private ItemStack test;
 	
+	//this is called by the radiationTimer
 	public void deliverSupplyDrop() {
-		getRandomLocation(Xmin, Xmax, Zmin, Zmax, Y, world);
 		makeSupplyDrop();
 		addSupplyDropLocation(this.randomLocation);
 		this.randomLocation.getBlock().setType(Material.CHEST);
 		setChestInventory(this.randomLocation);
-		main.getServer().getConsoleSender().sendMessage("Delivering Supply Drop at" + this.randomLocation.toString());
+		main.getServer().broadcastMessage(ChatColor.RED + "Delivering Supply Drop at: " + ChatColor.BLUE + "X= " + ChatColor.YELLOW + this.randomLocation.getX() +  ChatColor.BLUE + " Z= " + ChatColor.YELLOW + this.randomLocation.getBlockZ() +  ChatColor.BLUE + " Y= " + ChatColor.YELLOW + this.randomLocation.getY());
 	}
 	
 	private void makeSupplyDrop() {
-		this.randomLocation = getRandomLocation(Xmin, Xmax, Zmin, Zmax, Y, world);
+		//this will make a random location for the supply Drop to spawn on. 
+		this.randomLocation = getRandomLocation(1, 1, world);
 	}
-	private Location getRandomLocation(int Xmin, int Xmax, int Zmin, int Zmax, int Y, World world) {
+	private Location getRandomLocation(int Xoffset, int Zoffset, World world) {
+		//this is the method that makes the random location close to a random player.
+		Player ranPlayer = Bukkit.getOnlinePlayers().stream().findAny().get();
+		Location loc = ranPlayer.getLocation();
+		Location newLoc = new Location(world, (loc.getX() + Xoffset), loc.getY(), (loc.getZ() + Zoffset));
+				
+		/** this is old code, needs to be removed after testing new code
+		 * 
 		this.randomX = new Random().nextInt(((Xmax - Xmin) + 1) + Xmin);
 		this.randomZ = new Random().nextInt(((Zmax - Zmin) + 1) + Zmin);
 		this.Y = getHighestBlock(randomX, randomZ, world);
 		Location randomLocation = new Location(world, this.randomX, this.Y, this.randomZ);
-		return randomLocation;
-	}
-	private int getHighestBlock(int X, int Z, World world) {
-		Location loc = new Location(world, X, 0, Z);
-		int highestBlock = loc.getWorld().getHighestBlockYAt(X, Z);
-		return highestBlock;
+		**/
+		return newLoc;
 	}
 	private void setChestInventory(Location l) {
-		Chest chest = (Chest) Bukkit.getWorld("world").getBlockAt(randomLocation).getState();
+		//this method will set the inventory of the SupplyDrop
+		Chest chest = (Chest) Bukkit.getWorld("world").getBlockAt(l).getState();
 		chest.setCustomName("Supply Drop");
 		
 		test = new ItemStack(Material.ANVIL);
@@ -70,6 +63,8 @@ public class SupplyDropManager {
 		chest.getInventory().addItem(test);
 		chest.update();
 	}
+	
+	//hashmap getters and setters and other things to do with the hashmap. 
 	
 	public Map<Location, SupplyDropObject> getSupplyDropObjectMap(){
 		return supplyDropObjectMap;

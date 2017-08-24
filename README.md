@@ -1,5 +1,5 @@
 ## MT_Project
-#### Zombie Apocalypse plugin for spigot 1.12
+#### Zombie Apocalypse plugin for Minecraft Spigot 1.12.x
 
  ##### This plugin is in progress and is still in Pre-alpha, and will be making small and big updates throughout the Pre-alpha stage, so be on the lookout for any updates that we make becasue it might be a performance fix or a new feature that was added.
  

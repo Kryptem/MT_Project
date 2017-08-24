@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-
 import mortuusterra.events.radiation.RadiationDamageEvent;
+import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.MobListener;
 import mortuusterra.managers.Geck.GeckRangeManager;
@@ -21,7 +21,6 @@ import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 import mortuusterra.managers.supplydrops.SupplyDropManager;
 import mortuusterra.managers.tower.CellTowerManager;
-import mortuusterra.utils.ElapsedTime;
 import mortuusterra.utils.timers.RadiationTimer;
 import mortuusterra.utils.timers.SupplyDropTimer;
 
@@ -40,11 +39,11 @@ public class Main extends JavaPlugin {
 	// private PlayerChatListener playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
+	private PlayerListener playerListener;
 
 	private RadiationDamageEvent radDamageEvent;
 
 	private CellTowerRecipe cellTowerRecipe;
-	private ElapsedTime elapsedTime;
 
 	private BukkitTask radTimer;
 	private BukkitTask supplyDropTimer;
@@ -54,7 +53,6 @@ public class Main extends JavaPlugin {
 		logger = Logger.getLogger("Minecraft");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		registerResipes();
-		initiateOther();
 		registerListeners();
 		initiateManagers();
 		registerEvents();
@@ -67,7 +65,6 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		elapsedTime.setupStopTime();
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		// getFileManager().saveFiles();
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
@@ -92,10 +89,12 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerListeners() {
+		playerListener = new PlayerListener();
 		mobListener = new MobListener();
 		// playerChatListener = new PlayerChatListener();
 		geckPowerListener = new GeckPowerListener();
 
+		getServer().getPluginManager().registerEvents(this.playerListener, this);
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
 		// getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
@@ -111,18 +110,8 @@ public class Main extends JavaPlugin {
 		supplyDropManager = new SupplyDropManager();
 	}
 
-	private void initiateOther() {
-		elapsedTime = new ElapsedTime();
-		elapsedTime.setupStartTime();
-
-	}
-
 	public MobListener getMobListener() {
 		return mobListener;
-	}
-
-	public ElapsedTime getElapsedTime() {
-		return elapsedTime;
 	}
 
 	public PlayerManager getPlayerManager() {
@@ -170,5 +159,9 @@ public class Main extends JavaPlugin {
 
 	public BukkitTask getSupplyDropTimer() {
 		return supplyDropTimer;
+	}
+
+	public PlayerListener getPlayerListener() {
+		return playerListener;
 	}
 }

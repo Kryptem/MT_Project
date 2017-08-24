@@ -1,7 +1,5 @@
 package mortuusterra.managers.radiation;
 
-import java.util.concurrent.TimeUnit;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,11 +11,7 @@ public class RadiationManager {
 	private int playerX;
 	private int playerZ;
 	private int playerY;
-
-	private long elapsedTime;
-	private long radStrangth;
-	private long radDecrement;
-	private long seconds;
+	private int radStrangth = 1;
 
 	private String uuid;
 
@@ -26,23 +20,15 @@ public class RadiationManager {
 
 	Main main = JavaPlugin.getPlugin(Main.class);
 
+	// This is were we check if each player online is in the hashmap, and if they
+	// are not in a building, and checks if the player is not in range of a GECK,
+	// then give them radiation.
 	public void CheckEachPlayerLocation() {
 		// check if player is outside or under a building. or in range of a GECK
 		for (Player p : main.getServer().getOnlinePlayers()) {
-			main.getPlayerManager().addRadPlayer(p);
-
-			if (isPlayerInBuilding(p)) {
-				return;
-			} else {
-				main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(false);
-				main.getGeckRangeManager().checkPlayers(p);
-				if (main.getPlayerManager().containsGeckPlayer(uuid)) {
-					if (main.getPlayerManager().getGeckPlayer(uuid).getplayerInRangeOfGeck()) {
-						return;
-					} else {
-						givePlayerRads(p);
-					}
-				} else {
+			if (!(isPlayerInBuilding(p))) {
+				checkPlayerRange(p);
+				if (!(main.getPlayerManager().getRadPlayer(uuid).getplayerInRangeOfGeck())) {
 					givePlayerRads(p);
 				}
 			}
@@ -50,20 +36,7 @@ public class RadiationManager {
 	}
 
 	public void givePlayerRads(Player p) {
-		// calculate the rads for the player according to the elapsed time.
-		main.getElapsedTime().setupElapsedtime();
-		elapsedTime = main.getElapsedTime().getElapsedTime();
-		seconds = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-		radDecrement = 0;
-		radStrangth = 1 - ((seconds / 50) - radDecrement);
 		p.damage(radStrangth);
-
-		if (radStrangth < 2) {
-			return;
-		} else if (radStrangth >= 2) {
-			main.getElapsedTime().setTimeStart(0L);
-			radDecrement = (radDecrement - 1);
-		}
 	}
 
 	private boolean isPlayerInBuilding(Player p) {
@@ -78,6 +51,11 @@ public class RadiationManager {
 			main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(true);
 			return true;
 		}
+		main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(false);
 		return false;
+	}
+
+	private void checkPlayerRange(Player p) {
+		main.getGeckRangeManager().checkPlayers(p);
 	}
 }

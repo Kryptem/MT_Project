@@ -14,9 +14,7 @@ import mortuusterra.Main;
 
 public class GeckPowerListener implements Listener {
 	Main main = JavaPlugin.getPlugin(Main.class);
-
-	private boolean correct = false;
-	private boolean isPowered = false;
+	
 	private Location blockLocation;
 
 	// Every time a player interacts with a block
@@ -50,38 +48,8 @@ public class GeckPowerListener implements Listener {
 					return;
 				}
 			} else if (sponge.getType().equals(Material.SPONGE) && (sponge.isBlockPowered())) {
-
 				main.getGeckObjectManager().getGeckObject(blockLocation).setIspowered(false);
-				main.getPlayerManager().getRadPlayer(e.getPlayer().getUniqueId().toString()).setPlayerInRangeOfGeck(false);
-				main.getGeckObjectManager().removeGeckLocation(blockLocation);
-				main.getPlayerManager().removeGeckPlayer(e.getPlayer());
 			}
 		}
-	}
-
-	public boolean isCorrect() {
-		return correct;
-	}
-
-	public void setIncorrect(boolean correct) {
-		this.correct = correct;
-	}
-
-	public Location getBlockLocation() {
-		return blockLocation;
-	}
-
-	public void setBlockLocation(Location blockLocation) {
-		this.blockLocation = blockLocation;
-		return;
-	}
-
-	public boolean isPowered() {
-		return isPowered;
-	}
-
-	public void setPowered(boolean isPowered) {
-		this.isPowered = isPowered;
-		return;
 	}
 }

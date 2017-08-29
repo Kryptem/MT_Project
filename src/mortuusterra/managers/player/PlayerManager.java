@@ -10,12 +10,9 @@ import mortuusterra.objects.player.PlayerObject;
 public class PlayerManager {
 
 	private Map<String, PlayerObject> radsPlayerMap = new HashMap<>();
-	//private Map<String, PlayerObject> GeckPlayerMap = new HashMap<>();
 	/*
 	 * radsPlayerMap is for all players in Radiation
 	 */
-
-	// radsPlayerMap
 
 	public Map<String, PlayerObject> getPlayerMap() {
 		return radsPlayerMap;
@@ -42,37 +39,4 @@ public class PlayerManager {
 	public boolean containsRadPlayer(String uuid) {
 		return radsPlayerMap.containsKey(uuid);
 	}
-
-	// GeckPlayerMap
-
-	/**
-	
-	public Map<String, PlayerObject> GeckPlayerMap() {
-		return GeckPlayerMap;
-	}
-
-	public PlayerObject getGeckPlayer(String uuid) {
-		return GeckPlayerMap.get(uuid);
-	}
-
-	public void addGeckPlayer(Player p) {
-		if (containsGeckPlayer(p.getUniqueId().toString())) {
-			return;
-		}
-		GeckPlayerMap.put(p.getUniqueId().toString(), new PlayerObject(p.getUniqueId()));
-	}
-
-	public void removeGeckPlayer(Player p) {
-		if (!containsGeckPlayer(p.getUniqueId().toString())) {
-			return;
-		}
-		GeckPlayerMap.remove(p.getUniqueId().toString());
-	}
-
-	public boolean containsGeckPlayer(String uuid) {
-		return GeckPlayerMap.containsKey(uuid);
-	}
-
-**/
-
 }

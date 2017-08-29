@@ -15,77 +15,93 @@ import mortuusterra.objects.supplydrop.SupplyDropObject;
 import net.md_5.bungee.api.ChatColor;
 
 public class SupplyDropManager {
-	
+
 	Main main = JavaPlugin.getPlugin(Main.class);
-	
+
 	private Location randomLocation;
 	private World world = main.getServer().getWorld("world");
 
 	private Map<Location, SupplyDropObject> supplyDropObjectMap = new HashMap<>();
-	
+
 	private ItemStack test;
-	
-	//this is called by the radiationTimer
+
+	Location newLoc;
+
+	private int y;
+	private int x;
+	private int z;
+
+	// this is called by the radiationTimer
 	public void deliverSupplyDrop() {
 		makeSupplyDrop();
 		addSupplyDropLocation(this.randomLocation);
-		this.randomLocation.getBlock().setType(Material.CHEST);
 		setChestInventory(this.randomLocation);
-		main.getServer().broadcastMessage(ChatColor.RED + "Delivering Supply Drop at: " + ChatColor.BLUE + "X= " + ChatColor.YELLOW + this.randomLocation.getX() +  ChatColor.BLUE + " Z= " + ChatColor.YELLOW + this.randomLocation.getBlockZ() +  ChatColor.BLUE + " Y= " + ChatColor.YELLOW + this.randomLocation.getY());
+		brodcastMessage();
 	}
-	
+
 	private void makeSupplyDrop() {
-		//this will make a random location for the supply Drop to spawn on. 
 		this.randomLocation = getRandomLocation(1, 1, world);
+		this.randomLocation.getBlock().setType(Material.CHEST);
 	}
+
 	private Location getRandomLocation(int Xoffset, int Zoffset, World world) {
-		//this is the method that makes the random location close to a random player.
+		// this is the method that makes the random location close to a random player.
 		Player ranPlayer = Bukkit.getOnlinePlayers().stream().findAny().get();
 		Location loc = ranPlayer.getLocation();
-		Location newLoc = new Location(world, (loc.getX() + Xoffset), loc.getY(), (loc.getZ() + Zoffset));
-				
-		/** this is old code, needs to be removed after testing new code
-		 * 
-		this.randomX = new Random().nextInt(((Xmax - Xmin) + 1) + Xmin);
-		this.randomZ = new Random().nextInt(((Zmax - Zmin) + 1) + Zmin);
-		this.Y = getHighestBlock(randomX, randomZ, world);
-		Location randomLocation = new Location(world, this.randomX, this.Y, this.randomZ);
-		**/
+
+		this.y = loc.getWorld().getHighestBlockAt(loc).getY();
+		this.x = (int) loc.getX();
+		this.z = (int) loc.getZ();
+
+		this.newLoc = new Location(world, (loc.getX() + Xoffset), y, (loc.getZ() + Zoffset));
+
 		return newLoc;
 	}
+
 	private void setChestInventory(Location l) {
-		//this method will set the inventory of the SupplyDrop
-		Chest chest = (Chest) Bukkit.getWorld("world").getBlockAt(l).getState();
+		// this method will set the inventory of the SupplyDrop
+		Chest chest = (Chest) Bukkit.getWorld("world").getBlockAt(newLoc).getState();
 		chest.setCustomName("Supply Drop");
-		
+
 		test = new ItemStack(Material.ANVIL);
-		
+
 		chest.getInventory().addItem(test);
 		chest.update();
 	}
-	
-	//hashmap getters and setters and other things to do with the hashmap. 
-	
-	public Map<Location, SupplyDropObject> getSupplyDropObjectMap(){
+
+	private void brodcastMessage() {
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			p.sendMessage(ChatColor.RED + "Delivering Supply Drop at: " + ChatColor.BLUE + "X= " + ChatColor.YELLOW + x
+					+ ChatColor.BLUE + " Z= " + ChatColor.YELLOW + z + ChatColor.BLUE + " Y= " + ChatColor.YELLOW + y);
+		}
+	}
+
+	// hashmap getters and setters and other things to do with the hashmap.
+
+	public Map<Location, SupplyDropObject> getSupplyDropObjectMap() {
 		return supplyDropObjectMap;
 	}
+
 	public SupplyDropObject getSupplyDropObject(Location supplyDropLocation) {
 		return supplyDropObjectMap.get(supplyDropLocation);
 	}
+
 	public void addSupplyDropLocation(Location supplyDropLocation) {
-		if(supplyDropObjectMap.containsKey(supplyDropLocation)) {
+		if (supplyDropObjectMap.containsKey(supplyDropLocation)) {
 			return;
-		}else {
+		} else {
 			supplyDropObjectMap.put(supplyDropLocation, new SupplyDropObject(supplyDropLocation));
 		}
 	}
+
 	public void removeSupplyDropLocation(Location supplyDropLocation) {
-		if(supplyDropObjectMap.containsKey(supplyDropLocation)) {
+		if (supplyDropObjectMap.containsKey(supplyDropLocation)) {
 			supplyDropObjectMap.remove(supplyDropLocation);
-		}else {
+		} else {
 			return;
 		}
 	}
+
 	public boolean containSupplyDropLocation(Location supplyDropLocation) {
 		return supplyDropObjectMap.containsKey(supplyDropLocation);
 	}

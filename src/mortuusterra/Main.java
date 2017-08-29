@@ -4,17 +4,18 @@ package mortuusterra;
  * Created by Kadeska23
  */
 
-import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
+import me.libraryaddict.disguise.DisguiseAPI;
 import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.MobListener;
 import mortuusterra.managers.Geck.GeckRangeManager;
-import mortuusterra.managers.crafting.CellTowerRecipe;
+import mortuusterra.managers.crafting.RecipeManager;
 import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
@@ -25,8 +26,9 @@ import mortuusterra.utils.timers.RadiationTimer;
 import mortuusterra.utils.timers.SupplyDropTimer;
 
 public class Main extends JavaPlugin {
-
-	public Logger logger;
+	Location loc;
+	
+	//private DisguiseAPI disguiseAPI;
 
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
@@ -43,14 +45,13 @@ public class Main extends JavaPlugin {
 
 	private RadiationDamageEvent radDamageEvent;
 
-	private CellTowerRecipe cellTowerRecipe;
+	private RecipeManager recipeManager;
 
 	private BukkitTask radTimer;
 	private BukkitTask supplyDropTimer;
 
 	@Override
 	public void onEnable() {
-		logger = Logger.getLogger("Minecraft");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		registerResipes();
 		registerListeners();
@@ -80,8 +81,10 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerResipes() {
-		cellTowerRecipe = new CellTowerRecipe();
-		cellTowerRecipe.setRecipe();
+		recipeManager = new RecipeManager();
+		recipeManager.setCellTowerRecipe();
+		recipeManager.setGeneratorRecipe();
+		recipeManager.setPowerOutletRecipe();
 	}
 
 	private void registerEvents() {
@@ -122,8 +125,8 @@ public class Main extends JavaPlugin {
 		return radMan;
 	}
 
-	public CellTowerRecipe getCellTowerRecipe() {
-		return cellTowerRecipe;
+	public RecipeManager getCellTowerRecipe() {
+		return recipeManager;
 	}
 
 	public CellTowerManager getCellTowerManager() {
@@ -164,4 +167,9 @@ public class Main extends JavaPlugin {
 	public PlayerListener getPlayerListener() {
 		return playerListener;
 	}
+/**
+	public DisguiseAPI getDisguiseAPI() {
+		return disguiseAPI;
+	}
+	**/
 }

@@ -2,7 +2,7 @@ main: mortuusterra.Main
 name: MortuusTerra
 version: 1.0
 author: kadeska233
-depends: []
+depends: [iDisguise]
 softdepend: []
 database: false
 description: >

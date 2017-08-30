@@ -4,19 +4,13 @@ import org.bukkit.Location;
 
 public class GeckObject {
 
-	private Location GeckLocation;
 	private Boolean ispowered = false;
 	private boolean isCorrect = false;
 	private Location geckLocation;
 
-	public GeckObject(Location GeckLocation) {
-		this.GeckLocation = GeckLocation;
+	public GeckObject(Location geckLocation) {
+		this.geckLocation = geckLocation;
 	}
-
-	public Location getTowerLocation() {
-		return this.GeckLocation;
-	}
-
 	public Boolean getIspowered() {
 		return ispowered;
 	}

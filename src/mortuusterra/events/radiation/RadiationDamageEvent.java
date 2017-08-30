@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import mortuusterra.Main;
 
 public final class RadiationDamageEvent extends Event implements Cancellable {
-	Main main = JavaPlugin.getPlugin(Main.class);
 
 	private static final HandlerList handlers = new HandlerList();
 	private boolean isCancelled = false;

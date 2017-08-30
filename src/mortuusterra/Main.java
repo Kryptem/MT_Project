@@ -5,11 +5,9 @@ package mortuusterra;
  */
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import me.libraryaddict.disguise.DisguiseAPI;
 import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
@@ -20,13 +18,11 @@ import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
-import mortuusterra.managers.supplydrops.SupplyDropManager;
+//import mortuusterra.managers.supplydrops.SupplyDropManager;
 import mortuusterra.managers.tower.CellTowerManager;
-import mortuusterra.utils.timers.RadiationTimer;
-import mortuusterra.utils.timers.SupplyDropTimer;
+// import mortuusterra.utils.timers.SupplyDropTimer;
 
 public class Main extends JavaPlugin {
-	Location loc;
 	
 	//private DisguiseAPI disguiseAPI;
 
@@ -36,7 +32,7 @@ public class Main extends JavaPlugin {
 	private GeckObjectManager geckObjectManager;
 	private GeckRangeManager geckRangeManager;
 	private MobManager mobManager;
-	private SupplyDropManager supplyDropManager;
+	//private SupplyDropManager supplyDropManager;
 
 	// private PlayerChatListener playerChatListener;
 	private GeckPowerListener geckPowerListener;
@@ -53,7 +49,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-		registerResipes();
+		registerRecipes();
 		registerListeners();
 		initiateManagers();
 		registerEvents();
@@ -71,16 +67,15 @@ public class Main extends JavaPlugin {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
-	public void clearUnwantedMobs() {
+	private void clearUnwantedMobs() {
 		mobManager.clearUnwantedMobs();
 	}
 
-	public void registerRadiationTimer() {
-		this.radTimer = new RadiationTimer().runTaskTimerAsynchronously(this, 0L, 80L);
-		this.supplyDropTimer = new SupplyDropTimer().runTaskTimer(this, 1L, 500L);
+	private void registerRadiationTimer() {
+		// We aren't using this rn. this.supplyDropTimer = new SupplyDropTimer().runTaskTimer(this, 1L, 500L);
 	}
 
-	private void registerResipes() {
+	private void registerRecipes() {
 		recipeManager = new RecipeManager();
 		recipeManager.setCellTowerRecipe();
 		recipeManager.setGeneratorRecipe();
@@ -110,7 +105,7 @@ public class Main extends JavaPlugin {
 		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
-		supplyDropManager = new SupplyDropManager();
+		//supplyDropManager = new SupplyDropManager();
 	}
 
 	public MobListener getMobListener() {
@@ -152,10 +147,10 @@ public class Main extends JavaPlugin {
 	public GeckRangeManager getGeckRangeManager() {
 		return geckRangeManager;
 	}
-	public SupplyDropManager getSupplyDropManager() {
+	/*public SupplyDropManager getSupplyDropManager() {
 		return supplyDropManager;
 	}
-
+*/
 	public BukkitTask getRadTimer() {
 		return radTimer;
 	}

@@ -15,15 +15,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import mortuusterra.Main;
 
 public class PlayerChatListener implements Listener {
-	Main main = JavaPlugin.getPlugin(Main.class);
+	private Main main = JavaPlugin.getPlugin(Main.class);
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
-		Location senderLocation = e.getPlayer().getLocation();
 		String preMessage = e.getMessage();
 		Set<Player> recipients = e.getRecipients();
-		ArrayList<Player> radioRecieve = new ArrayList<>();
-		ArrayList<Player> scrambleRecieve = new ArrayList<>();
+		ArrayList<Player> radioReceive = new ArrayList<>();
+		ArrayList<Player> scrambleReceive = new ArrayList<>();
 		// check if the sender has a radio, then check if the player is in range of a
 		// cell tower or another player, then check if there are other players in range
 		// if cell tower and if so then send the message raw only to the players that
@@ -33,27 +32,27 @@ public class PlayerChatListener implements Listener {
 			if (isInRangeOfCellTower(e.getPlayer())) {
 				for (Player p : recipients) {
 					if ((isInRangeOfCellTower(p) && isSenderHasRadio(p)) || isInRangeSender(p, e.getPlayer())) {
-						radioRecieve.add(p);
+						radioReceive.add(p);
 					}
 					if (isSenderHasRadio(p) && !isInRangeOfCellTower(p)) {
-						scrambleRecieve.add(p);
+						scrambleReceive.add(p);
 					}
 				}
 			}
 		} else {
 			for (Player p : recipients) {
 				if (isInRangeSender(p, e.getPlayer())) {
-					radioRecieve.add(p);
+					radioReceive.add(p);
 				}
 			}
 		}
 		e.setCancelled(true);
-		for (Player p : radioRecieve) {
+		for (Player p : radioReceive) {
 			p.sendMessage(preMessage);
 		}
-		for (Player p : scrambleRecieve) {
+		for (Player p : scrambleReceive) {
 			String scrambledMessage = preMessage;
-			scrambledMessage = scrambledMessage.replaceAll("e", String.valueOf(p.getName().length()));
+			scrambledMessage = scrambledMessage.replace("e", String.valueOf(p.getName().length()));
 			scrambledMessage = ChatColor.MAGIC + scrambledMessage;
 			p.sendMessage(scrambledMessage);
 		}
@@ -65,17 +64,14 @@ public class PlayerChatListener implements Listener {
 		return send.getLocation().distance(recieve.getLocation()) <= 50;
 	}
 
-	public boolean isSenderHasRadio(Player p) {
-		if (p.getInventory().contains(Material.JUKEBOX)) {
-			return true;
-		} else
-			return false;
+	private boolean isSenderHasRadio(Player p) {
+		return p.getInventory().contains(Material.JUKEBOX);
 
 	}
 
-	public boolean isInRangeOfCellTower(Player p) {
+	private boolean isInRangeOfCellTower(Player p) {
 		for (Location loc : main.getCellTowerManager().getCellTowerLocationsMap().keySet()) {
-			if (p.getLocation().distance(loc) <= 50) {
+			if (p.getLocation().distanceSquared(loc) <= 2500) {
 				return true;
 			}
 		}

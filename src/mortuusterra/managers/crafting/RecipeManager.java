@@ -2,6 +2,7 @@ package mortuusterra.managers.crafting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -10,31 +11,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import mortuusterra.Main;
 
 public class RecipeManager {
-	private String CellTowerName = "CellTower";
-	private String GeneratorName = "Generator";
-	private String PowerOutletName = "PowerOutlet";
-
-	private ItemStack cellTower;
-	private ItemStack generator;
-	private ItemStack powerOutlet;
-
-	private ItemMeta cellTowerMeta;
-	private ItemMeta generatorMeta;
-	private ItemMeta powerOutletMeta;
-
-	private ShapedRecipe cellTowerRecipe;
-	private ShapedRecipe generatorRecipe;
-	private ShapedRecipe powerOutletRecipe;
+	
+	/*
+	 * Why are we adding new recipes for the same item (celltower)??
+	 */
+	
+	// Added this to remove deprecated code.
+	NamespacedKey key = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "MortuusTerra");
 
 	// cell tower
 	public void setCellTowerRecipe() {
-		cellTower = new ItemStack(Material.DIAMOND_BLOCK);
+		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
 
-		cellTowerMeta = cellTower.getItemMeta();
-		cellTowerMeta.setDisplayName(CellTowerName);
+		ItemMeta cellTowerMeta = cellTower.getItemMeta();
+		String cellTowerName = "CellTower";
+		cellTowerMeta.setDisplayName(cellTowerName);
 		cellTower.setItemMeta(cellTowerMeta);
 
-		cellTowerRecipe = new ShapedRecipe(cellTower);
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(key, cellTower); 
 
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
@@ -46,13 +40,14 @@ public class RecipeManager {
 
 	// Generator
 	public void setGeneratorRecipe() {
-		generator = new ItemStack(Material.IRON_BLOCK);
+		ItemStack generator = new ItemStack(Material.IRON_BLOCK);
 
-		generatorMeta = generator.getItemMeta();
-		generatorMeta.setDisplayName(GeneratorName);
+		ItemMeta generatorMeta = generator.getItemMeta();
+		String generatorName = "Generator";
+		generatorMeta.setDisplayName(generatorName);
 		generator.setItemMeta(generatorMeta);
 
-		generatorRecipe = new ShapedRecipe(cellTower);
+		ShapedRecipe generatorRecipe = new ShapedRecipe(key, generator);
 		generatorRecipe.shape("iii", "ici", "iii");
 		generatorRecipe.setIngredient('i', Material.IRON_INGOT);
 		generatorRecipe.setIngredient('c', Material.COAL);
@@ -62,13 +57,13 @@ public class RecipeManager {
 
 	// Power Outlet
 	public void setPowerOutletRecipe() {
-		powerOutlet = new ItemStack(Material.WOOL);
-
-		powerOutletMeta = powerOutlet.getItemMeta();
-		powerOutletMeta.setDisplayName(PowerOutletName);
+		ItemStack powerOutlet = new ItemStack(Material.WOOL);
+		ItemMeta powerOutletMeta = powerOutlet.getItemMeta();
+		String powerOutletName = "PowerOutlet";
+		powerOutletMeta.setDisplayName(powerOutletName);
 		powerOutlet.setItemMeta(powerOutletMeta);
 
-		powerOutletRecipe = new ShapedRecipe(cellTower);
+		ShapedRecipe powerOutletRecipe = new ShapedRecipe(key, powerOutlet);
 		powerOutletRecipe.shape("www", "wrw", "www");
 		powerOutletRecipe.setIngredient('w', Material.WOOL);
 		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);

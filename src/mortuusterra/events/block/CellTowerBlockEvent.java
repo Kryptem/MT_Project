@@ -28,8 +28,4 @@ public class CellTowerBlockEvent implements Listener {
 			main.getCellTowerManager().removeCellTowerLocations(e.getBlock().getLocation());
 		}
 	}
-
-	public Location getBlockLocation() {
-		return blockLocation;
-	}
 }

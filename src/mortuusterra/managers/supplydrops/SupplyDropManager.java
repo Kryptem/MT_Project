@@ -1,3 +1,6 @@
+/* 
+  We are not using this class (for now).
+  
 package mortuusterra.managers.supplydrops;
 
 import java.util.HashMap;
@@ -26,10 +29,10 @@ public class SupplyDropManager {
 	private ItemStack test;
 
 	Location newLoc;
+	int x;
+	int y;
+	int z;
 
-	private int y;
-	private int x;
-	private int z;
 
 	// this is called by the radiationTimer
 	public void deliverSupplyDrop() {
@@ -49,11 +52,12 @@ public class SupplyDropManager {
 		Player ranPlayer = Bukkit.getOnlinePlayers().stream().findAny().get();
 		Location loc = ranPlayer.getLocation();
 
-		this.y = loc.getWorld().getHighestBlockAt(loc).getY();
-		this.x = (int) loc.getX();
-		this.z = (int) loc.getZ();
 
-		this.newLoc = new Location(world, (loc.getX() + Xoffset), y, (loc.getZ() + Zoffset));
+		y = loc.getWorld().getHighestBlockYAt(loc);
+		z = loc.getBlockX();
+		x = loc.getBlockX();
+
+		this.newLoc = new Location(world, (x + Xoffset), y, (z + Zoffset));
 
 		return newLoc;
 	}
@@ -105,4 +109,4 @@ public class SupplyDropManager {
 	public boolean containSupplyDropLocation(Location supplyDropLocation) {
 		return supplyDropObjectMap.containsKey(supplyDropLocation);
 	}
-}
+}*/

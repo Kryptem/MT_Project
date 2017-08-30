@@ -8,7 +8,7 @@ public class PlayerObject {
 	
 	private UUID uuid;
 	
-	private boolean playerInBuilding = false;
+	//private boolean playerInBuilding = false;
 	private boolean PlayerInRangeOfGeck = false;
 	private Location playerLocation;
 
@@ -20,9 +20,11 @@ public class PlayerObject {
 		return uuid;
 	}
 	
-	public void setPlayerInBuilding(boolean bool) {
+	//Didn't see any meaningful usage, feel free to uncomment if you wish to use. 
+	/*public void setPlayerInBuilding(boolean bool) {
 		this.playerInBuilding = bool;
 	}
+	*/
 	public void setPlayerInRangeOfGeck(boolean bool) {
 		this.PlayerInRangeOfGeck = bool;
 	}

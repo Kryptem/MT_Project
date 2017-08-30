@@ -3,12 +3,14 @@ package mortuusterra.events.radiation;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+/**
+ * 
+ * What's this class for? :O
+ *
+ */
 
 public final class RadiationDamageEvent extends Event implements Cancellable {
-	Main main = JavaPlugin.getPlugin(Main.class);
 
 	private static final HandlerList handlers = new HandlerList();
 	private boolean isCancelled = false;

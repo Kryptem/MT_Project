@@ -20,12 +20,12 @@ public class GeckRangeManager {
 			Location geckLocation = geckObject.getGeckLocation();
 			Location playerLocation = p.getLocation();
 
-			double distance = geckLocation.distanceSquared(playerLocation);
+			double distance = geckLocation.distance(playerLocation);
 
 			//System.out.println(distance + " - DISTANCE");
 
 			// if the distance is less than or = to x and the GECK is correct and powered then you are in range of the geck
-			int x = 25;
+			int x = 20;
 			if (distance <= x) {
 					main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(
 							main.getGeckObjectManager().getGeckObject(geckLocation).isCorrect()

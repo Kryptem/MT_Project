@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import mortuusterra.events.block.CellTowerBlockEvent;
 import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
@@ -96,6 +97,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
 		// getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
+		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
 	}
 
 	private void initiateManagers() {

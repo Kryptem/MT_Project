@@ -37,7 +37,7 @@ Main main = JavaPlugin.getPlugin(Main.class);
                 main.getRadiationManager().checkPlayerLoc(e.getPlayer());
 
             }
-        }.runTaskTimer(main, 0L, 20L);
+        }.runTaskTimer(main, 0L, 40L);
 	}
 	
 	@EventHandler

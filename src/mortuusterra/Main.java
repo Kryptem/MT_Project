@@ -45,7 +45,7 @@ public class Main extends JavaPlugin {
 	private RecipeManager recipeManager;
 
 	private BukkitTask radTimer;
-	private BukkitTask supplyDropTimer;
+	//private BukkitTask supplyDropTimer;
 
 	@Override
 	public void onEnable() {
@@ -156,11 +156,11 @@ public class Main extends JavaPlugin {
 	public BukkitTask getRadTimer() {
 		return radTimer;
 	}
-
+/**
 	public BukkitTask getSupplyDropTimer() {
 		return supplyDropTimer;
 	}
-
+**/
 	public PlayerListener getPlayerListener() {
 		return playerListener;
 	}

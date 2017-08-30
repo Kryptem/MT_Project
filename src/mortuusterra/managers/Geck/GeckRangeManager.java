@@ -1,6 +1,5 @@
 package mortuusterra.managers.Geck;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,7 +22,7 @@ public class GeckRangeManager {
 
 			double distance = geckLocation.distanceSquared(playerLocation);
 
-			System.out.println(distance + " - DISTANCE");
+			//System.out.println(distance + " - DISTANCE");
 
 			// if the distance is less than or = to x and the GECK is correct and powered then you are in range of the geck
 			int x = 25;
@@ -32,7 +31,7 @@ public class GeckRangeManager {
 							main.getGeckObjectManager().getGeckObject(geckLocation).isCorrect()
 							&& main.getGeckObjectManager().getGeckObject(geckLocation).getIspowered());
 					
-					Bukkit.broadcastMessage(main.getGeckObjectManager().getGeckObject(geckLocation).isCorrect() + "");
+					//Bukkit.broadcastMessage(main.getGeckObjectManager().getGeckObject(geckLocation).isCorrect() + "");
 			} else {
 				main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(false);
 			}

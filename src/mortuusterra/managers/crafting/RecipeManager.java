@@ -17,7 +17,9 @@ public class RecipeManager {
 	 */
 	
 	// Added this to remove deprecated code.
-	NamespacedKey key = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "MortuusTerra");
+	NamespacedKey CellTower = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "CellTower");
+	NamespacedKey Generator = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "Generator");
+	NamespacedKey PowerOutlet = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "PowerOutlet");
 
 	// cell tower
 	public void setCellTowerRecipe() {
@@ -28,7 +30,7 @@ public class RecipeManager {
 		cellTowerMeta.setDisplayName(cellTowerName);
 		cellTower.setItemMeta(cellTowerMeta);
 
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(key, cellTower); 
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(CellTower, cellTower); 
 
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
@@ -47,7 +49,7 @@ public class RecipeManager {
 		generatorMeta.setDisplayName(generatorName);
 		generator.setItemMeta(generatorMeta);
 
-		ShapedRecipe generatorRecipe = new ShapedRecipe(key, generator);
+		ShapedRecipe generatorRecipe = new ShapedRecipe(Generator, generator);
 		generatorRecipe.shape("iii", "ici", "iii");
 		generatorRecipe.setIngredient('i', Material.IRON_INGOT);
 		generatorRecipe.setIngredient('c', Material.COAL);
@@ -63,7 +65,7 @@ public class RecipeManager {
 		powerOutletMeta.setDisplayName(powerOutletName);
 		powerOutlet.setItemMeta(powerOutletMeta);
 
-		ShapedRecipe powerOutletRecipe = new ShapedRecipe(key, powerOutlet);
+		ShapedRecipe powerOutletRecipe = new ShapedRecipe(PowerOutlet, powerOutlet);
 		powerOutletRecipe.shape("www", "wrw", "www");
 		powerOutletRecipe.setIngredient('w', Material.WOOL);
 		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);

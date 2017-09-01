@@ -11,7 +11,6 @@ import mortuusterra.Main;
 
 public class PlayerChat implements Listener {
 	private Main main = JavaPlugin.getPlugin(Main.class);
-
 	@EventHandler
 	private void onChatEvent(AsyncPlayerChatEvent e) {
 		e.setCancelled(true);

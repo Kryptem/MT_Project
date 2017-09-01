@@ -36,12 +36,12 @@ public class Main extends JavaPlugin {
 	private MobManager mobManager;
 	//private SupplyDropManager supplyDropManager;
 
-	// private PlayerChatListener playerChatListener;
+	private PlayerChat playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
 	
-	private PlayerChat playerChatListener;
+	//private PlayerChat playerChatListener;
 
 	private RadiationDamageEvent radDamageEvent;
 
@@ -92,12 +92,12 @@ public class Main extends JavaPlugin {
 
 	private void registerListeners() {
 		playerListener = new PlayerListener();
-		//playerChatListener = new PlayerChat();
+		playerChatListener = new PlayerChat();
 		mobListener = new MobListener();
 		geckPowerListener = new GeckPowerListener();
 
 		getServer().getPluginManager().registerEvents(this.playerListener, this);
-		//getServer().getPluginManager().registerEvents(this.playerChatListener, this);
+		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
 		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);

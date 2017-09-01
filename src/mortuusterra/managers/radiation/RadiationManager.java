@@ -15,31 +15,33 @@ public class RadiationManager {
 	// This is were we check if each player online is in the hashmap, and if they
 	// are not in a building, and checks if the player is not in range of a GECK,
 	// then give them radiation.
-	
-	//Changed method so this is independent for each player. Use checkPlayerLoc(player) instead.
+
+	// Changed method so this is independent for each player. Use
+	// checkPlayerLoc(player) instead.
 	@Deprecated
 	public void CheckEachPlayerLocation() {
 		// check if player is outside or under a building. or in range of a GECK
-		
-		main.getServer().getOnlinePlayers().stream().filter(this::isPlayerInBuilding).forEach(p ->{
+
+		main.getServer().getOnlinePlayers().stream().filter(this::isPlayerInBuilding).forEach(p -> {
 			checkPlayerRange(p);
 			if (!(main.getPlayerManager().getRadPlayer(uuid).getplayerInRangeOfGeck()))
 				givePlayerRads(p);
 		});
 	}
-	
-	// Will damage player if they are not in range of a GECK and they are not in a building.
-	public void checkPlayerLoc(Player player){
-		
-		if (!isPlayerInBuilding(player)){
-			
+
+	// Will damage player if they are not in range of a GECK and they are not in a
+	// building.
+	public void checkPlayerLoc(Player player) {
+
+		if (!isPlayerInBuilding(player)) {
+
 			checkPlayerRange(player);
-			
-			if (!main.getPlayerManager().getRadPlayer(player.getUniqueId().toString()).getplayerInRangeOfGeck()){
+
+			if (!main.getPlayerManager().getRadPlayer(player.getUniqueId().toString()).getplayerInRangeOfGeck()) {
 				givePlayerRads(player);
 			}
 		}
-		
+
 	}
 
 	private void givePlayerRads(Player p) {
@@ -52,11 +54,24 @@ public class RadiationManager {
 		Location playerLocation = p.getLocation();
 		int highestY = playerLocation.getWorld().getHighestBlockYAt(playerLocation);
 		if ((playerLocation.getBlockY() < highestY - 1)) {
-			// What's the point of this: main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(true);
 			return true;
 		}
-		// What's the point of this:  main.getPlayerManager().getRadPlayer(uuid).setPlayerInBuilding(false);
 		return false;
+	}
+
+	public boolean isPlayerInRad(Player p) {
+		if (!isPlayerInBuilding(p)) {
+
+			checkPlayerRange(p);
+
+			if (!main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).getplayerInRangeOfGeck()) {
+				p.sendMessage("true");
+				return true;
+			}
+		}
+		p.sendMessage("false");
+		return false;
+
 	}
 
 	private void checkPlayerRange(Player p) {

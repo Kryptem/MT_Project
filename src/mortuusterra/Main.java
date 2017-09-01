@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import mortuusterra.events.block.CellTowerBlockEvent;
 import mortuusterra.events.radiation.RadiationDamageEvent;
+import mortuusterra.listeners.chat.PlayerChat;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.MobListener;
@@ -39,6 +40,8 @@ public class Main extends JavaPlugin {
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
+	
+	private PlayerChat playerChatListener;
 
 	private RadiationDamageEvent radDamageEvent;
 
@@ -89,13 +92,13 @@ public class Main extends JavaPlugin {
 
 	private void registerListeners() {
 		playerListener = new PlayerListener();
+		//playerChatListener = new PlayerChat();
 		mobListener = new MobListener();
-		// playerChatListener = new PlayerChatListener();
 		geckPowerListener = new GeckPowerListener();
 
 		getServer().getPluginManager().registerEvents(this.playerListener, this);
+		//getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
-		// getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
 		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
 	}

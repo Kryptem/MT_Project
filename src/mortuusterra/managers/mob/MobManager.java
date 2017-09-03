@@ -27,12 +27,10 @@ public class MobManager {
 	}
 
 	public void clearUnwantedMobs(Chunk loaded){
-		long b4 = System.nanoTime();
         Arrays.stream(loaded.getEntities()).filter(e -> e instanceof LivingEntity).filter(entity ->
                 (entity.getType().isAlive() && entity.getType() != EntityType.PLAYER
                 && entity.getType() != EntityType.ZOMBIE && entity.getType() != EntityType.ENDERMAN
                 && entity.getType() != EntityType.PIG && entity.getType() != EntityType.COW
                 && entity.getType() != EntityType.SHEEP)).forEach(entity -> ((LivingEntity)entity).damage(((LivingEntity) entity).getHealth() + 1));
-    	System.out.println(System.nanoTime() - b4);
 	}
 }

@@ -116,6 +116,7 @@ public class Main extends JavaPlugin {
 	public MobListener getMobListener() {
 		return mobListener;
 	}
+	public MobManager getMobManager(){return mobManager;}
 
 	public PlayerManager getPlayerManager() {
 		return playerMan;

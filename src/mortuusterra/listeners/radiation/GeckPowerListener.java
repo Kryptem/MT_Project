@@ -23,6 +23,7 @@ public class GeckPowerListener implements Listener {
 	private Location blockLocation;
 
 	// Every time a player interacts with a block
+    // Added disabled message. 9/3/17
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent e) {
 		// if the block is not null then get the block location
@@ -57,6 +58,7 @@ public class GeckPowerListener implements Listener {
 			} else if (sponge.getType().equals(Material.SPONGE)
 					&& (sponge.isBlockPowered() && main.getGeckObjectManager().getGeckObject(blockLocation) != null)) {
 				main.getGeckObjectManager().getGeckObject(blockLocation).setIspowered(false);
+				e.getPlayer().sendMessage(ChatColor.RED + "GECK Disabled!");
 			}
 		}
 	}

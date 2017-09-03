@@ -8,8 +8,6 @@ import mortuusterra.Main;
 
 public class RadiationManager {
 
-	private String uuid;
-
 	private Main main = JavaPlugin.getPlugin(Main.class);
 
 	// This is were we check if each player online is in the hashmap, and if they
@@ -23,7 +21,7 @@ public class RadiationManager {
 		
 		main.getServer().getOnlinePlayers().stream().filter(this::isPlayerInBuilding).forEach(p ->{
 			checkPlayerRange(p);
-			if (!(main.getPlayerManager().getRadPlayer(uuid).getplayerInRangeOfGeck()))
+			if (!(main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).getplayerInRangeOfGeck()))
 				givePlayerRads(p);
 		});
 	}
@@ -48,7 +46,7 @@ public class RadiationManager {
 	}
 
 	private boolean isPlayerInBuilding(Player p) {
-		this.uuid = p.getUniqueId().toString();
+		String uuid = p.getUniqueId().toString();
 		Location playerLocation = p.getLocation();
 		int highestY = playerLocation.getWorld().getHighestBlockYAt(playerLocation);
 		if ((playerLocation.getBlockY() < highestY - 1)) {

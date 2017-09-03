@@ -1,54 +1,45 @@
 package mortuusterra.listeners.spawn;
 
+import mortuusterra.Main;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 
 public class MobListener implements Listener {
-	private EntityType type;
-	private DamageCause cause;
 
+	private Main main = Main.getPlugin(Main.class);
+    // Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler
-	public void onEntitySpawn(EntitySpawnEvent e) {
+	public void onEntitySpawn(CreatureSpawnEvent e) {
 		if (e.getEntityType().isAlive() && e.getEntityType() != EntityType.PLAYER
 				&& e.getEntityType() != EntityType.ZOMBIE && e.getEntityType() != EntityType.ENDERMAN
 				&& e.getEntityType() != EntityType.PIG && e.getEntityType() != EntityType.COW
 				&& e.getEntityType() != EntityType.SHEEP) {
-			this.type = e.getEntityType();
 			e.setCancelled(true);
+			System.out.println("Called");
 			e.getLocation().getWorld().spawn(e.getLocation(), Zombie.class);
 		}
 
 	}
 
+	// Fixed, removed unnecessary method. 9/2/17
 	@EventHandler
 	public void onBurn(EntityCombustEvent e) {
-		if (e.getEntity().getLastDamageCause() != null) {
-			this.cause = e.getEntity().getLastDamageCause().getCause();
-			if (e.getEntityType() == EntityType.ZOMBIE && isSunDamage()) {
-				e.setCancelled(true);
+		Location loc = e.getEntity().getLocation();
+		int light = loc.getBlock().getLightFromSky();
 
-			}
-		} else {
-			return;
+		if (light >= 12 && e.getEntity().getType() == EntityType.ZOMBIE){
+			e.setCancelled(true);
 		}
 	}
 
-	private boolean isSunDamage() {
-		if (cause != DamageCause.LAVA || cause != DamageCause.ENTITY_ATTACK || cause != DamageCause.ENTITY_SWEEP_ATTACK
-				|| cause != DamageCause.PROJECTILE || cause != DamageCause.FIRE) {
-			return true;
-
-		} else {
-			return false;
-		}
-	}
-
-	public EntityType getType() {
-		return type;
+	@EventHandler
+	public void onChunkLoad(ChunkLoadEvent event){
+		main.getMobManager().clearUnwantedMobs(event.getChunk());
 	}
 }

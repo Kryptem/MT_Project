@@ -17,10 +17,17 @@ public class RecipeManager {
 	 */
 	
 	// Added this to remove deprecated code.
+<<<<<<< HEAD
 	private Main main = JavaPlugin.getPlugin(Main.class);
 	private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
 	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
 	private final NamespacedKey outletKey = new NamespacedKey(main, "poweroutlet");
+=======
+	NamespacedKey CellTower = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "CellTower");
+	NamespacedKey Generator = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "Generator");
+	NamespacedKey PowerOutlet = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "PowerOutlet");
+
+>>>>>>> master
 	// cell tower
 	public void setCellTowerRecipe() {
 		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
@@ -30,7 +37,11 @@ public class RecipeManager {
 		cellTowerMeta.setDisplayName(cellTowerName);
 		cellTower.setItemMeta(cellTowerMeta);
 
+<<<<<<< HEAD
 		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
+=======
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(CellTower, cellTower); 
+>>>>>>> master
 
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
@@ -49,7 +60,11 @@ public class RecipeManager {
 		generatorMeta.setDisplayName(generatorName);
 		generator.setItemMeta(generatorMeta);
 
+<<<<<<< HEAD
 		ShapedRecipe generatorRecipe = new ShapedRecipe(genKey, generator);
+=======
+		ShapedRecipe generatorRecipe = new ShapedRecipe(Generator, generator);
+>>>>>>> master
 		generatorRecipe.shape("iii", "ici", "iii");
 		generatorRecipe.setIngredient('i', Material.IRON_INGOT);
 		generatorRecipe.setIngredient('c', Material.COAL);
@@ -65,7 +80,11 @@ public class RecipeManager {
 		powerOutletMeta.setDisplayName(powerOutletName);
 		powerOutlet.setItemMeta(powerOutletMeta);
 
+<<<<<<< HEAD
 		ShapedRecipe powerOutletRecipe = new ShapedRecipe(outletKey, powerOutlet);
+=======
+		ShapedRecipe powerOutletRecipe = new ShapedRecipe(PowerOutlet, powerOutlet);
+>>>>>>> master
 		powerOutletRecipe.shape("www", "wrw", "www");
 		powerOutletRecipe.setIngredient('w', Material.WOOL);
 		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);

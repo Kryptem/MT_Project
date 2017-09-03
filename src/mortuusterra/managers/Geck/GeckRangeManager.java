@@ -24,11 +24,12 @@ public class GeckRangeManager {
 			double distance = geckLocation.distanceSquared(playerLocation);
 
 			// if the distance is less than or = to x and the GECK is correct and powered then you are in range of the geck
-			int x = 25;
+			int x = 225; // this is the squared range of blocks. the block rang is 15 blocks.
 			if (distance <= x) {
 					main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(
 							main.getGeckObjectManager().getGeckObject(geckLocation).isCorrect()
 							&& main.getGeckObjectManager().getGeckObject(geckLocation).getIspowered());
+
 			} else {
 				main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).setPlayerInRangeOfGeck(false);
 			}

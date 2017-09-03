@@ -37,3 +37,4 @@ public class GeckObjectManager {
 		return gecklocationMap.containsKey(geckLocation);
 	}
 }
+

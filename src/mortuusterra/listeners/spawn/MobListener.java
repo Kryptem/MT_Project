@@ -19,7 +19,7 @@ public class MobListener implements Listener {
 		if (e.getEntityType().isAlive() && e.getEntityType() != EntityType.PLAYER
 				&& e.getEntityType() != EntityType.ZOMBIE && e.getEntityType() != EntityType.ENDERMAN
 				&& e.getEntityType() != EntityType.PIG && e.getEntityType() != EntityType.COW
-				&& e.getEntityType() != EntityType.SHEEP) {
+				&& e.getEntityType() != EntityType.SHEEP && e.getEntityType() != EntityType.HORSE) {
 			e.setCancelled(true);
 			System.out.println("Called");
 			e.getLocation().getWorld().spawn(e.getLocation(), Zombie.class);

@@ -1,6 +1,3 @@
-/* 
-  We are not using this class (for now).
-  
 package mortuusterra.managers.supplydrops;
 
 import java.util.HashMap;
@@ -109,4 +106,4 @@ public class SupplyDropManager {
 	public boolean containSupplyDropLocation(Location supplyDropLocation) {
 		return supplyDropObjectMap.containsKey(supplyDropLocation);
 	}
-}*/
+}

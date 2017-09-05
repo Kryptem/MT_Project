@@ -1,15 +1,13 @@
 package mortuusterra.events.block;
 
-import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import mortuusterra.Main;
 
 public class CellTowerBlockEvent implements Listener {
+	
+	/**
+	 * CellTowers are disabled for now. 
+	 * 
+	 * 
 	Main main = JavaPlugin.getPlugin(Main.class);
 
 	private Location blockLocation;
@@ -28,4 +26,5 @@ public class CellTowerBlockEvent implements Listener {
 			main.getCellTowerManager().removeCellTowerLocations(e.getBlock().getLocation());
 		}
 	}
+	**/
 }

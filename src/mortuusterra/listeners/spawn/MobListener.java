@@ -13,7 +13,8 @@ import org.bukkit.event.world.ChunkLoadEvent;
 public class MobListener implements Listener {
 
 	private Main main = Main.getPlugin(Main.class);
-    // Changed to CreatureSpawnEvent 9/2/17
+
+	// Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler
 	public void onEntitySpawn(CreatureSpawnEvent e) {
 		if (e.getEntityType().isAlive() && e.getEntityType() != EntityType.PLAYER
@@ -21,7 +22,6 @@ public class MobListener implements Listener {
 				&& e.getEntityType() != EntityType.PIG && e.getEntityType() != EntityType.COW
 				&& e.getEntityType() != EntityType.SHEEP && e.getEntityType() != EntityType.HORSE) {
 			e.setCancelled(true);
-			System.out.println("Called");
 			e.getLocation().getWorld().spawn(e.getLocation(), Zombie.class);
 		}
 
@@ -33,13 +33,13 @@ public class MobListener implements Listener {
 		Location loc = e.getEntity().getLocation();
 		int light = loc.getBlock().getLightFromSky();
 
-		if (light >= 12 && e.getEntity().getType() == EntityType.ZOMBIE){
+		if (light >= 12 && e.getEntity().getType() == EntityType.ZOMBIE) {
 			e.setCancelled(true);
 		}
 	}
 
 	@EventHandler
-	public void onChunkLoad(ChunkLoadEvent event){
+	public void onChunkLoad(ChunkLoadEvent event) {
 		main.getMobManager().clearUnwantedMobs(event.getChunk());
 	}
 }

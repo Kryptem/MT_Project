@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import mortuusterra.events.block.CellTowerBlockEvent;
-import mortuusterra.events.radiation.RadiationDamageEvent;
 import mortuusterra.listeners.chat.PlayerChat;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
@@ -20,35 +19,28 @@ import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
-//import mortuusterra.managers.supplydrops.SupplyDropManager;
-import mortuusterra.managers.tower.CellTowerManager;
-// import mortuusterra.utils.timers.SupplyDropTimer;
 
 public class Main extends JavaPlugin {
-	
-	//private DisguiseAPI disguiseAPI;
+
+	// private DisguiseAPI disguiseAPI;
 
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
-	private CellTowerManager cellTowerManager;
+	// private CellTowerManager cellTowerManager;
 	private GeckObjectManager geckObjectManager;
 	private GeckRangeManager geckRangeManager;
 	private MobManager mobManager;
-	//private SupplyDropManager supplyDropManager;
+	// private SupplyDropManager supplyDropManager;
 
 	private PlayerChat playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
-	
-	//private PlayerChat playerChatListener;
-
-	private RadiationDamageEvent radDamageEvent;
 
 	private RecipeManager recipeManager;
 
 	private BukkitTask radTimer;
-	//private BukkitTask supplyDropTimer;
+	// private BukkitTask supplyDropTimer;
 
 	@Override
 	public void onEnable() {
@@ -56,10 +48,8 @@ public class Main extends JavaPlugin {
 		registerRecipes();
 		registerListeners();
 		initiateManagers();
-		registerEvents();
 		registerRadiationTimer();
 
-		clearUnwantedMobs();
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
@@ -71,12 +61,9 @@ public class Main extends JavaPlugin {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
-	private void clearUnwantedMobs() {
-		mobManager.clearUnwantedMobs();
-	}
-
 	private void registerRadiationTimer() {
-		// We aren't using this rn. this.supplyDropTimer = new SupplyDropTimer().runTaskTimer(this, 1L, 500L);
+		// We aren't using this rn. this.supplyDropTimer = new
+		// SupplyDropTimer().runTaskTimer(this, 1L, 500L);
 	}
 
 	private void registerRecipes() {
@@ -84,10 +71,6 @@ public class Main extends JavaPlugin {
 		recipeManager.setCellTowerRecipe();
 		recipeManager.setGeneratorRecipe();
 		recipeManager.setPowerOutletRecipe();
-	}
-
-	private void registerEvents() {
-		radDamageEvent = new RadiationDamageEvent();
 	}
 
 	private void registerListeners() {
@@ -106,17 +89,20 @@ public class Main extends JavaPlugin {
 	private void initiateManagers() {
 		playerMan = new PlayerManager();
 		geckObjectManager = new GeckObjectManager();
-		cellTowerManager = new CellTowerManager();
+		// cellTowerManager = new CellTowerManager();
 		geckRangeManager = new GeckRangeManager();
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
-		//supplyDropManager = new SupplyDropManager();
+		// supplyDropManager = new SupplyDropManager();
 	}
 
 	public MobListener getMobListener() {
 		return mobListener;
 	}
-	public MobManager getMobManager(){return mobManager;}
+
+	public MobManager getMobManager() {
+		return mobManager;
+	}
 
 	public PlayerManager getPlayerManager() {
 		return playerMan;
@@ -130,17 +116,14 @@ public class Main extends JavaPlugin {
 		return recipeManager;
 	}
 
-	public CellTowerManager getCellTowerManager() {
-		return cellTowerManager;
-	}
+	/**
+	 * public CellTowerManager getCellTowerManager() { return cellTowerManager; }
+	 **/
 
 	/**
 	 * public PlayerChatListener getPlayerChatListener() { return
 	 * playerChatListener; }
 	 **/
-	public RadiationDamageEvent GetRadiationDamageEvent() {
-		return radDamageEvent;
-	}
 
 	public GeckObjectManager getGeckObjectManager() {
 		return geckObjectManager;
@@ -153,24 +136,21 @@ public class Main extends JavaPlugin {
 	public GeckRangeManager getGeckRangeManager() {
 		return geckRangeManager;
 	}
-	/*public SupplyDropManager getSupplyDropManager() {
-		return supplyDropManager;
-	}
-*/
+
+	/*
+	 * public SupplyDropManager getSupplyDropManager() { return supplyDropManager; }
+	 */
 	public BukkitTask getRadTimer() {
 		return radTimer;
 	}
-/**
-	public BukkitTask getSupplyDropTimer() {
-		return supplyDropTimer;
-	}
-**/
+
+	/**
+	 * public BukkitTask getSupplyDropTimer() { return supplyDropTimer; }
+	 **/
 	public PlayerListener getPlayerListener() {
 		return playerListener;
 	}
-/**
-	public DisguiseAPI getDisguiseAPI() {
-		return disguiseAPI;
-	}
-	**/
+	/**
+	 * public DisguiseAPI getDisguiseAPI() { return disguiseAPI; }
+	 **/
 }

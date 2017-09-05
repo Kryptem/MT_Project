@@ -1,21 +1,10 @@
 package mortuusterra.managers.supplydrops;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Chest;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
-import mortuusterra.Main;
-import mortuusterra.objects.supplydrop.SupplyDropObject;
-import net.md_5.bungee.api.ChatColor;
-
 public class SupplyDropManager {
-
+/**
+ * Supply Drops are disabled for now.
+ * 
+ * 
 	Main main = JavaPlugin.getPlugin(Main.class);
 
 	private Location randomLocation;
@@ -31,7 +20,6 @@ public class SupplyDropManager {
 	int z;
 
 
-	// this is called by the radiationTimer
 	public void deliverSupplyDrop() {
 		makeSupplyDrop();
 		addSupplyDropLocation(this.randomLocation);
@@ -106,4 +94,7 @@ public class SupplyDropManager {
 	public boolean containSupplyDropLocation(Location supplyDropLocation) {
 		return supplyDropObjectMap.containsKey(supplyDropLocation);
 	}
+	
+	**/
+	
 }

@@ -15,14 +15,19 @@ import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.MobListener;
 import mortuusterra.managers.Geck.GeckRangeManager;
 import mortuusterra.managers.crafting.RecipeManager;
+import mortuusterra.managers.misc.MessageScrambler;
 import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 
 public class Main extends JavaPlugin {
+	
+	public static Main main;
 
 	// private DisguiseAPI disguiseAPI;
+	
+	private MessageScrambler messageScrambler;
 
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
@@ -45,6 +50,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
+		messageScrambler = new MessageScrambler();
 		registerRecipes();
 		registerListeners();
 		initiateManagers();
@@ -70,7 +76,6 @@ public class Main extends JavaPlugin {
 		recipeManager = new RecipeManager();
 		recipeManager.setCellTowerRecipe();
 		recipeManager.setGeneratorRecipe();
-		recipeManager.setPowerOutletRecipe();
 	}
 
 	private void registerListeners() {
@@ -94,6 +99,10 @@ public class Main extends JavaPlugin {
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
 		// supplyDropManager = new SupplyDropManager();
+	}
+	
+	public MessageScrambler getMessageScrambler() {
+		return messageScrambler;
 	}
 
 	public MobListener getMobListener() {

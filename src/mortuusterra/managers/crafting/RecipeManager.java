@@ -17,7 +17,6 @@ public class RecipeManager {
 	// Added this to remove deprecated code.
 	//private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
 	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
-	private final NamespacedKey outletKey = new NamespacedKey(main, "poweroutlet");
 
 	// cell tower
 	public void setCellTowerRecipe() {
@@ -49,20 +48,5 @@ public class RecipeManager {
 		generatorRecipe.setIngredient('c', Material.COAL);
 
 		Bukkit.getServer().addRecipe(generatorRecipe);
-	}
-
-	// Power Outlet
-	public void setPowerOutletRecipe() {
-		ItemStack powerOutlet = new ItemStack(Material.WOOL);
-		ItemMeta powerOutletMeta = powerOutlet.getItemMeta();
-		String powerOutletName = "PowerOutlet";
-		powerOutletMeta.setDisplayName(powerOutletName);
-		powerOutlet.setItemMeta(powerOutletMeta);
-		ShapedRecipe powerOutletRecipe = new ShapedRecipe(outletKey, powerOutlet);
-		powerOutletRecipe.shape("www", "wrw", "www");
-		powerOutletRecipe.setIngredient('w', Material.WOOL);
-		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);
-
-		Bukkit.getServer().addRecipe(powerOutletRecipe);
 	}
 }

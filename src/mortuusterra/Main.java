@@ -36,27 +36,21 @@ public class Main extends JavaPlugin {
 	private GeckObjectManager geckObjectManager;
 	private GeckRangeManager geckRangeManager;
 	private MobManager mobManager;
-<<<<<<< HEAD
-=======
 
 	// Just a fancy prefix looks like "[!]"
 	public static final String NOTI_PREFIX = ChatColor.translateAlternateColorCodes('&', "&7&l[&b&l!&7&l]");
 
 	//private SupplyDropManager supplyDropManager;
->>>>>>> horsey
-	// private SupplyDropManager supplyDropManager;
 
 	private PlayerChat playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
-<<<<<<< HEAD
-=======
+
     private GenListener genListener;
 	
 	//private PlayerChat playerChatListener;
 
->>>>>>> horsey
 
 	private RecipeManager recipeManager;
 
@@ -72,11 +66,8 @@ public class Main extends JavaPlugin {
 		initiateManagers();
 		registerRadiationTimer();
 
-<<<<<<< HEAD
-		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "DONE");
-=======
+
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
->>>>>>> horsey
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 

@@ -29,7 +29,6 @@ public class RecipeManager {
 		return generator.clone();
 	}
 
-
 	public void setCellTowerRecipe() {
 		/**
 		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
@@ -41,6 +40,13 @@ public class RecipeManager {
 		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
 
 		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
+
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
+
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
+
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
+
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
 		cellTowerRecipe.setIngredient('r', Material.REDSTONE_BLOCK);
@@ -59,6 +65,7 @@ public class RecipeManager {
 		generator.setItemMeta(generatorMeta);
 
 		ShapedRecipe generatorRecipe = new ShapedRecipe(genKey, generator);
+
 
 		generatorRecipe.shape("iii", "ici", "iii");
 		generatorRecipe.setIngredient('i', Material.IRON_INGOT);

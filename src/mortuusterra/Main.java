@@ -41,12 +41,12 @@ public class Main extends JavaPlugin {
 	public static final String NOTI_PREFIX = ChatColor.translateAlternateColorCodes('&', "&7&l[&b&l!&7&l]");
 
 	//private SupplyDropManager supplyDropManager;
-	// private SupplyDropManager supplyDropManager;
 
 	private PlayerChat playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
+
     private GenListener genListener;
 	
 	//private PlayerChat playerChatListener;
@@ -65,6 +65,7 @@ public class Main extends JavaPlugin {
 		registerListeners();
 		initiateManagers();
 		registerRadiationTimer();
+
 
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");

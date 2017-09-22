@@ -16,6 +16,8 @@ public class RadiationManager {
 
 	// Changed method so this is independent for each player. Use
 	// checkPlayerLoc(player) instead.
+	
+	/**
 	@Deprecated
 	public void CheckEachPlayerLocation() {
 		// check if player is outside or under a building. or in range of a GECK
@@ -26,6 +28,8 @@ public class RadiationManager {
 				givePlayerRads(p);
 		});
 	}
+	
+	**/
 
 	// Will damage player if they are not in range of a GECK and they are not in a
 	// building.
@@ -48,7 +52,6 @@ public class RadiationManager {
 	}
 
 	private boolean isPlayerInBuilding(Player p) {
-		String uuid = p.getUniqueId().toString();
 		Location playerLocation = p.getLocation();
 		int highestY = playerLocation.getWorld().getHighestBlockYAt(playerLocation);
 		if ((playerLocation.getBlockY() < highestY - 1)) {
@@ -59,15 +62,11 @@ public class RadiationManager {
 
 	public boolean isPlayerInRad(Player p) {
 		if (!isPlayerInBuilding(p)) {
-
 			checkPlayerRange(p);
-
 			if (!main.getPlayerManager().getRadPlayer(p.getUniqueId().toString()).getplayerInRangeOfGeck()) {
-				p.sendMessage("true");
 				return true;
 			}
 		}
-		p.sendMessage("false");
 		return false;
 
 	}

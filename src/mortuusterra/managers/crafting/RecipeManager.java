@@ -13,15 +13,11 @@ import mortuusterra.Main;
 
 public class RecipeManager {
 	
-	/*
-	 * Why are we adding new recipes for the same item (celltower)??
-	 */
+	private final Main main = JavaPlugin.getPlugin(Main.class);
 	
 	// Added this to remove deprecated code.
-	private Main main = JavaPlugin.getPlugin(Main.class);
-	private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
+	//private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
 	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
-	private final NamespacedKey outletKey = new NamespacedKey(main, "poweroutlet");
 
 	// To prevent repition :)
 	public static final String GENERATOR_NAME = ChatColor.RED + "" + ChatColor.BOLD  + "Generator";
@@ -33,10 +29,10 @@ public class RecipeManager {
 		return generator.clone();
 	}
 
-	// cell tower
-	public void setCellTowerRecipe() {
-		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
 
+	public void setCellTowerRecipe() {
+		/**
+		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
 		ItemMeta cellTowerMeta = cellTower.getItemMeta();
 		String cellTowerName = "CellTower";
 		cellTowerMeta.setDisplayName(cellTowerName);
@@ -44,18 +40,20 @@ public class RecipeManager {
 
 		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
 
+		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
 		cellTowerRecipe.setIngredient('r', Material.REDSTONE_BLOCK);
 
 		Bukkit.getServer().addRecipe(cellTowerRecipe);
-
+		**/
 	}
 
 	// Generator
 	public void setGeneratorRecipe() {
 		generator = new ItemStack(Material.IRON_BLOCK);
 
+		ItemStack generator = new ItemStack(Material.IRON_BLOCK);
 		ItemMeta generatorMeta = generator.getItemMeta();
 		generatorMeta.setDisplayName(GENERATOR_NAME);
 		generator.setItemMeta(generatorMeta);
@@ -67,22 +65,5 @@ public class RecipeManager {
 		generatorRecipe.setIngredient('c', Material.COAL);
 
 		Bukkit.getServer().addRecipe(generatorRecipe);
-	}
-
-	// Power Outlet
-	public void setPowerOutletRecipe() {
-		ItemStack powerOutlet = new ItemStack(Material.WOOL);
-		ItemMeta powerOutletMeta = powerOutlet.getItemMeta();
-		String powerOutletName = "PowerOutlet";
-		powerOutletMeta.setDisplayName(powerOutletName);
-		powerOutlet.setItemMeta(powerOutletMeta);
-
-		ShapedRecipe powerOutletRecipe = new ShapedRecipe(outletKey, powerOutlet);
-
-		powerOutletRecipe.shape("www", "wrw", "www");
-		powerOutletRecipe.setIngredient('w', Material.WOOL);
-		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);
-
-		Bukkit.getServer().addRecipe(powerOutletRecipe);
 	}
 }

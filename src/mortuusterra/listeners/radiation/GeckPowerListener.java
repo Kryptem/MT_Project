@@ -55,7 +55,7 @@ public class GeckPowerListener implements Listener {
 
 					e.getPlayer().sendMessage(ChatColor.GREEN + "GECK Enabled!");
 				}
-			} else if (sponge.getType().equals(Material.SPONGE)
+			} else if (sponge.getType().equals(Material.LEVER)
 					&& (sponge.isBlockPowered() && main.getGeckObjectManager().getGeckObject(blockLocation) != null)) {
 				main.getGeckObjectManager().getGeckObject(blockLocation).setIspowered(false);
 				e.getPlayer().sendMessage(ChatColor.RED + "GECK Disabled!");

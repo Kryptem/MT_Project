@@ -3,28 +3,15 @@ package mortuusterra.utils.files;
 import mortuusterra.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class FileManager {
 
-    FileManager fileManager = new FileManager();
-    private Main main = JavaPlugin.getPlugin(Main.class);
-    private YamlConfiguration yamlFile;
-    private HashMap<String, PluginFile> pluginFiles = new HashMap<>();
-    private HashMap<PluginFile, File> files = new HashMap<>();
-
-    public HashMap<PluginFile, File> getFiles() {
-        return files;
-    }
-
-    HashMap<String, PluginFile> getPluginFiles() {
-        return pluginFiles;
-    }
+	// Not exactly sure what this class was for; removed weird variables that would've thrown StackOverflows
+    private static Main main = JavaPlugin.getPlugin(Main.class);
 
     /**
      * Create PluginFile Method
@@ -34,7 +21,7 @@ public class FileManager {
      */
 
     // Obviously creates a PluginFile. ex: createPluginFile("config", FileType.YAML);
-    public void createPluginFile(String name, FileType type) {
+    public static File createPluginFile(String name, FileType type) {
         switch (type) {
             case YAML:
                 if (!main.getDataFolder().exists()) {
@@ -55,11 +42,10 @@ public class FileManager {
                     }
                 }
 
-                yamlFile = YamlConfiguration.loadConfiguration(file);
-                break;
+                return file;
             case JSON:
+                File jsonFile = new File(name + ".json");
                 try {
-                    File jsonFile = new File(name + ".json)");
 
                     if (!jsonFile.exists()) {
                         jsonFile.createNewFile();
@@ -69,10 +55,10 @@ public class FileManager {
                     e.printStackTrace();
                     main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not create file!");
                 }
-                break;
+                return jsonFile;
             case TEXT:
+                File textFile = new File(name + ".txt");
                 try {
-                    File textFile = new File(name + ".txt");
 
                     if (!textFile.exists()) {
                         textFile.createNewFile();
@@ -82,8 +68,11 @@ public class FileManager {
                     e.printStackTrace();
                     main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to create file!");
                 }
-                break;
+                return textFile;
+            default:
+                throw new IllegalArgumentException("Unknown FileType");
         }
     }
+
 
 }

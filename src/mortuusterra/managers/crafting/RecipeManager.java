@@ -1,6 +1,7 @@
 package mortuusterra.managers.crafting;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -17,17 +18,21 @@ public class RecipeManager {
 	 */
 	
 	// Added this to remove deprecated code.
-<<<<<<< HEAD
 	private Main main = JavaPlugin.getPlugin(Main.class);
 	private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
 	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
 	private final NamespacedKey outletKey = new NamespacedKey(main, "poweroutlet");
-=======
-	NamespacedKey CellTower = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "CellTower");
-	NamespacedKey Generator = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "Generator");
-	NamespacedKey PowerOutlet = new NamespacedKey(JavaPlugin.getPlugin(Main.class), "PowerOutlet");
 
->>>>>>> master
+	// To prevent repition :)
+	public static final String GENERATOR_NAME = ChatColor.RED + "" + ChatColor.BOLD  + "Generator";
+	
+	private static ItemStack generator;
+	
+	// Returns an copy of what the generator looks like
+	public static ItemStack getGenerator() {
+		return generator.clone();
+	}
+
 	// cell tower
 	public void setCellTowerRecipe() {
 		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
@@ -37,11 +42,7 @@ public class RecipeManager {
 		cellTowerMeta.setDisplayName(cellTowerName);
 		cellTower.setItemMeta(cellTowerMeta);
 
-<<<<<<< HEAD
 		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-=======
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(CellTower, cellTower); 
->>>>>>> master
 
 		cellTowerRecipe.shape("ddd", "drd", "ddd");
 		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
@@ -53,18 +54,14 @@ public class RecipeManager {
 
 	// Generator
 	public void setGeneratorRecipe() {
-		ItemStack generator = new ItemStack(Material.IRON_BLOCK);
+		generator = new ItemStack(Material.IRON_BLOCK);
 
 		ItemMeta generatorMeta = generator.getItemMeta();
-		String generatorName = "Generator";
-		generatorMeta.setDisplayName(generatorName);
+		generatorMeta.setDisplayName(GENERATOR_NAME);
 		generator.setItemMeta(generatorMeta);
 
-<<<<<<< HEAD
 		ShapedRecipe generatorRecipe = new ShapedRecipe(genKey, generator);
-=======
-		ShapedRecipe generatorRecipe = new ShapedRecipe(Generator, generator);
->>>>>>> master
+
 		generatorRecipe.shape("iii", "ici", "iii");
 		generatorRecipe.setIngredient('i', Material.IRON_INGOT);
 		generatorRecipe.setIngredient('c', Material.COAL);
@@ -80,11 +77,8 @@ public class RecipeManager {
 		powerOutletMeta.setDisplayName(powerOutletName);
 		powerOutlet.setItemMeta(powerOutletMeta);
 
-<<<<<<< HEAD
 		ShapedRecipe powerOutletRecipe = new ShapedRecipe(outletKey, powerOutlet);
-=======
-		ShapedRecipe powerOutletRecipe = new ShapedRecipe(PowerOutlet, powerOutlet);
->>>>>>> master
+
 		powerOutletRecipe.shape("www", "wrw", "www");
 		powerOutletRecipe.setIngredient('w', Material.WOOL);
 		powerOutletRecipe.setIngredient('r', Material.REDSTONE_BLOCK);

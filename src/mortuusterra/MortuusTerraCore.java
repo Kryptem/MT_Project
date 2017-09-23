@@ -10,13 +10,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import mortuusterra.events.block.CellTowerBlockEvent;
-import mortuusterra.listeners.chat.PlayerChat;
 import mortuusterra.listeners.player.PlayerListener;
 import mortuusterra.listeners.radiation.GeckPowerListener;
 import mortuusterra.listeners.spawn.MobListener;
 import mortuusterra.managers.Geck.GeckRangeManager;
 import mortuusterra.managers.crafting.RecipeManager;
-import mortuusterra.managers.misc.MessageScrambler;
 import mortuusterra.managers.mob.MobManager;
 import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
@@ -28,7 +26,6 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	// private DisguiseAPI disguiseAPI;
 	
-	private MessageScrambler messageScrambler;
 
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
@@ -42,7 +39,6 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	//private SupplyDropManager supplyDropManager;
 
-	private PlayerChat playerChatListener;
 	private GeckPowerListener geckPowerListener;
 	private MobListener mobListener;
 	private PlayerListener playerListener;
@@ -60,7 +56,6 @@ public class MortuusTerraCore extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-		messageScrambler = new MessageScrambler();
 		registerRecipes();
 		registerListeners();
 		initiateManagers();
@@ -92,12 +87,10 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	private void registerListeners() {
 		playerListener = new PlayerListener();
-		playerChatListener = new PlayerChat();
 		mobListener = new MobListener();
 		geckPowerListener = new GeckPowerListener();
 
 		getServer().getPluginManager().registerEvents(this.playerListener, this);
-		getServer().getPluginManager().registerEvents(this.playerChatListener, this);
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
 		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
@@ -116,10 +109,6 @@ public class MortuusTerraCore extends JavaPlugin {
 	
 	public MortuusTerraCore getCore() {
 		return main;
-	}
-	
-	public MessageScrambler getMessageScrambler() {
-		return messageScrambler;
 	}
 
 	public MobListener getMobListener() {

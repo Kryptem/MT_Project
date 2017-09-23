@@ -26,7 +26,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.material.Lever;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 import mortuusterra.managers.crafting.RecipeManager;
 import mortuusterra.utils.files.FileType;
 import mortuusterra.utils.files.PluginFile;
@@ -39,7 +39,7 @@ import mortuusterra.utils.files.PluginFile;
 public class GenListener implements Listener {
 
 	// Variables :D
-    private Main main = Main.getPlugin(Main.class);
+    private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
     private PluginFile file;
     
     // A special hierachial map, in the order of World -> Chunk -> Location to make it as fast as possible
@@ -126,7 +126,7 @@ public class GenListener implements Listener {
 
             inUse.add(event.getBlock().getLocation());
             
-            event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.GREEN + " Powering up generator...");
+            event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Powering up generator...");
 
             // Run everything async; creates a dramatic delay + saves performance
             new BukkitRunnable(){
@@ -144,7 +144,7 @@ public class GenListener implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.GREEN + " Generator Ready!");
+                            event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Generator Ready!");
                             inUse.remove(event.getBlock().getLocation());
                         }
                     }.runTask(main);
@@ -172,7 +172,7 @@ public class GenListener implements Listener {
         
         if (!generators.get(event.getBlock().getWorld().getName()).getList(chunk).contains(event.getBlock().getLocation())) return;
 
-        event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.RED + " Un-powering generator");
+        event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " Un-powering generator");
         
         inUse.add(event.getBlock().getLocation());
         event.setCancelled(true);
@@ -217,7 +217,7 @@ public class GenListener implements Listener {
 
 			@Override
 			public void run() {
-				event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.RED + " Generator deactivated!");
+				event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " Generator deactivated!");
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), RecipeManager.getGenerator());
 				inUse.remove(event.getBlock().getLocation());
@@ -248,7 +248,7 @@ public class GenListener implements Listener {
                 event.getClickedBlock().getType() == Material.WOOD_BUTTON){
             event.setCancelled(true);
             event.getClickedBlock().getWorld().spawnParticle(Particle.SMOKE_NORMAL, event.getClickedBlock().getLocation().add(0.5, 1, 0.5), 7,  0, 0.2, 0, 0.03);
-            event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.RED + " There is no generator in range!");
+            event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " There is no generator in range!");
         }else if (event.getClickedBlock().getType() == Material.LEVER){
         	BlockState state =  event.getClickedBlock().getState(); 
         	Lever lever = (Lever) state.getData();
@@ -257,7 +257,7 @@ public class GenListener implements Listener {
         	state.setData(lever);
         	state.update();
             event.getClickedBlock().getWorld().spawnParticle(Particle.SMOKE_NORMAL, event.getClickedBlock().getLocation().add(0.5, 1, 0.5), 7,  0, 0.2, 0, 0.03);
-            event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.RED + " There is no generator in range!");
+            event.getPlayer().sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " There is no generator in range!");
         }
 
     }

@@ -9,10 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 
 public class PlayerChat implements Listener {
-	private Main main = JavaPlugin.getPlugin(Main.class);
+	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	@EventHandler
 	private void onChatEvent(AsyncPlayerChatEvent e) {

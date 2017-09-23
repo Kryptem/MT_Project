@@ -1,5 +1,5 @@
 main: mortuusterra.Main
-name: MortuusTerra
+name: MortuusTerraCore
 version: 1.0
 author: kadeska233
 depends: [iDisguise]

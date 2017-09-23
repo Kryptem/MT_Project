@@ -4,11 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 import mortuusterra.objects.geck.GeckObject;
 
 public class GeckRangeManager {
-	private Main main = JavaPlugin.getPlugin(Main.class);
+	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	public void checkPlayers(Player p) {
 		setPlayerLocation(p, p.getLocation());

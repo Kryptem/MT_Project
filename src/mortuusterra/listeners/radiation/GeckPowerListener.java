@@ -15,10 +15,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 
 public class GeckPowerListener implements Listener {
-	Main main = JavaPlugin.getPlugin(Main.class);
+	MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	private Location blockLocation;
 

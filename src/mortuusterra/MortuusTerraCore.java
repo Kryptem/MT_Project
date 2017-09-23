@@ -22,9 +22,9 @@ import mortuusterra.managers.player.PlayerManager;
 import mortuusterra.managers.radiation.GeckObjectManager;
 import mortuusterra.managers.radiation.RadiationManager;
 
-public class Main extends JavaPlugin {
+public class MortuusTerraCore extends JavaPlugin {
 	
-	public static Main main;
+	public final MortuusTerraCore main = this;
 
 	// private DisguiseAPI disguiseAPI;
 	
@@ -112,6 +112,10 @@ public class Main extends JavaPlugin {
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
 		// supplyDropManager = new SupplyDropManager();
+	}
+	
+	public MortuusTerraCore getCore() {
+		return main;
 	}
 	
 	public MessageScrambler getMessageScrambler() {

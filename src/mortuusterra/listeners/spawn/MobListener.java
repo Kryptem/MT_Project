@@ -12,8 +12,9 @@ import org.bukkit.event.world.ChunkLoadEvent;
 
 public class MobListener implements Listener {
 
+
 	private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
-	private DamageCause cause;
+//	private DamageCause cause;
 
 	// Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler
@@ -31,7 +32,7 @@ public class MobListener implements Listener {
 	@EventHandler
 	public void onBurn(EntityCombustEvent e) {
 		if (e.getEntityType() == EntityType.ZOMBIE) {
-			if (isSunDamage()) {
+			if (isSunDamage(e.getEntity().getLastDamageCause().getCause())) {
 				e.getEntity().setFireTicks(0);
 				e.setDuration(0);
 				e.setCancelled(true);
@@ -39,13 +40,9 @@ public class MobListener implements Listener {
 		}
 	}
 
-	private boolean isSunDamage() {
-		if (cause != DamageCause.LAVA || cause != DamageCause.ENTITY_ATTACK || cause != DamageCause.ENTITY_SWEEP_ATTACK
-				|| cause != DamageCause.PROJECTILE || cause != DamageCause.FIRE) {
-			return true;
-		} else {
-			return false;
-		}
+	private boolean isSunDamage(DamageCause cause) {
+		return cause != DamageCause.LAVA && cause != DamageCause.ENTITY_ATTACK && cause != DamageCause.ENTITY_SWEEP_ATTACK
+				&& cause != DamageCause.PROJECTILE && cause != DamageCause.FIRE;
 	}
 
 	@EventHandler

@@ -51,7 +51,7 @@ public class ManyMap<K,V>{
 	 * @return the list bound to key
 	 */
 	public List<V> getList(K key){
-		return map.containsKey(key) ? map.get(key) : new ArrayList<V>();
+		return map.containsKey(key) ? map.get(key) : new ArrayList<>();
 	}
 	
 	/**

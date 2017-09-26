@@ -1,6 +1,6 @@
 package mortuusterra.utils.files;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class FileManager {
 
 	// Not exactly sure what this class was for; removed weird variables that would've thrown StackOverflows
-    private static Main main = JavaPlugin.getPlugin(Main.class);
+    private static MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
     /**
      * Create PluginFile Method

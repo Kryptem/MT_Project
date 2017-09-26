@@ -1,8 +1,8 @@
-main: mortuusterra.Main
-name: MortuusTerra
+main: mortuusterra.MortuusTerraCore
+name: MortuusTerraCore
 version: 1.0
 author: kadeska233
-depends: [iDisguise]
+depends: []
 softdepend: []
 database: false
 description: >

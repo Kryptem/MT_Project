@@ -9,11 +9,11 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 
 public class RecipeManager {
 	
-	private final Main main = JavaPlugin.getPlugin(Main.class);
+	private final MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 	
 	// Added this to remove deprecated code.
 	//private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");

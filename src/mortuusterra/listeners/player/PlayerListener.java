@@ -7,12 +7,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListener implements Listener{
-	private Main main = JavaPlugin.getPlugin(Main.class);
 
+MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+  
     //Disguise disguise = DisguiseAPI.constructDisguise(zombie);
 	
 	@EventHandler

@@ -4,11 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 
 public class RadiationManager {
 
-	private Main main = JavaPlugin.getPlugin(Main.class);
+	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	// This is were we check if each player online is in the hashmap, and if they
 	// are not in a building, and checks if the player is not in range of a GECK,

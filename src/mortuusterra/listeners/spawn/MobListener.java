@@ -1,6 +1,6 @@
 package mortuusterra.listeners.spawn;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,9 @@ import org.bukkit.event.world.ChunkLoadEvent;
 
 public class MobListener implements Listener {
 
-	private Main main = Main.getPlugin(Main.class);
+
+	private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
+//	private DamageCause cause;
 
 	// Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler

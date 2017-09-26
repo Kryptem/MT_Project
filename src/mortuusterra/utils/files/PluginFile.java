@@ -10,12 +10,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
-import mortuusterra.Main;
+import mortuusterra.MortuusTerraCore;
 
 public class PluginFile {
 
 	// Unsure how this was meant to be, changed so that it doesn't throw StackOverflows
-    private Main main = JavaPlugin.getPlugin(Main.class);
+    private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
     private String name;
     private File file;

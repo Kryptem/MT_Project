@@ -3,7 +3,6 @@ package mortuusterra.listeners.player;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +11,7 @@ import mortuusterra.Main;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListener implements Listener{
-Main main = JavaPlugin.getPlugin(Main.class);
+	private Main main = JavaPlugin.getPlugin(Main.class);
 
     //Disguise disguise = DisguiseAPI.constructDisguise(zombie);
 	
@@ -32,7 +31,7 @@ Main main = JavaPlugin.getPlugin(Main.class);
                 main.getRadiationManager().checkPlayerLoc(e.getPlayer());
 
             }
-        }.runTaskTimer(main, 0L, 40L);
+        }.runTaskTimer(main, 0L, 100L);
 	}
 	
 	@EventHandler
@@ -41,10 +40,10 @@ Main main = JavaPlugin.getPlugin(Main.class);
 	}
 	
 	//@SuppressWarnings("static-access")
-	@EventHandler
-	private void onPlayerDeathEvent(PlayerDeathEvent e) {
+	//@EventHandler
+	//private void onPlayerDeathEvent(PlayerDeathEvent e) {
 		//MobDisguise disguise = new MobDisguise(DisguiseType.ZOMBIE);
 		//main.getDisguiseAPI().disguiseEntity(e.getEntity(), disguise);
-		return;
-	}
+	//	return;
+	//}
 }

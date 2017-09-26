@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import mortuusterra.Main;
 
 public class GeckPowerListener implements Listener {
-	Main main = JavaPlugin.getPlugin(Main.class);
+	private Main main = JavaPlugin.getPlugin(Main.class);
 
 	private Location blockLocation;
 
@@ -55,7 +55,7 @@ public class GeckPowerListener implements Listener {
 
 					e.getPlayer().sendMessage(ChatColor.GREEN + "GECK Enabled!");
 				}
-			} else if (sponge.getType().equals(Material.LEVER)
+			} else if (lever.getType().equals(Material.LEVER)
 					&& (sponge.isBlockPowered() && main.getGeckObjectManager().getGeckObject(blockLocation) != null)) {
 				main.getGeckObjectManager().getGeckObject(blockLocation).setIspowered(false);
 				e.getPlayer().sendMessage(ChatColor.RED + "GECK Disabled!");

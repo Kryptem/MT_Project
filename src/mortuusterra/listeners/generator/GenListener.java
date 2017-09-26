@@ -169,7 +169,9 @@ public class GenListener implements Listener {
 	@EventHandler
     public void onBreak(BlockBreakEvent event){
         String chunk = event.getBlock().getLocation().getChunk().getX() + ";" + event.getBlock().getLocation().getChunk().getZ();
-        
+
+        if (!generators.containsKey(event.getBlock().getWorld().getName())) return;
+
         if (!generators.get(event.getBlock().getWorld().getName()).getList(chunk).contains(event.getBlock().getLocation())) return;
 
         event.getPlayer().sendMessage(Main.NOTI_PREFIX + ChatColor.RED + " Un-powering generator");
@@ -240,6 +242,7 @@ public class GenListener implements Listener {
     	
     	String chunk = event.getClickedBlock().getLocation().getChunk().getX() + ";" + event.getClickedBlock().getLocation().getChunk().getZ();
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (!powerable.containsKey(event.getClickedBlock().getWorld().getName())) return;
         if (powerable.get(event.getClickedBlock().getWorld().getName()).getList(chunk).
         		contains(event.getClickedBlock().getLocation())) return;
 

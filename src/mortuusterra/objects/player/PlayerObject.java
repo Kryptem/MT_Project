@@ -28,7 +28,7 @@ public class PlayerObject {
 	public void setPlayerInRangeOfGeck(boolean bool) {
 		this.PlayerInRangeOfGeck = bool;
 	}
-	public boolean getplayerInRangeOfGeck() {
+	public boolean getPlayerInRangeOfGeck() {
 		return PlayerInRangeOfGeck;
 	}
 

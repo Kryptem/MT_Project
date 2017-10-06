@@ -16,15 +16,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spigot-1.12.1" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/Server - Test/spigot-1.12.1.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Server - Test/BuildTools/spigot-1.12.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/Desktop/Server - Test/spigot-1.12.1.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Server - Test/BuildTools/spigot-1.12.2.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -1,4 +1,4 @@
-main: mortuusterra.MortuusTerraCore
+main: com.mortuusterra.MortuusTerraCore
 name: MortuusTerraCore
 version: 1.0
 author: kadeska233

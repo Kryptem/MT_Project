@@ -1,4 +1,4 @@
-package com.mortuusterra.objects.tower;
+package com.mortuusterra.objects;
 
 import org.bukkit.Location;
 

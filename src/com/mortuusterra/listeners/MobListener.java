@@ -1,4 +1,4 @@
-package com.mortuusterra.listeners.spawn;
+package com.mortuusterra.listeners;
 
 import com.mortuusterra.MortuusTerraCore;
 import org.bukkit.entity.EntityType;

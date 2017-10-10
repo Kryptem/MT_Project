@@ -1,4 +1,4 @@
-package com.mortuusterra.objects.electricity;
+package com.mortuusterra.objects;
 
 import org.bukkit.Location;
 

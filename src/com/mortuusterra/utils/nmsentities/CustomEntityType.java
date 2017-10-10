@@ -6,7 +6,8 @@ import java.util.List;
 
 import org.bukkit.entity.EntityType;
 
-import com.mortuusterra.objects.mobs.DayZombie;
+import com.mortuusterra.objects.DayZombie;
+
 import net.minecraft.server.v1_12_R1.BiomeBase;
 import net.minecraft.server.v1_12_R1.BiomeBase.BiomeMeta;
 import net.minecraft.server.v1_12_R1.EntityInsentient;

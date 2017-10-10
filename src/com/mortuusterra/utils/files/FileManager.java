@@ -80,13 +80,13 @@ public class FileManager {
 
 	public void saveFiles() {
 		main.getPlayerManager().savePlayersToDisk();
-		main.getGeckManager().saveGecksToDisk();
+		main.getGeckObjectManager().saveGecksToDisk();
 		main.getGenListener().saveFile();
 	}
 
 	public void loadFiles() {
 		main.getPlayerManager().loadPlayersFromDisk();
-		main.getGeckManager().loadGecksFromDisk();
+		main.getGeckObjectManager().loadGecksFromDisk();
 		main.getGenListener().loadFile();
 	}
 

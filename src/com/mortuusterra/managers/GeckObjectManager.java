@@ -1,16 +1,21 @@
 package com.mortuusterra.managers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.mortuusterra.objects.GeckObject;
+import com.mortuusterra.utils.files.FileType;
+import com.mortuusterra.utils.files.PluginFile;
+import com.mortuusterra.utils.others.StringUtilities;
 
 public class GeckObjectManager {
+
+	private PluginFile file;
 
 	private Map<Location, GeckObject> gecklocationMap = new HashMap<>();
 
@@ -40,20 +45,30 @@ public class GeckObjectManager {
 		return gecklocationMap.containsKey(geckLocation);
 	}
 
-	/**
-	 * Checks if the geck structure is correct.
-	 * 
-	 * @param center
-	 *            The center block.
-	 * @return true if the build is correct, false otherwise.
-	 */
-	public boolean isGeckBuildCorrect(Block center) {
-
-		BlockFace[] faces = { BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH };
-		for (BlockFace f : faces) {
-			if (center.getRelative(f).getType() != Material.PISTON_BASE)
-				return false;
+	public void saveGecksToDisk() {
+		YamlConfiguration config = file.returnYaml();
+		
+		List<String> toSave = new ArrayList<>();
+		for (GeckObject geck : gecklocationMap.values()) {
+			toSave.add(StringUtilities.locationToString(geck.getGeckLocation()));
 		}
-		return true;
+
+		config.set("gecks", toSave);
+		gecklocationMap.clear();
+		file.save(config);
+	}
+
+	public void loadGecksFromDisk() {
+		file = new PluginFile("gecks", FileType.YAML);
+		YamlConfiguration config = file.returnYaml();
+
+		for (String locaString : config.getStringList("gecks")) {
+			Location loc = StringUtilities.stringToLocation(locaString);
+			GeckObject geck = new GeckObject(loc);
+			geck.setCorrect(true);
+			geck.setPowered(true);
+			
+			gecklocationMap.put(loc, geck);
+		}
 	}
 }

@@ -64,7 +64,8 @@ public class MortuusTerraCore extends JavaPlugin {
 
 		// Register the zombie.
 		CustomEntityType.DAY_ZOMBIE.registerEntity();
-
+		getRadiationManager().startPlayerRadiationDamage();
+		
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}

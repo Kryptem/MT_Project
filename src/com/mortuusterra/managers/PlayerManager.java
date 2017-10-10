@@ -1,78 +1,83 @@
 package com.mortuusterra.managers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.PlayerObject;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
 
 public class PlayerManager {
 
-	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 	private PluginFile file;
 
 	/*
-	 * List of all PlayerObject of players who have joined. I figured we did not
+	 * Map of all PlayerObject of players who are online. I figured we did not
 	 * need a Map for players in radiation since we always damage the players.
 	 * But if they are not in radiation they'll get damaged for 0 dmg
 	 */
-	private List<PlayerObject> mtPlayers = new ArrayList<>();
-	private List<PlayerObject> infected = new ArrayList<>();
+	private Map<UUID, PlayerObject> mtPlayers = new HashMap<>();
+	private List<PlayerObject> infectedPlayers = new ArrayList<>();
 
-	public void addPlayer(Player p) {
-		PlayerObject mtPlayer = new PlayerObject(p.getUniqueId());
-		if (!mtPlayers.contains(mtPlayer))
-			mtPlayers.add(mtPlayer);
+	/**
+	 * Adds an MT-Player -if not already present - to the Map.
+	 * 
+	 * @param p
+	 *            The Player to be added.
+	 */
+	public void addMortuusPlayer(Player p) {
+		if (!mtPlayers.containsKey(p.getUniqueId()))
+			mtPlayers.put(p.getUniqueId(), new PlayerObject(p.getUniqueId()));
 	}
 
-	public PlayerObject getPlayerObjectByUuid(UUID uuid) {
-		for (PlayerObject p : mtPlayers) {
-			if (p.getUuid().equals(uuid))
-				return p;
-		}
+	public void removeMortuusPlayer(Player p) {
+		if (mtPlayers.containsKey(p.getUniqueId()))
+			mtPlayers.remove(p.getUniqueId());
+	}
+
+	public PlayerObject getMortuusPlayer(UUID uuid) {
+		if (mtPlayers.containsKey(uuid))
+			return mtPlayers.get(uuid);
 		return null;
 	}
 
-	public void removePlayer(Player p) {
-		PlayerObject mtPlayer = getPlayerObjectByUuid(p.getUniqueId());
-
-		if (mtPlayers.contains(mtPlayer))
-			mtPlayers.remove(mtPlayer);
+	public boolean containsMortuusPlayer(UUID uuid) {
+		if (mtPlayers.containsKey(uuid))
+			return true;
+		return false;
 	}
 
-	public List<PlayerObject> getMtPlayers() {
+	public Map<UUID, PlayerObject> getMtPlayers() {
 		return mtPlayers;
 	}
 
 	public List<PlayerObject> getInfected() {
-		return infected;
-	}
-
-	public boolean containsPlayer(Player p) {
-		return mtPlayers.contains(getPlayerObjectByUuid(p.getUniqueId()));
+		return infectedPlayers;
 	}
 
 	public void savePlayersToDisk() {
 		YamlConfiguration config = file.returnYaml();
+		if (mtPlayers.isEmpty())
+			return;
 
-		for (PlayerObject p : mtPlayers) {
+		for (PlayerObject p : mtPlayers.values()) {
 			String uuid = p.getUuid().toString();
-			config.set(uuid + ".ingame-name", p.getPlayer().getName());
+			config.set(uuid + ".ingame-name", p.getCurrentIngameName());
 			config.set(uuid + ".in-geck-range", p.isPlayerInRangeOfGeck());
 			config.set(uuid + ".infected", p.isInfected());
 			config.set(uuid + ".infected-state", p.getInfectedState());
 
-//			if (config.get(uuid + ".first-join-time") == null)
-//				config.set(uuid + ".first-join-time", p.getJoinTime());
+			// if (config.get(uuid + ".first-join-time") == null)
+			// config.set(uuid + ".first-join-time", p.getJoinTime());
 		}
-
+		mtPlayers.clear();
 		file.save(config);
 	}
 
@@ -80,14 +85,27 @@ public class PlayerManager {
 		file = new PluginFile("players", FileType.YAML);
 		YamlConfiguration config = file.returnYaml();
 
-		mtPlayers.clear();
 		for (String key : config.getConfigurationSection("").getKeys(false)) {
-			PlayerObject p = new PlayerObject(UUID.fromString(key));
-			p.setInfected(config.getBoolean(key + ".infected"));
-			p.setInfectedState(config.getInt(key + ".infected-state"));
-			p.setPlayerInRangeOfGeck(config.getBoolean(key + ".in-geck-range"));
-			
-			mtPlayers.add(p);
+
+			// Only convert online players to PlayerObject and add to Map.
+			for (Player online : Bukkit.getOnlinePlayers()) {
+				UUID uuid = UUID.fromString(key);
+
+				if (!online.getUniqueId().equals(uuid))
+					continue;
+				
+				PlayerObject p = new PlayerObject(uuid);
+
+				boolean infected = config.getBoolean(key + ".infected");
+				boolean inGeckRange = config.getBoolean(key + ".in-geck-range");
+				int infectedState = config.getInt(key + ".infected-state");
+
+				p.setInfected(infected);
+				p.setInfectedState(infectedState);
+				p.setPlayerInRangeOfGeck(inGeckRange);
+
+				mtPlayers.put(uuid, p);
+			}
 		}
 
 	}

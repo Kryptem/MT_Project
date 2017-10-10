@@ -24,9 +24,7 @@ public class PlayerListener implements Listener {
 
 	@EventHandler
 	private void onPlayerJoinEvent(PlayerJoinEvent e) {
-		main.getPlayerManager().addPlayer(e.getPlayer());
-		main.getRadiationManager().damage(e.getPlayer());
-
+		main.getPlayerManager().addMortuusPlayer(e.getPlayer());
 	}
 
 	@EventHandler
@@ -49,7 +47,7 @@ public class PlayerListener implements Listener {
 
 		// 15% chance of getting infected
 		if (infectionChance < 15) {
-			PlayerObject mtPlayer = main.getPlayerManager().getPlayerObjectByUuid(p.getUniqueId());
+			PlayerObject mtPlayer = main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
 			if (!mtPlayer.isInfected() && mtPlayer != null) {
 				p.sendMessage(MortuusTerraCore.NOTI_PREFIX + StringUtilities.color("&2I feel strange..."));
 				mtPlayer.setInfected(true);

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class PlayerObject {
 
@@ -20,7 +19,7 @@ public class PlayerObject {
 	private int infectedState;
 //	private long joinTime;
 
-	private Player player;
+	private String currentIngameName;
 	private Location playerLocation;
 
 	public PlayerObject(UUID uniqueId) {
@@ -30,7 +29,7 @@ public class PlayerObject {
 		this.playerInRangeOfGeck = false;
 		this.isInfected = false;
 //		this.joinTime = joinTime;
-		this.player = Bukkit.getPlayer(uuid);
+		this.currentIngameName = Bukkit.getOfflinePlayer(uniqueId).getName();
 	}
 
 	public UUID getUuid() {
@@ -52,8 +51,8 @@ public class PlayerObject {
 		this.infectedState = infectedState;
 	}
 	
-	public Player getPlayer() {
-		return player;
+	public String getCurrentIngameName() {
+		return currentIngameName;
 	}
 
 //	public long getJoinTime() {

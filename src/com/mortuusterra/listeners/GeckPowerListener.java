@@ -49,7 +49,7 @@ public class GeckPowerListener implements Listener {
 		String chunk = clicked.getLocation().getChunk().getX() + ";" + clicked.getLocation().getChunk().getZ();
 
 		if (underneath.getType() == Material.SPONGE && !underneath.isBlockPowered()) {
-			if (!main.getGeckObjectManager().isGeckBuildCorrect(underneath)) {
+			if (!main.getGeckManager().isGeckBuildCorrect(underneath)) {
 				p.sendMessage(ChatColor.RED + "You must build the GECK correctly!");
 
 				// Check if the geck is inside the powerables list
@@ -64,6 +64,7 @@ public class GeckPowerListener implements Listener {
 
 		} else if (main.getGeckObjectManager().getGeckObject(underneathLoc) != null && underneath.isBlockPowered()) {
 			main.getGeckObjectManager().getGeckObject(underneathLoc).setPowered(false);
+			main.getGeckObjectManager().removeGeckLocation(underneathLoc);
 			p.sendMessage(ChatColor.RED + "GECK Disabled!");
 		}
 	}

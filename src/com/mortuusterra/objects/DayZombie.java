@@ -1,4 +1,4 @@
-package com.mortuusterra.objects.mobs;
+package com.mortuusterra.objects;
 
 import net.minecraft.server.v1_12_R1.EntityZombie;
 import net.minecraft.server.v1_12_R1.EnumDifficulty;

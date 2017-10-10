@@ -1,4 +1,4 @@
-package com.mortuusterra.managers.supplydrops;
+package com.mortuusterra.managers;
 
 public class SupplyDropManager {
 /**

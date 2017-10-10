@@ -1,4 +1,4 @@
-package com.mortuusterra.objects.supplydrop;
+package com.mortuusterra.objects;
 
 import java.util.List;
 

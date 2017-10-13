@@ -55,10 +55,10 @@ public class PluginFile {
     public void save(YamlConfiguration yamlConfiguration) {
         try {
             yamlConfiguration.save(file);
-            main.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Successfully saved file " + name + "!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
         } catch (IOException e) {
             e.printStackTrace();
-            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to save file " + name + "!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
         }
     }
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -25,7 +24,7 @@ public class PlayerManager {
 	 */
 	private Map<UUID, PlayerObject> mtPlayers = new HashMap<>();
 	private List<PlayerObject> infectedPlayers = new ArrayList<>();
-
+	
 	/**
 	 * Adds an MT-Player -if not already present - to the Map.
 	 * 
@@ -73,6 +72,7 @@ public class PlayerManager {
 			config.set(uuid + ".in-geck-range", p.isPlayerInRangeOfGeck());
 			config.set(uuid + ".infected", p.isInfected());
 			config.set(uuid + ".infected-state", p.getInfectedState());
+			config.set(uuid + ".time-infected", p.getTimeInfected());
 
 			// if (config.get(uuid + ".first-join-time") == null)
 			// config.set(uuid + ".first-join-time", p.getJoinTime());
@@ -88,24 +88,26 @@ public class PlayerManager {
 		for (String key : config.getConfigurationSection("").getKeys(false)) {
 
 			// Only convert online players to PlayerObject and add to Map.
-			for (Player online : Bukkit.getOnlinePlayers()) {
+			//for (Player online : Bukkit.getOnlinePlayers()) {
 				UUID uuid = UUID.fromString(key);
 
-				if (!online.getUniqueId().equals(uuid))
-					continue;
+//				if (!online.getUniqueId().equals(uuid))
+//					continue;
 				
 				PlayerObject p = new PlayerObject(uuid);
 
 				boolean infected = config.getBoolean(key + ".infected");
 				boolean inGeckRange = config.getBoolean(key + ".in-geck-range");
 				int infectedState = config.getInt(key + ".infected-state");
+				int timeInfected = config.getInt(key + ".time-infected");
 
+				p.setTimeInfected(timeInfected);
 				p.setInfected(infected);
 				p.setInfectedState(infectedState);
 				p.setPlayerInRangeOfGeck(inGeckRange);
 
 				mtPlayers.put(uuid, p);
-			}
+			//}
 		}
 
 	}

@@ -28,12 +28,12 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
-	// private CellTowerManager cellTowerManager;
 	private GeckObjectManager geckObjectManager;
 	private GeckManager geckManager;
 	private MobManager mobManager;
 
 	// Just a fancy prefix looks like "[!]"
+	public static final String MTC_PREFIX = StringUtilities.color("&7&l[&b&lMTCore&7&l]");
 	public static final String NOTI_PREFIX = StringUtilities.color("&7&l[&b&l!&7&l] ");
 
 	// private SupplyDropManager supplyDropManager;
@@ -107,7 +107,6 @@ public class MortuusTerraCore extends JavaPlugin {
 		fileManager = new FileManager();
 		playerMan = new PlayerManager();
 		geckObjectManager = new GeckObjectManager();
-		// cellTowerManager = new CellTowerManager();
 		geckManager = new GeckManager();
 		radMan = new RadiationManager();
 		mobManager = new MobManager();
@@ -145,16 +144,6 @@ public class MortuusTerraCore extends JavaPlugin {
 	public RecipeManager getCellTowerRecipe() {
 		return recipeManager;
 	}
-
-	/**
-	 * public CellTowerManager getCellTowerManager() { return cellTowerManager;
-	 * }
-	 **/
-
-	/**
-	 * public PlayerChatListener getPlayerChatListener() { return
-	 * playerChatListener; }
-	 **/
 
 	public GeckObjectManager getGeckObjectManager() {
 		return geckObjectManager;

@@ -7,10 +7,15 @@ import java.util.List;
 import org.bukkit.potion.PotionEffectType;
 
 public enum InfectedStates {
+	
+	/*
+	 * Represents the states a player will go through after a while when being infected by a zombie.
+	 * Feel free to add/modify the possible effects the player will get in each state.
+	 */
 
 	UNEASY(0, PotionEffectType.HUNGER), 
 	SICK(1, PotionEffectType.HUNGER, PotionEffectType.SLOW),
-	TRANSFORMED(2, PotionEffectType.HUNGER, PotionEffectType.SLOW, PotionEffectType.CONFUSION, PotionEffectType.POISON);
+	TRANSFORMED(2, PotionEffectType.HUNGER, PotionEffectType.SLOW, PotionEffectType.WITHER, PotionEffectType.POISON);
 
 	private List<PotionEffectType> possibleEffects;
 	private final int id;
@@ -21,7 +26,7 @@ public enum InfectedStates {
 		possibleEffects.addAll(Arrays.asList(effects));
 	}
 
-	public InfectedStates getStateById(int id) {
+	public static InfectedStates getStateById(int id) {
 		for (InfectedStates state : values()) {
 			if (state.getId() == id)
 				return state;
@@ -29,7 +34,7 @@ public enum InfectedStates {
 		return null;
 	}
 
-	public InfectedStates getStateByString(String s) {
+	public static InfectedStates getStateByString(String s) {
 		for (InfectedStates state : values()) {
 			if (state.toString().equalsIgnoreCase(s))
 				return state;

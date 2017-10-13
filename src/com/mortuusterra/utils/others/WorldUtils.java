@@ -3,6 +3,7 @@ package com.mortuusterra.utils.others;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 public class WorldUtils {
@@ -25,6 +26,31 @@ public class WorldUtils {
 				for (int z = -(radius); z <= radius; z++) {
 					blocks.add(generator.getRelative(x, y, z));
 				}
+			}
+		}
+		return blocks;
+	}
+
+	/**
+	 * Method to return all blocks in a 2-dimensional space (x,z)
+	 * 
+	 * @param center
+	 *            The center block.
+	 * @param radius
+	 *            The radius.
+	 * @param addAirBlocks
+	 *            If true, air blocks are added to the list.
+	 * @return A list containing all blocks.
+	 */
+	public static List<Block> getNearbyBlocks2D(Block center, int radius) {
+
+		List<Block> blocks = new ArrayList<>();
+
+		for (int x = center.getX() - radius; x <= center.getX() + radius; x++) {
+			for (int z = center.getZ() - radius; z <= center.getZ() + radius; z++) {
+				Location loc = new Location(center.getWorld(), x, center.getY(), z);
+
+				blocks.add(loc.getBlock());
 			}
 		}
 		return blocks;

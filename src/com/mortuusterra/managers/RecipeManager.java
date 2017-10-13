@@ -16,7 +16,7 @@ public class RecipeManager {
 	
 	// Added this to remove deprecated code.
 	//private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
-	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
+	private final NamespacedKey genKey = new NamespacedKey(main, "MortuusTerraCore");
 
 	// To prevent repition :)
 	public static final String GENERATOR_NAME = ChatColor.RED + "" + ChatColor.BOLD  + "Generator";

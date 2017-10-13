@@ -1,10 +1,11 @@
-package com.mortuusterra.managers.tower;
+package com.mortuusterra.managers;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
-import com.mortuusterra.objects.tower.CellTowerObject;
+
+import com.mortuusterra.objects.CellTowerObject;
 
 public class CellTowerManager {
 

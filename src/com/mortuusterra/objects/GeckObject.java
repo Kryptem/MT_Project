@@ -1,4 +1,4 @@
-package com.mortuusterra.objects.geck;
+package com.mortuusterra.objects;
 
 import org.bukkit.Location;
 
@@ -11,11 +11,11 @@ public class GeckObject {
 	public GeckObject(Location geckLocation) {
 		this.geckLocation = geckLocation;
 	}
-	public Boolean getIspowered() {
+	public Boolean isPowered() {
 		return ispowered;
 	}
 
-	public void setIspowered(Boolean ispowered) {
+	public void setPowered(Boolean ispowered) {
 		this.ispowered = ispowered;
 	}
 

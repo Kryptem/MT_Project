@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.FalloutShelter;
-import com.mortuusterra.objects.PlayerObject;
 
 public class PlayerListener implements Listener {
 
@@ -24,22 +23,22 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	private void onPlayerJoinEvent(PlayerJoinEvent e) {
 		main.getPlayerManager().addMortuusPlayer(e.getPlayer());
-		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
-
-		if (mortuusPlayer.isInfected() && mortuusPlayer.getInfectedState() > 0) {
-			mortuusPlayer.startInfection();
-		}
+//		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
+//
+//		if (mortuusPlayer.isInfected() && mortuusPlayer.getInfectedState() > 0) {
+//			mortuusPlayer.startInfection();
+//		}
 	}
 
 	@EventHandler
 	private void onPlayerLeaveEvent(PlayerQuitEvent e) {
-		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
-
-		if (mortuusPlayer != null) {
-			if (mortuusPlayer.getTask() != null) {
-				mortuusPlayer.getTask().cancel();
-			}
-		}
+//		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
+//
+//		if (mortuusPlayer != null) {
+//			if (mortuusPlayer.getTask() != null) {
+//				mortuusPlayer.getTask().cancel();
+//			}
+//		}
 	}
 
 	@EventHandler

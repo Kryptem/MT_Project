@@ -147,7 +147,7 @@ public class GeneratorListener implements Listener {
 			// performance
 			new BukkitRunnable() {
 
-				@SuppressWarnings("deprecation")
+			
 				@Override
 				public void run() {
 					List<Block> blocks = getNearbyBlocks(placedBlock, 15);
@@ -160,16 +160,16 @@ public class GeneratorListener implements Listener {
 						mm.addValue(chunk, block.getLocation());
 						powerable.put(block.getLocation().getWorld().getName(), mm);
 
-						// Power redstone
-						if (block.getType() == Material.REDSTONE_TORCH_OFF)
-							block.setType(Material.REDSTONE_TORCH_ON);
-						
-						// Tries to update the wire. This doesn't work all the time.
-						// Sometimes a wire won't turn on eventhough it is powered by a torch for example.
-						if (block.getType() == Material.REDSTONE_WIRE) {
-							block.setData((byte) 1, true);
-							block.setData((byte) 0, true);
-						}
+//						 Power redstone
+//						if (block.getType() == Material.REDSTONE_TORCH_OFF)
+//							block.setType(Material.REDSTONE_TORCH_ON);
+//						
+//						 Tries to update the wire. This doesn't work all the time.
+//						 Sometimes a wire won't turn on eventhough it is powered by a torch for example.
+//						if (block.getType() == Material.REDSTONE_WIRE) {
+//							block.setData((byte) 1, true);
+//							block.setData((byte) 0, true);
+//						}
 
 					}
 

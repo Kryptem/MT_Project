@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.mortuusterra.events.block.CellTowerBlockEvent;
 import com.mortuusterra.listeners.GeckPowerListener;
 import com.mortuusterra.listeners.GeneratorListener;
 import com.mortuusterra.listeners.MobListener;
@@ -99,7 +98,7 @@ public class MortuusTerraCore extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(this.playerListener, this);
 		getServer().getPluginManager().registerEvents(this.mobListener, this);
 		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
-		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
+		//getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
 		getServer().getPluginManager().registerEvents(genListener = new GeneratorListener(), this);
 	}
 

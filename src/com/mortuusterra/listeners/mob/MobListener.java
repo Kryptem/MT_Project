@@ -1,19 +1,27 @@
-package com.mortuusterra.listeners.spawn;
+package com.mortuusterra.listeners.mob;
 
-import com.mortuusterra.MortuusTerraCore;
+import java.util.Random;
+
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.ItemStack;
+
+import com.mortuusterra.MortuusTerraCore;
+
 
 public class MobListener implements Listener {
 
-
+	
+	private Random rand = new Random();
 	private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
-//	private DamageCause cause;
 
 	// Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler
@@ -26,6 +34,19 @@ public class MobListener implements Listener {
 		    e.getLocation().getWorld().spawn(e.getLocation(), Zombie.class);
 		}
 
+	}
+	
+	/*
+	 * Added chance of dropping sponge
+	 */
+	@EventHandler
+	public void onZombieDie(EntityDeathEvent event) {
+		if (event.getEntityType() != EntityType.ZOMBIE) return;
+		
+		if (rand.nextInt(100) == 0) {
+			Location loc = event.getEntity().getLocation();
+			loc.getWorld().dropItemNaturally(loc, new ItemStack(Material.SPONGE));
+		}
 	}
 
 	@EventHandler

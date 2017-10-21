@@ -70,13 +70,13 @@ public class GeckPowerListener implements Listener {
 
 		if (broken.getType() == Material.LEVER) {
 
-			if (main.getGeckObjectManager().getGeckObject(broken.getRelative(0, -1, 0).getLocation()) != null) {
+			if (main.getGeckObjectManager().containsGeckLocation(broken.getRelative(0, -1, 0).getLocation())) {
 				main.getGeckObjectManager().removeGeckLocation(broken.getRelative(0, -1, 0).getLocation());
 				player.sendMessage(ChatColor.RED + "GECK disabled.");
 			}
 
 		} else if (broken.getType() == Material.SPONGE
-				&& main.getGeckObjectManager().getGeckObject(broken.getLocation()) != null) {
+				&& main.getGeckObjectManager().containsGeckLocation(broken.getLocation())) {
 			main.getGeckObjectManager().removeGeckLocation(broken.getLocation());
 			player.sendMessage(ChatColor.RED + "GECK disabled.");
 		} else if (broken.getType() == Material.PISTON_BASE) {
@@ -85,7 +85,7 @@ public class GeckPowerListener implements Listener {
 			sides.forEach(side -> {
 				Location bloc = broken.getRelative(side).getLocation();
 
-				if (main.getGeckObjectManager().getGeckObject(bloc) != null) {
+				if (main.getGeckObjectManager().containsGeckLocation(bloc)) {
 					main.getGeckObjectManager().removeGeckLocation(bloc);
 					player.sendMessage(ChatColor.RED + "GECK disabled.");
 				}

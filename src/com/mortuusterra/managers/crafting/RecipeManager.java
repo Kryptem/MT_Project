@@ -23,13 +23,13 @@ public class RecipeManager {
 	
 	private static ItemStack generator;
 	
-	// Returns an copy of what the generator looks like
+	// Returns the generator item DO NOT MODIFY THIS
 	public static ItemStack getGenerator() {
-		return generator.clone();
+		return generator;
 	}
 
 	public void setCellTowerRecipe() {
-		/**
+		/*
 		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
 		ItemMeta cellTowerMeta = cellTower.getItemMeta();
 		String cellTowerName = "CellTower";

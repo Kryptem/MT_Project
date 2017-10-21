@@ -5,6 +5,7 @@ package com.mortuusterra;
  */
 
 import com.mortuusterra.listeners.generator.GenListener;
+import com.mortuusterra.listeners.mob.MobListener;
 import com.mortuusterra.utils.nmsentities.CustomEntityType;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,7 +14,6 @@ import org.bukkit.scheduler.BukkitTask;
 import com.mortuusterra.events.block.CellTowerBlockEvent;
 import com.mortuusterra.listeners.player.PlayerListener;
 import com.mortuusterra.listeners.radiation.GeckPowerListener;
-import com.mortuusterra.listeners.spawn.MobListener;
 import com.mortuusterra.managers.Geck.GeckRangeManager;
 import com.mortuusterra.managers.crafting.RecipeManager;
 import com.mortuusterra.managers.mob.MobManager;

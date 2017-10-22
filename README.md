@@ -1,7 +1,7 @@
 Copyright (C) 2017   Mortuss Terra Team
 
 You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <MT_Core/LICENSE>.
+    along with this program.  If not, see <https://github.com/kadeska/MT_Core/blob/master/LICENSE>.
     
 ## MT_Project
 #### Zombie Apocalypse plugin for Minecraft Spigot 1.12.x

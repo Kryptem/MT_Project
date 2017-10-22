@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2017 Mortuss Terra Team
+ * You should have received a copy of the GNU General Public License along with this program. 
+ * If not, see https://github.com/kadeska/MT_Core/blob/master/LICENSE.
+ */
+
 package com.mortuusterra;
 
 import org.bukkit.ChatColor;
@@ -32,8 +38,8 @@ public class MortuusTerraCore extends JavaPlugin {
 	 */
 
 	/*
-	 * Use getCore() to get this main class and all of its public methods. 
-	 * DO NOT ACCESS BEFORE ONENABLE
+	 * Use getCore() to get this main class and all of its public methods. DO NOT
+	 * ACCESS BEFORE ONENABLE
 	 **/
 	public static MortuusTerraCore core;
 
@@ -90,10 +96,10 @@ public class MortuusTerraCore extends JavaPlugin {
 
 		// register custom Zombie
 		CustomEntityType.DAY_ZOMBIE.registerEntity();
-		
-		//register/initiate Commands
+
+		// register/initiate Commands
 		getCommand("supplydrop").setExecutor(new AdminCommands(this));
-		
+
 		// register/initiate timers
 
 		// start radiation

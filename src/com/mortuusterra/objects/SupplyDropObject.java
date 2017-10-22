@@ -1,37 +1,53 @@
 package com.mortuusterra.objects;
 
-import java.util.List;
-
 import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.block.Chest;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.mortuusterra.MortuusTerraCore;
 
 public class SupplyDropObject {
-	public SupplyDropObject(Location supplyDropLocation) {
-		this.supplyDropLocation = supplyDropLocation;
+	
+	private final MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+
+	private Location dropLocation;
+	private Inventory dropInventory;
+	private boolean isLooted;
+	private Chest dropChest;
+
+	public SupplyDropObject(Location dropLocation, Chest dropChest, Inventory dropInventory) {
+		this.isLooted = false;
+		this.dropChest = dropChest;
+		this.dropInventory = dropInventory;
+		this.dropLocation = dropLocation;
+		
+		if (dropInventory != null)
+			fillChest();
 	}
 	
-	private Location supplyDropLocation;
+	public void fillChest() {
+		main.getSupplyDropManager().fillSupplyDropContent(dropInventory);
+	}
 	
-	private List<ItemStack> supplyDropLoot;
-	
-	private boolean isLooted = false;
-	
-	private String name;
-
-	public Location getSupplyDropLocation() {
-		return supplyDropLocation;
+	public Inventory getDropInventory() {
+		return dropInventory;
 	}
 
-	public void setSupplyDropLocation(Location supplyDropLocation) {
-		this.supplyDropLocation = supplyDropLocation;
+	public void setDropChest(Chest dropChest) {
+		this.dropChest = dropChest;
 	}
 
-	public List<ItemStack> getSupplyDropLoot() {
-		return supplyDropLoot;
+	public Chest getDropChest() {
+		return dropChest;
 	}
 
-	public void setSupplyDropLoot(List<ItemStack> supplyDropLoot) {
-		this.supplyDropLoot = supplyDropLoot;
+	public Location getDropLocation() {
+		return dropLocation;
+	}
+
+	public void setDropLocation(Location supplyDropLocation) {
+		this.dropLocation = supplyDropLocation;
 	}
 
 	public boolean isLooted() {
@@ -40,14 +56,6 @@ public class SupplyDropObject {
 
 	public void setLooted(boolean isLooted) {
 		this.isLooted = isLooted;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }

@@ -1,18 +1,21 @@
 package com.mortuusterra.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.FalloutShelter;
+import com.mortuusterra.objects.PKStates;
+import com.mortuusterra.objects.PlayerObject;
 
 public class PlayerListener implements Listener {
 
@@ -23,22 +26,48 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	private void onPlayerJoinEvent(PlayerJoinEvent e) {
 		main.getPlayerManager().addMortuusPlayer(e.getPlayer());
-//		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
-//
-//		if (mortuusPlayer.isInfected() && mortuusPlayer.getInfectedState() > 0) {
-//			mortuusPlayer.startInfection();
-//		}
+		
+		if (!main.getScoreboards().isHostile(e.getPlayer()))
+			main.getScoreboards().addPlayer(e.getPlayer(), "Neutral");
 	}
 
 	@EventHandler
-	private void onPlayerLeaveEvent(PlayerQuitEvent e) {
-//		PlayerObject mortuusPlayer = main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId());
-//
-//		if (mortuusPlayer != null) {
-//			if (mortuusPlayer.getTask() != null) {
-//				mortuusPlayer.getTask().cancel();
-//			}
-//		}
+	public void onPlayerKillsPlayer(EntityDamageByEntityEvent e) {
+		if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player))
+			return;
+		
+		Player killer = (Player) e.getDamager();
+		Player target = (Player) e.getEntity();
+		
+		// Check if the target is dead
+		if (target.getHealth() - e.getDamage() <= 0) {
+			PlayerObject killerObject = main.getPlayerManager().getMortuusPlayer(killer.getUniqueId());
+			
+			// Sets the time in SECONDS.
+			killerObject.setLastPlayerKillTime(System.currentTimeMillis() / 1000);
+			killerObject.addPlayerKills(1);
+			
+			for (PKStates state : PKStates.values()) {
+				if (killerObject.getPlayerKills() == state.getRequiredKills()) {
+					killerObject.setPkState(state);
+					main.getScoreboards().switchTeam(killer, "Orange");
+					break;
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e) {
+		Player p = e.getPlayer();
+		PlayerObject pObject = main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
+		
+		// if 25 minutes have passed since the last kill set to neutral.
+		if (pObject.getLastPlayerKillTime() + 1500  > (System.currentTimeMillis() / 1000)) {
+			main.getScoreboards().switchTeam(p, "Neutral");
+			pObject.setPkState(PKStates.NEUTRAL);
+			pObject.setPlayerKills(0);
+		}
 	}
 
 	@EventHandler
@@ -46,58 +75,23 @@ public class PlayerListener implements Listener {
 		if (e.getHand() == EquipmentSlot.OFF_HAND)
 			return;
 		
+		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
+			main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId()).setPkState(PKStates.ORANGE);;
+
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			
-		if (e.getItem() == null)
-			return;
-			
-		if (e.getItem().getType() != Material.DIAMOND_HOE)
-			return;
+
+			if (e.getItem() == null)
+				return;
+
+			if (e.getItem().getType() != Material.DIAMOND_HOE)
+				return;
 			FalloutShelter s = new FalloutShelter(e.getClickedBlock().getLocation().clone());
 			s.generateFalloutShelter();
 		}
 	}
+	
+	
+	
+	
 
-	// @EventHandler
-	// public void onPlayerGetDamagedByZombie(EntityDamageByEntityEvent e) {
-	// Entity victim = e.getEntity();
-	// Entity damager = e.getDamager();
-	//
-	// if (!(victim instanceof Player) || !(damager instanceof Zombie))
-	// return;
-	//
-	// Player p = (Player) victim;
-	// Random r = new Random();
-	//
-	// int infectionChance = r.nextInt(100);
-	//
-	// // 5% chance of getting infected on hit
-	// if (infectionChance < 5) {
-	// PlayerObject mtPlayer =
-	// main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
-	//
-	// if (mtPlayer != null && !mtPlayer.isInfected() &&
-	// mtPlayer.getInfectedState() == -1) {
-	// p.sendMessage(MortuusTerraCore.NOTI_PREFIX + StringUtilities.color("&2I
-	// feel strange..."));
-	// mtPlayer.setInfected(true);
-	// mtPlayer.setInfectedState(0);
-	// mtPlayer.startInfection();
-	//
-	// }
-	// }
-	// }
-
-	@EventHandler
-	public void onPlayerEat(PlayerItemConsumeEvent e) {
-
-	}
-
-	// @SuppressWarnings("static-access")
-	// @EventHandler
-	// private void onPlayerDeathEvent(PlayerDeathEvent e) {
-	// MobDisguise disguise = new MobDisguise(DisguiseType.ZOMBIE);
-	// main.getDisguiseAPI().disguiseEntity(e.getEntity(), disguise);
-	// return;
-	// }
 }

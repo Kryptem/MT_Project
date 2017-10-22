@@ -15,7 +15,7 @@ import com.mortuusterra.MortuusTerraCore;
 public class PluginFile {
 
 	// Unsure how this was meant to be, changed so that it doesn't throw StackOverflows
-    private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+    private MortuusTerraCore core = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
     private String name;
     private File file;
@@ -55,10 +55,10 @@ public class PluginFile {
     public void save(YamlConfiguration yamlConfiguration) {
         try {
             yamlConfiguration.save(file);
-            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
+            core.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
         } catch (IOException e) {
             e.printStackTrace();
-            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
+            core.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
         }
     }
 
@@ -76,7 +76,7 @@ public class PluginFile {
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
+            core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
         }
     }
 
@@ -92,7 +92,7 @@ public class PluginFile {
             printWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
+            core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
         }
     }
 
@@ -119,7 +119,7 @@ public class PluginFile {
 	public void dispose() {
 		file.delete();
 		file = null;
-		main = null;
+		core = null;
 		name = null;
 	}
 }

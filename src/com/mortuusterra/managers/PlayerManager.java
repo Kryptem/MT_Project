@@ -1,8 +1,6 @@
 package com.mortuusterra.managers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,8 +21,7 @@ public class PlayerManager {
 	 * But if they are not in radiation they'll get damaged for 0 dmg
 	 */
 	private Map<UUID, PlayerObject> mtPlayers = new HashMap<>();
-	private List<PlayerObject> infectedPlayers = new ArrayList<>();
-	
+
 	/**
 	 * Adds an MT-Player -if not already present - to the Map.
 	 * 
@@ -57,10 +54,6 @@ public class PlayerManager {
 		return mtPlayers;
 	}
 
-	public List<PlayerObject> getInfected() {
-		return infectedPlayers;
-	}
-
 	public void savePlayersToDisk() {
 		YamlConfiguration config = file.returnYaml();
 		if (mtPlayers.isEmpty())
@@ -68,11 +61,10 @@ public class PlayerManager {
 
 		for (PlayerObject p : mtPlayers.values()) {
 			String uuid = p.getUuid().toString();
+			config.set(uuid + ".kills", p.getPlayerKills());
 			config.set(uuid + ".ingame-name", p.getCurrentIngameName());
 			config.set(uuid + ".in-geck-range", p.isPlayerInRangeOfGeck());
-			config.set(uuid + ".infected", p.isInfected());
-			config.set(uuid + ".infected-state", p.getInfectedState());
-			config.set(uuid + ".time-infected", p.getTimeInfected());
+			config.set(uuid + ".last-player-kill", p.getLastPlayerKillTime());
 
 			// if (config.get(uuid + ".first-join-time") == null)
 			// config.set(uuid + ".first-join-time", p.getJoinTime());
@@ -88,26 +80,23 @@ public class PlayerManager {
 		for (String key : config.getConfigurationSection("").getKeys(false)) {
 
 			// Only convert online players to PlayerObject and add to Map.
-			//for (Player online : Bukkit.getOnlinePlayers()) {
-				UUID uuid = UUID.fromString(key);
+			// for (Player online : Bukkit.getOnlinePlayers()) {
+			UUID uuid = UUID.fromString(key);
 
-//				if (!online.getUniqueId().equals(uuid))
-//					continue;
-				
-				PlayerObject p = new PlayerObject(uuid);
+			// if (!online.getUniqueId().equals(uuid))
+			// continue;
 
-				boolean infected = config.getBoolean(key + ".infected");
-				boolean inGeckRange = config.getBoolean(key + ".in-geck-range");
-				int infectedState = config.getInt(key + ".infected-state");
-				int timeInfected = config.getInt(key + ".time-infected");
+			PlayerObject p = new PlayerObject(uuid);
+			boolean inGeckRange = config.getBoolean(key + ".in-geck-range");
+			long lastPlayerKill = config.getLong(key + ".last-player-kill");
+			int playerKills = config.getInt(key + ".kills");
+			
+			p.setPlayerKills(playerKills);
+			p.setPlayerInRangeOfGeck(inGeckRange);
+			p.setLastPlayerKillTime(lastPlayerKill);
 
-				p.setTimeInfected(timeInfected);
-				p.setInfected(infected);
-				p.setInfectedState(infectedState);
-				p.setPlayerInRangeOfGeck(inGeckRange);
-
-				mtPlayers.put(uuid, p);
-			//}
+			mtPlayers.put(uuid, p);
+			// }
 		}
 
 	}

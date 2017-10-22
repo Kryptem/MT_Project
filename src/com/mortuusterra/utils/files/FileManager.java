@@ -12,7 +12,7 @@ public class FileManager {
 
 	// Not exactly sure what this class was for; removed weird variables that
 	// would've thrown StackOverflows
-	private static MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+	private static MortuusTerraCore core = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	/**
 	 * Create PluginFile Method
@@ -28,11 +28,11 @@ public class FileManager {
 	public static File createPluginFile(String name, FileType type) {
 		switch (type) {
 		case YAML:
-			if (!main.getDataFolder().exists()) {
-				main.getDataFolder().mkdir();
+			if (!core.getDataFolder().exists()) {
+				core.getDataFolder().mkdir();
 			}
 
-			File file = new File(main.getDataFolder(), name + ".yml");
+			File file = new File(core.getDataFolder(), name + ".yml");
 
 			if (!file.exists()) {
 				try {
@@ -57,7 +57,7 @@ public class FileManager {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not create file!");
+				core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not create file!");
 			}
 			return jsonFile;
 		case TEXT:
@@ -70,7 +70,7 @@ public class FileManager {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to create file!");
+				core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to create file!");
 			}
 			return textFile;
 		default:
@@ -79,15 +79,17 @@ public class FileManager {
 	}
 
 	public void saveFiles() {
-		main.getPlayerManager().savePlayersToDisk();
-		main.getGeckObjectManager().saveGecksToDisk();
-		main.getGenListener().saveFile();
+		core.getPlayerManager().savePlayersToDisk();
+		core.getGeckObjectManager().saveGecksToDisk();
+		core.getGenListener().saveFile();
+		core.getSupplyDropManager().saveSupplyData();
 	}
 
 	public void loadFiles() {
-		main.getPlayerManager().loadPlayersFromDisk();
-		main.getGeckObjectManager().loadGecksFromDisk();
-		main.getGenListener().loadFile();
+		core.getPlayerManager().loadPlayersFromDisk();
+		core.getGeckObjectManager().loadGecksFromDisk();
+		core.getGenListener().loadFile();
+		core.getSupplyDropManager().loadSupplyData();
 	}
 
 }

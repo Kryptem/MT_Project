@@ -1,38 +1,15 @@
 package com.mortuusterra;
 
-<<<<<<< HEAD
-/**
- * Created by Kadeska23
- */
-
-import com.mortuusterra.listeners.generator.GenListener;
-import com.mortuusterra.listeners.mob.MobListener;
-import com.mortuusterra.utils.nmsentities.CustomEntityType;
-=======
->>>>>>> a3b0c6bc9e48566cf827d6422684ac6b888df60f
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-<<<<<<< HEAD
-import org.bukkit.scheduler.BukkitTask;
-
-import com.mortuusterra.events.block.CellTowerBlockEvent;
-import com.mortuusterra.listeners.player.PlayerListener;
-import com.mortuusterra.listeners.radiation.GeckPowerListener;
-import com.mortuusterra.managers.Geck.GeckRangeManager;
-import com.mortuusterra.managers.crafting.RecipeManager;
-import com.mortuusterra.managers.mob.MobManager;
-import com.mortuusterra.managers.player.PlayerManager;
-import com.mortuusterra.managers.radiation.GeckObjectManager;
-import com.mortuusterra.managers.radiation.RadiationManager;
-=======
 
 import com.mortuusterra.commands.AdminCommands;
 import com.mortuusterra.listeners.GeckPowerListener;
 import com.mortuusterra.listeners.GeneratorListener;
-import com.mortuusterra.listeners.MobListener;
 import com.mortuusterra.listeners.PlayerListener;
 import com.mortuusterra.listeners.WorldListener;
+import com.mortuusterra.listeners.mob.MobListener;
 import com.mortuusterra.managers.GeckManager;
 import com.mortuusterra.managers.GeckObjectManager;
 import com.mortuusterra.managers.MobManager;
@@ -44,9 +21,16 @@ import com.mortuusterra.objects.CustomScoreboards;
 import com.mortuusterra.utils.files.FileManager;
 import com.mortuusterra.utils.nmsentities.CustomEntityType;
 import com.mortuusterra.utils.others.StringUtilities;
->>>>>>> a3b0c6bc9e48566cf827d6422684ac6b888df60f
 
 public class MortuusTerraCore extends JavaPlugin {
+	/*
+	 * List of contributors
+	 * Kadeska23
+	 * Shyos
+	 * Horsey
+	 * Andrewbow159
+	 */
+	
 
 	/*
 	 * Use getCore() to get this main class and all of its public methods. DO

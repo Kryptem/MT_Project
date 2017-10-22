@@ -24,17 +24,16 @@ import com.mortuusterra.utils.others.StringUtilities;
 
 public class MortuusTerraCore extends JavaPlugin {
 	/*
-	 * List of contributors
-	 * Kadeska23
-	 * Shyos
-	 * Horsey
+	 * List of contributors 
+	 * Kadeska23 
+	 * Shyos 
+	 * Horsey 
 	 * Andrewbow159
 	 */
-	
 
 	/*
-	 * Use getCore() to get this main class and all of its public methods. DO
-	 * NOT ACCESS BEFORE ONENABLE
+	 * Use getCore() to get this main class and all of its public methods. 
+	 * DO NOT ACCESS BEFORE ONENABLE
 	 **/
 	public static MortuusTerraCore core;
 
@@ -91,7 +90,10 @@ public class MortuusTerraCore extends JavaPlugin {
 
 		// register custom Zombie
 		CustomEntityType.DAY_ZOMBIE.registerEntity();
+		
+		//register/initiate Commands
 		getCommand("supplydrop").setExecutor(new AdminCommands(this));
+		
 		// register/initiate timers
 
 		// start radiation
@@ -156,7 +158,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	public FileManager getFileManager() {
 		return fileManager;
 	}
-	
+
 	public CustomScoreboards getScoreboards() {
 		return scoreboards;
 	}

@@ -1,3 +1,4 @@
+Copyright (C) 2017   Mortuss Terra Team
 ## MT_Project
 #### Zombie Apocalypse plugin for Minecraft Spigot 1.12.x
 

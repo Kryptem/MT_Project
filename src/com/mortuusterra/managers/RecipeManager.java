@@ -1,4 +1,4 @@
-package com.mortuusterra.managers.crafting;
+package com.mortuusterra.managers;
 
 import com.mortuusterra.MortuusTerraCore;
 import org.bukkit.Bukkit;

@@ -1,4 +1,4 @@
-package com.mortuusterra.managers.mob;
+package com.mortuusterra.managers;
 
 import java.util.Arrays;
 

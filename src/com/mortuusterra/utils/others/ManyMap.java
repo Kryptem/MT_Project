@@ -1,4 +1,4 @@
-package com.mortuusterra.listeners.generator;
+package com.mortuusterra.utils.others;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +15,7 @@ import java.util.Set;
  * @param <K> key
  * @param <V> values
  */
+
 public class ManyMap<K,V>{
 	
 	// We're just using a hashmap.

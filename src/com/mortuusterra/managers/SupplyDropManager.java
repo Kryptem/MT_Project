@@ -115,6 +115,16 @@ public class SupplyDropManager {
 		YamlConfiguration config = file.returnYaml();
 
 		// Supply content
+		// If no content for supply drops is set in config, set a default one to avoid a NPE.
+		if (config.getConfigurationSection("supply-drops.items") == null) {
+			main.getLogger().info("No supplydrop content found. Creating default content.");
+			String path = "supply-drops.items.0";
+			config.set(path + ".material", "STONE");
+			config.set(path + ".chance", 75);
+			config.set(path + ".amount", 32);
+			file.save(config);
+		}
+		
 		for (String key : config.getConfigurationSection("supply-drops.items").getKeys(false)) {
 
 			Material itemMaterial = Material.valueOf(config.getString("supply-drops.items." + key + ".material").toUpperCase());
@@ -136,14 +146,6 @@ public class SupplyDropManager {
 
 	public void saveSupplyData() {
 		YamlConfiguration config = file.returnYaml();
-		
-		// If no content for supply drops is set in config, a a default one to avoid a NPE.
-		if (config.getConfigurationSection("supply-drops.items") == null) {
-			String path = "supply-drops.items";
-			config.set(path + ".material", "STONE");
-			config.set(path + ".chance", 75);
-			config.set(path + ".amount", 32);
-		}
 
 		List<String> locString = new ArrayList<>();
 		for (SupplyDropObject sd : supplyDrops) {

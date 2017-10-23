@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.mortuusterra.objects.PKStates;
 import com.mortuusterra.objects.PlayerObject;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
@@ -61,6 +62,8 @@ public class PlayerManager {
 
 		for (PlayerObject p : mtPlayers.values()) {
 			String uuid = p.getUuid().toString();
+			
+			config.set(uuid + ".pk-state", p.getPkState().name());
 			config.set(uuid + ".kills", p.getPlayerKills());
 			config.set(uuid + ".ingame-name", p.getCurrentIngameName());
 			config.set(uuid + ".in-geck-range", p.isPlayerInRangeOfGeck());
@@ -87,10 +90,12 @@ public class PlayerManager {
 			// continue;
 
 			PlayerObject p = new PlayerObject(uuid);
+			PKStates state = PKStates.getStateByString(config.getString(key + ".pk-state"));
 			boolean inGeckRange = config.getBoolean(key + ".in-geck-range");
 			long lastPlayerKill = config.getLong(key + ".last-player-kill");
 			int playerKills = config.getInt(key + ".kills");
 			
+			p.setPkState(state);
 			p.setPlayerKills(playerKills);
 			p.setPlayerInRangeOfGeck(inGeckRange);
 			p.setLastPlayerKillTime(lastPlayerKill);

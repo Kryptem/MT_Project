@@ -17,13 +17,13 @@ public class CustomScoreboards {
 
 		pkTeamsBoard = manager.getNewScoreboard();
 
-		pkTeamsBoard.registerNewTeam("Neutral");
-		pkTeamsBoard.registerNewTeam("Orange");
-		pkTeamsBoard.registerNewTeam("Red");
+		pkTeamsBoard.registerNewTeam("NEUTRAL");
+		pkTeamsBoard.registerNewTeam("ORANGE");
+		pkTeamsBoard.registerNewTeam("RED");
 
-		pkTeamsBoard.getTeam("Neutral").setPrefix(PKStates.NEUTRAL.getColor() + "");
-		pkTeamsBoard.getTeam("Orange").setPrefix(PKStates.ORANGE.getColor() + "");
-		pkTeamsBoard.getTeam("Red").setPrefix(PKStates.RED.getColor() + "");
+		pkTeamsBoard.getTeam("NEUTRAL").setPrefix(PKStates.NEUTRAL.getColor() + "");
+		pkTeamsBoard.getTeam("ORANGE").setPrefix(PKStates.ORANGE.getColor() + "");
+		pkTeamsBoard.getTeam("RED").setPrefix(PKStates.RED.getColor() + "");
 
 		for (Team team : pkTeamsBoard.getTeams()) {
 			team.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.ALWAYS);
@@ -31,8 +31,8 @@ public class CustomScoreboards {
 	}
 	
 	public boolean isHostile(Player p) {
-		if (pkTeamsBoard.getTeam("Orange").hasEntry(p.getName()) ||
-			pkTeamsBoard.getTeam("Red").hasEntry(p.getName())) 
+		if (pkTeamsBoard.getTeam("ORANGE").hasEntry(p.getName()) ||
+			pkTeamsBoard.getTeam("RED").hasEntry(p.getName())) 
 			return true;
 		return false;
 	}
@@ -48,13 +48,19 @@ public class CustomScoreboards {
 	public void addPlayer(Player p, String team) {
 		if (!pkTeamsBoard.getTeam(team).hasEntry(p.getName())) {
 			pkTeamsBoard.getTeam(team).addEntry(p.getName());
-			p.setScoreboard(pkTeamsBoard);
 		}
+		updateScoreboard();
 	}
 
 	public void removePlayer(Player p, String team) {
 		if (!pkTeamsBoard.getTeam(team).hasEntry(p.getName())) {
 			pkTeamsBoard.getTeam(team).removeEntry(p.getName());
+		}
+		updateScoreboard();
+	}
+	
+	public void updateScoreboard() {
+		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setScoreboard(pkTeamsBoard);
 		}
 	}

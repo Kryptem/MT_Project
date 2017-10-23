@@ -24,6 +24,15 @@ public enum PKStates {
 		return requiredKills;
 	}
 	
+	public static PKStates getStateByString(String state) {
+		for (PKStates st : PKStates.values()) {
+			if (st.name().equalsIgnoreCase(state))
+				return st;
+		}
+		
+		return null;
+	}
+	
 	
 	
 }

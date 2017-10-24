@@ -31,47 +31,52 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	private void onPlayerJoinEvent(PlayerJoinEvent e) {
 		main.getPlayerManager().addMortuusPlayer(e.getPlayer());
-		
+
 		if (!main.getScoreboards().isHostile(e.getPlayer()))
-			main.getScoreboards().addPlayer(e.getPlayer(), "Neutral");
+			main.getScoreboards().addPlayer(e.getPlayer(), "NEUTRAL");
 	}
 
 	@EventHandler
 	public void onPlayerKillsPlayer(EntityDamageByEntityEvent e) {
 		if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player))
 			return;
-		
+
 		Player killer = (Player) e.getDamager();
 		Player target = (Player) e.getEntity();
-		
+
 		// Check if the target is dead
 		if (target.getHealth() - e.getDamage() <= 0) {
 			PlayerObject killerObject = main.getPlayerManager().getMortuusPlayer(killer.getUniqueId());
-			
+
 			// Sets the time in SECONDS.
 			killerObject.setLastPlayerKillTime(System.currentTimeMillis() / 1000);
 			killerObject.addPlayerKills(1);
-			
+
 			for (PKStates state : PKStates.values()) {
 				if (killerObject.getPlayerKills() == state.getRequiredKills()) {
 					killerObject.setPkState(state);
-					main.getScoreboards().switchTeam(killer, "Orange");
+					main.getScoreboards().switchTeam(killer, state.name());
 					break;
 				}
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
 		PlayerObject pObject = main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
-		
+
 		// if 25 minutes have passed since the last kill set to neutral.
-		if (pObject.getLastPlayerKillTime() + 1500  > (System.currentTimeMillis() / 1000)) {
-			main.getScoreboards().switchTeam(p, "Neutral");
-			pObject.setPkState(PKStates.NEUTRAL);
-			pObject.setPlayerKills(0);
+		// The time is in SECONDS.
+		if (pObject.getLastPlayerKillTime() != 0) {
+			if (pObject.getLastPlayerKillTime() + 1500 < (System.currentTimeMillis() / 1000)
+					&& pObject.getPkState() != PKStates.NEUTRAL) {
+
+				main.getScoreboards().switchTeam(p, "NEUTRAL");
+				pObject.setPkState(PKStates.NEUTRAL);
+				pObject.setPlayerKills(0);
+			}
 		}
 	}
 
@@ -79,9 +84,10 @@ public class PlayerListener implements Listener {
 	public void test(PlayerInteractEvent e) {
 		if (e.getHand() == EquipmentSlot.OFF_HAND)
 			return;
-		
+
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
-			main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId()).setPkState(PKStates.ORANGE);;
+			main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId()).setPkState(PKStates.ORANGE);
+		;
 
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
@@ -94,9 +100,5 @@ public class PlayerListener implements Listener {
 			s.generateFalloutShelter();
 		}
 	}
-	
-	
-	
-	
 
 }

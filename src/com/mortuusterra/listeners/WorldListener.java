@@ -38,6 +38,8 @@ public class WorldListener implements Listener {
 			public void run() {
 				if (timePassed == 0) 
 					randomFactor = r.nextInt(48001) - 24000;
+				if (timePassed % 200 == 0)
+					core.getLogger().info("Next supplydrop in " + (((216000 + randomFactor) - timePassed) / 20) + " seconds.");
 				// If 3 hours (216.000 ticks) ± 20 minutes (24000 ticks) have passed deliver.
 				// Getting the world should maybe be changed later.
 				if (timePassed >= 216000 + randomFactor) {
@@ -47,7 +49,7 @@ public class WorldListener implements Listener {
 				timePassed++;
 			}
 
-		}.runTaskTimer(core, 0L, 0L);
+		}.runTaskTimer(core, 0L, 1L);
 	}
 
 	@EventHandler

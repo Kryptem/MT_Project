@@ -98,16 +98,11 @@ public class SupplyDropManager {
 		for (SupplyDropContent content : supplyContent) {
 			if (r.nextInt(100) < content.getItemChance()) {
 				
-				int i = 0;
 				int slot = r.nextInt(inventory.getSize());
-				
 				// Add the items to the inventory on random slots.
-				while (i < content.getItemAmount()) {
-					while (inventory.getItem(slot) != null)
-						slot = r.nextInt(inventory.getSize());
-					inventory.setItem(slot, new ItemStack(content.getItemMaterial(), 1));
-					i++;
-				}
+				while (inventory.getContents()[slot] != null)
+					slot = r.nextInt(inventory.getSize());
+				inventory.setItem(slot, new ItemStack(content.getItemMaterial(), content.getItemAmount()));
 			}
 		}
 		

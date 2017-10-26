@@ -95,6 +95,7 @@ public class FileManager {
 		core.getGeckObjectManager().loadGecksFromDisk();
 		core.getGenListener().loadFile();
 		core.getSupplyDropManager().loadSupplyData();
+		core.getDataManager().loadData();
 	}
 
 }

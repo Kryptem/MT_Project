@@ -108,6 +108,8 @@ public class SupplyDropManager {
 		
 		return inventory;
 	}
+	
+	
 
 	public void loadSupplyData() {
 		file = new PluginFile("supplyDrops", FileType.YAML);
@@ -116,7 +118,7 @@ public class SupplyDropManager {
 		// Supply content
 		// If no content for supply drops is set in config, set a default one to avoid a NPE.
 		if (config.getConfigurationSection("supply-drops.items") == null) {
-			main.getLogger().info("No supplydrop content found. Creating default content.");
+			main.getLogger().info("No Supplydrop content found. Setting defaults.");
 			String path = "supply-drops.items.0";
 			config.set(path + ".material", "STONE");
 			config.set(path + ".chance", 75);

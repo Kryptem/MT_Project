@@ -25,14 +25,11 @@ public class RadiationManager {
 			public void run() {
 
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					// PlayerObject mortuusPlayer =
-					// main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
-
 					if (isPlayerInRad(p))
 						p.damage(calculateRadiationDamage(p));
 				}
 			}
-		}.runTaskTimer(main, 0L, 3 * 20L);
+		}.runTaskTimer(main, 0L, main.getDataManager().getRadiationDamageDelay() * 20L);
 	}
 
 	/**
@@ -43,19 +40,21 @@ public class RadiationManager {
 	 * @return The calculated damage
 	 */
 	private double calculateRadiationDamage(Player player) {
-		double receivedDamage = 1D;
+		double receivedDamage = main.getDataManager().getDefaultRadiationDamage();
+		double stormDamage = main.getDataManager().getStormRadiationDamage();
+		double waterDamage = main.getDataManager().getWaterRadiationDamage();
 
 		if (isPlayerInBuilding(player)) {
 			return 0D;
 		}
 
 		if (player.getWorld().hasStorm()) {
-			receivedDamage += 1D;
+			receivedDamage += stormDamage;
 		}
 
 		if (player.getLocation().getBlock().getType() == Material.WATER
 				|| player.getLocation().getBlock().getType() == Material.STATIONARY_WATER) {
-			receivedDamage += 2D;
+			receivedDamage += waterDamage;
 		}
 
 		return receivedDamage;

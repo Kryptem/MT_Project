@@ -18,10 +18,10 @@ import com.mortuusterra.objects.FalloutShelter;
 
 public class WorldListener implements Listener {
 
-	//private MortuusTerraCore core;
+//	private MortuusTerraCore core;
 
 	public WorldListener(MortuusTerraCore core) {
-		//this.core = core;
+//		this.core = core;
 	}
 
 	@EventHandler

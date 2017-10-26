@@ -11,11 +11,15 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.plugin.java.JavaPlugin;
 
+import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.utils.others.WorldUtils;
 
 public class FalloutShelter {
 
+	private MortuusTerraCore core = JavaPlugin.getPlugin(MortuusTerraCore.class);
 	private Location shelterLocation;
 
 	public FalloutShelter(Location shelterLocation) {
@@ -103,10 +107,8 @@ public class FalloutShelter {
 		enderChest.setData((byte) 5);
 		furnace.setData((byte) 5);
 		
-//		BlockState state = (Chest) chestBlock.getState().getData();
-//		state.setData(arg0);
-//		Chest eChest = (Chest) enderChest.getState().getData();
-		
+		Chest chest = (Chest) chestBlock.getState();
+		core.getSupplyDropManager().fillSupplyDropContent(chest.getBlockInventory());
 		
 	}
 

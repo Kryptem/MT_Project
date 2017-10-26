@@ -15,6 +15,7 @@ import com.mortuusterra.commands.AdminCommands;
 import com.mortuusterra.listeners.GeckPowerListener;
 import com.mortuusterra.listeners.GeneratorListener;
 import com.mortuusterra.listeners.PlayerListener;
+import com.mortuusterra.listeners.SupplyDropListener;
 import com.mortuusterra.listeners.WorldListener;
 import com.mortuusterra.listeners.mob.MobListener;
 import com.mortuusterra.managers.DataManager;
@@ -146,6 +147,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager manager = getServer().getPluginManager();
 
+		manager.registerEvents(new SupplyDropListener(this), this);
 		manager.registerEvents(new PlayerListener(), this);
 		manager.registerEvents(new MobListener(), this);
 		manager.registerEvents(new GeckPowerListener(), this);

@@ -80,25 +80,25 @@ public class PlayerListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void test(PlayerInteractEvent e) {
-		if (e.getHand() == EquipmentSlot.OFF_HAND)
-			return;
-
-		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
-			main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId()).setPkState(PKStates.ORANGE);
-		;
-
-		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-
-			if (e.getItem() == null)
-				return;
-
-			if (e.getItem().getType() != Material.DIAMOND_HOE)
-				return;
-			FalloutShelter s = new FalloutShelter(e.getClickedBlock().getLocation().clone());
-			s.generateFalloutShelter();
-		}
-	}
+//	@EventHandler
+//	public void test(PlayerInteractEvent e) {
+//		if (e.getHand() == EquipmentSlot.OFF_HAND)
+//			return;
+//
+//		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
+//			main.getPlayerManager().getMortuusPlayer(e.getPlayer().getUniqueId()).setPkState(PKStates.ORANGE);
+//		;
+//
+//		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+//
+//			if (e.getItem() == null)
+//				return;
+//
+//			if (e.getItem().getType() != Material.DIAMOND_HOE)
+//				return;
+//			FalloutShelter s = new FalloutShelter(e.getClickedBlock().getLocation().clone());
+//			s.generateFalloutShelter();
+//		}
+//	}
 
 }

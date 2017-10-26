@@ -37,28 +37,29 @@ public class SupplyDropManager {
 		supplyDrops = new ArrayList<>();
 		supplyContent = new ArrayList<>();
 	}
-	
+
 	public void deliverSupplyDrop(World world) {
 		Random r = new Random();
-		
-		// Supply drops between -500, + 500 
+
+		// Supply drops between -500, + 500
 		double x = r.nextInt(1000) - 500;
 		double y = 0.0D;
 		double z = r.nextInt(1000) - 500;
-		
+
 		Location dropLocation = new Location(world, x, y, z);
-		
+
 		// Get the highest block at that location.
 		dropLocation.setY(world.getHighestBlockYAt(dropLocation));
-		
+
 		dropLocation.getBlock().setType(Material.CHEST);
 		Chest dropChest = (Chest) dropLocation.getBlock().getState();
-		
+
 		SupplyDropObject supplyDrop = new SupplyDropObject(dropLocation, dropChest, dropChest.getInventory());
 		addSupplyDrop(supplyDrop);
-		
+
 		for (Player p : world.getPlayers()) {
-			p.sendMessage(MortuusTerraCore.ALERT_PREFIX + StringUtilities.color("&eSupply Drop spotted at: &6" + x + ", " + dropLocation.getY() + ", " + z + "&e!"));
+			p.sendMessage(MortuusTerraCore.ALERT_PREFIX + StringUtilities
+					.color("&eSupply Drop spotted at: &6" + x + ", " + dropLocation.getY() + ", " + z + "&e!"));
 		}
 	}
 
@@ -70,11 +71,20 @@ public class SupplyDropManager {
 		}
 		return null;
 	}
-	
+
+	public boolean isSupplyDrop(Location location) {
+		for (SupplyDropObject sd : supplyDrops) {
+			if (sd.getDropLocation().equals(location)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void addSupplyDrop(SupplyDropObject sd) {
 		supplyDrops.add(sd);
 	}
-	
+
 	public void removeSupplyDrop(Location location) {
 		supplyDrops.remove(getSupplyDropByLocation(location));
 	}
@@ -82,22 +92,20 @@ public class SupplyDropManager {
 	public boolean isEmpty(Location location) {
 		SupplyDropObject sd = getSupplyDropByLocation(location);
 		if (sd == null)
-		return true;
-		
+			return true;
+
 		for (int i = 0; i < sd.getDropInventory().getSize(); i++) {
 			if (sd.getDropInventory().getContents()[i] != null)
 				return false;
 		}
-		supplyDrops.remove(sd);
-		
 		return true;
 	}
-	
+
 	public Inventory fillSupplyDropContent(Inventory inventory) {
 		Random r = new Random();
 		for (SupplyDropContent content : supplyContent) {
 			if (r.nextInt(100) < content.getItemChance()) {
-				
+
 				int slot = r.nextInt(inventory.getSize());
 				// Add the items to the inventory on random slots.
 				while (inventory.getContents()[slot] != null)
@@ -105,7 +113,7 @@ public class SupplyDropManager {
 				inventory.setItem(slot, new ItemStack(content.getItemMaterial(), content.getItemAmount()));
 			}
 		}
-		
+
 		return inventory;
 	}
 
@@ -114,19 +122,21 @@ public class SupplyDropManager {
 		YamlConfiguration config = file.returnYaml();
 
 		// Supply content
-		// If no content for supply drops is set in config, set a default one to avoid a NPE.
+		// If no content for supply drops is set in config, set a default one to
+		// avoid a NPE.
 		if (config.getConfigurationSection("supply-drops.items") == null) {
-			main.getLogger().info("No supplydrop content found. Creating default content.");
+			main.getLogger().info("No Supplydrop content found. Setting defaults.");
 			String path = "supply-drops.items.0";
 			config.set(path + ".material", "STONE");
 			config.set(path + ".chance", 75);
 			config.set(path + ".amount", 32);
 			file.save(config);
 		}
-		
+
 		for (String key : config.getConfigurationSection("supply-drops.items").getKeys(false)) {
 
-			Material itemMaterial = Material.valueOf(config.getString("supply-drops.items." + key + ".material").toUpperCase());
+			Material itemMaterial = Material
+					.valueOf(config.getString("supply-drops.items." + key + ".material").toUpperCase());
 			int itemChance = config.getInt("supply-drops.items." + key + ".chance");
 			int itemAmount = config.getInt("supply-drops.items." + key + ".amount");
 
@@ -136,7 +146,7 @@ public class SupplyDropManager {
 		// Supply drops
 		for (String s : config.getStringList("supply-drops.objects")) {
 			Location loc = StringUtilities.stringToLocation(s);
-			
+
 			loc.getBlock().setType(Material.CHEST);
 			Chest chest = (Chest) loc.getBlock().getState();
 			supplyDrops.add(new SupplyDropObject(loc, chest, chest.getInventory()));

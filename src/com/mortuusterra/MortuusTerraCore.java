@@ -7,6 +7,7 @@
 package com.mortuusterra;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,8 +15,10 @@ import com.mortuusterra.commands.AdminCommands;
 import com.mortuusterra.listeners.GeckPowerListener;
 import com.mortuusterra.listeners.GeneratorListener;
 import com.mortuusterra.listeners.PlayerListener;
+import com.mortuusterra.listeners.SupplyDropListener;
 import com.mortuusterra.listeners.WorldListener;
 import com.mortuusterra.listeners.mob.MobListener;
+import com.mortuusterra.managers.DataManager;
 import com.mortuusterra.managers.GeckManager;
 import com.mortuusterra.managers.GeckObjectManager;
 import com.mortuusterra.managers.MobManager;
@@ -27,6 +30,7 @@ import com.mortuusterra.objects.CustomScoreboards;
 import com.mortuusterra.utils.files.FileManager;
 import com.mortuusterra.utils.nmsentities.CustomEntityType;
 import com.mortuusterra.utils.others.StringUtilities;
+import com.mortuusterra.utils.others.SupplyDropTimer;
 
 public class MortuusTerraCore extends JavaPlugin {
 	/*
@@ -61,6 +65,8 @@ public class MortuusTerraCore extends JavaPlugin {
 	private MobManager mobManager;
 	private RecipeManager recipeManager;
 	private SupplyDropManager supplyDropManager;
+	private DataManager dataManager;
+	private SupplyDropTimer supplyDropTimer;
 
 	/*
 	 * These are all of the listeners
@@ -100,14 +106,18 @@ public class MortuusTerraCore extends JavaPlugin {
 		// register/initiate Commands
 		getCommand("supplydrop").setExecutor(new AdminCommands(this));
 
-		// register/initiate timers
-
-		// start radiation
-		getRadiationManager().startPlayerRadiationDamage();
-
 		// Load files
 		fileManager = new FileManager();
 		getFileManager().loadFiles();
+		
+		// start radiation
+		getRadiationManager().startPlayerRadiationDamage();
+	
+		// Start supplydrops for enabled worlds
+		for (World world : getDataManager().getSupplyDropWorlds()) {
+			getSupplyDropTimer().startSupplyDropTimer(world);
+		}
+
 
 		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
@@ -137,6 +147,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager manager = getServer().getPluginManager();
 
+		manager.registerEvents(new SupplyDropListener(this), this);
 		manager.registerEvents(new PlayerListener(), this);
 		manager.registerEvents(new MobListener(), this);
 		manager.registerEvents(new GeckPowerListener(), this);
@@ -155,6 +166,8 @@ public class MortuusTerraCore extends JavaPlugin {
 		mobManager = new MobManager();
 		supplyDropManager = new SupplyDropManager(this);
 		scoreboards = new CustomScoreboards();
+		dataManager = new DataManager(this);
+		supplyDropTimer = new SupplyDropTimer(this);
 	}
 
 	public static MortuusTerraCore getCore() {
@@ -163,6 +176,14 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	public FileManager getFileManager() {
 		return fileManager;
+	}
+
+	public SupplyDropTimer getSupplyDropTimer() {
+		return supplyDropTimer;
+	}
+	
+	public DataManager getDataManager() {
+		return dataManager;
 	}
 
 	public CustomScoreboards getScoreboards() {

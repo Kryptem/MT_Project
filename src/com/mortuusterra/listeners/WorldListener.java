@@ -12,44 +12,16 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.FalloutShelter;
 
 public class WorldListener implements Listener {
 
-	private MortuusTerraCore core;
-	private int timePassed;
+//	private MortuusTerraCore core;
 
 	public WorldListener(MortuusTerraCore core) {
-		this.core = core;
-		this.timePassed = 0;
-		startSupplyDropTimer();
-	}
-
-	private void startSupplyDropTimer() {
-		Random r = new Random();
-
-		new BukkitRunnable() {
-			int randomFactor = 0;
-			
-			@Override
-			public void run() {
-				if (timePassed == 0) 
-					randomFactor = r.nextInt(48001) - 24000;
-				if (timePassed % 200 == 0)
-					core.getLogger().info("Next supplydrop in " + (((216000 + randomFactor) - timePassed) / 20) + " seconds.");
-				// If 3 hours (216.000 ticks) ± 20 minutes (24000 ticks) have passed deliver.
-				// Getting the world should maybe be changed later.
-				if (timePassed >= 216000 + randomFactor) {
-					core.getSupplyDropManager().deliverSupplyDrop(core.getServer().getWorld("world"));
-					timePassed = 0;
-				}
-				timePassed++;
-			}
-
-		}.runTaskTimer(core, 0L, 1L);
+//		this.core = core;
 	}
 
 	@EventHandler

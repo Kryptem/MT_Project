@@ -5,9 +5,13 @@
  */
 package com.mortuusterra.managers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -62,7 +66,29 @@ public class RadiationManager {
 
 	private boolean isPlayerInBuilding(Player p) {
 		Location playerLocation = p.getLocation();
-		int highestY = playerLocation.getWorld().getHighestBlockYAt(playerLocation);
+		int highestY = playerLocation.getWorld().getHighestBlockYAt(playerLocation) - 1;
+
+		int x = playerLocation.getBlockX();
+		int z = playerLocation.getBlockZ();
+		List<Block> blocksAbovePlayer = new ArrayList<>();
+
+		for (int i = playerLocation.getBlockY() + 2; i < highestY; i++) {
+			blocksAbovePlayer.add(playerLocation.getWorld().getBlockAt(x, i, z));
+		}
+
+		Block highestBlock = playerLocation.getWorld().getBlockAt(x, highestY, z);
+
+		// Check if the highest block is a leaf
+		// If its a leaf but theres a non-leaf block below player is covered
+		// If theres only air or leaves above player, hes not covered
+		if (highestBlock.getType().name().contains("LEAVES")) {
+			for (Block b : blocksAbovePlayer) {
+				
+				if (b.getType() != Material.AIR && !b.getType().name().contains("LEAVES"))
+					return true;
+			}
+			return false;
+		}
 
 		return (playerLocation.getBlockY() < highestY - 1);
 	}

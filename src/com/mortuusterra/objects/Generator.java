@@ -10,9 +10,7 @@ import org.bukkit.Location;
 public class Generator {
 
 	private Location genLoc;
-	
 	private boolean toggle;
-	
 	private int fuelAmount;
 	
 	public Generator(Location genLoc) {

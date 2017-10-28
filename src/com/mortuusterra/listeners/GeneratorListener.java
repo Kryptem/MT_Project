@@ -138,68 +138,75 @@ public class GeneratorListener implements Listener {
 
 		String chunk = placedBlock.getLocation().getChunk().getX() + ";" + placedBlock.getLocation().getChunk().getZ();
 
-		if (inHand.hasItemMeta() && inHand.getItemMeta().hasDisplayName()) {
+		if (placedBlock.getType() == Material.FURNACE) {
+			if (main.getGeneratorManager().isGeneratorBuildCorrect(placedBlock)) {
 
-			if (!inHand.getItemMeta().getDisplayName().equalsIgnoreCase(RecipeManager.GENERATOR_NAME))
-				return;
+				// if
+				// (!inHand.getItemMeta().getDisplayName().equalsIgnoreCase(RecipeManager.GENERATOR_NAME))
+				// return;
 
-			// A generator was placed
-			inUse.add(placedBlock.getLocation());
+				// A generator was placed
+				inUse.add(placedBlock.getLocation());
 
-			player.sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Powering up generator...");
+				player.sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Powering up generator...");
 
-			// Run everything async; creates a dramatic delay + saves
-			// performance
-			new BukkitRunnable() {
+				// Run everything async; creates a dramatic delay + saves
+				// performance
+				new BukkitRunnable() {
 
-			
-				@Override
-				public void run() {
-					List<Block> blocks = getNearbyBlocks(placedBlock, 15);
+					@Override
+					public void run() {
+						List<Block> blocks = getNearbyBlocks(placedBlock, 15);
 
-					for (Block block : blocks) {
-						String chunk = block.getLocation().getChunk().getX() + ";"
-								+ block.getLocation().getChunk().getZ();
+						for (Block block : blocks) {
+							String chunk = block.getLocation().getChunk().getX() + ";"
+									+ block.getLocation().getChunk().getZ();
 
-						ManyMap<String, Location> mm = powerable.get(block.getLocation().getWorld().getName());
-						mm.addValue(chunk, block.getLocation());
-						powerable.put(block.getLocation().getWorld().getName(), mm);
+							ManyMap<String, Location> mm = powerable.get(block.getLocation().getWorld().getName());
+							mm.addValue(chunk, block.getLocation());
+							powerable.put(block.getLocation().getWorld().getName(), mm);
 
-//						 Power redstone
-//						if (block.getType() == Material.REDSTONE_TORCH_OFF)
-//							block.setType(Material.REDSTONE_TORCH_ON);
-//						
-//						 Tries to update the wire. This doesn't work all the time.
-//						 Sometimes a wire won't turn on eventhough it is powered by a torch for example.
-//						if (block.getType() == Material.REDSTONE_WIRE) {
-//							block.setData((byte) 1, true);
-//							block.setData((byte) 0, true);
-//						}
+							// Power redstone
+							// if (block.getType() ==
+							// Material.REDSTONE_TORCH_OFF)
+							// block.setType(Material.REDSTONE_TORCH_ON);
+							//
+							// Tries to update the wire. This doesn't work all
+							// the time.
+							// Sometimes a wire won't turn on eventhough it is
+							// powered by a torch for example.
+							// if (block.getType() == Material.REDSTONE_WIRE) {
+							// block.setData((byte) 1, true);
+							// block.setData((byte) 0, true);
+							// }
+
+						}
+
+						new BukkitRunnable() {
+							@Override
+							public void run() {
+								player.sendMessage(
+										MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Generator Ready!");
+								inUse.remove(placedBlock.getLocation());
+							}
+						}.runTask(main);
 
 					}
+				}.runTaskLaterAsynchronously(main, 10L); // It's a little too
+															// fast.
 
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							player.sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.GREEN + " Generator Ready!");
-							inUse.remove(placedBlock.getLocation());
-						}
-					}.runTask(main);
+				Location generatorLoc = placedBlock.getLocation();
 
-				}
-			}.runTaskLaterAsynchronously(main, 10L); // It's a little too fast.
+				// add the generator
+				ManyMap<String, Location> mm = generators.get(generatorLoc.getWorld().getName());
+				mm.addValue(generatorLoc.getChunk().getX() + ";" + generatorLoc.getChunk().getZ(), generatorLoc);
+				generators.put(generatorLoc.getWorld().getName(), mm);
 
-			Location generatorLoc = placedBlock.getLocation();
-
-			// add the generator
-			ManyMap<String, Location> mm = generators.get(generatorLoc.getWorld().getName());
-			mm.addValue(generatorLoc.getChunk().getX() + ";" + generatorLoc.getChunk().getZ(), generatorLoc);
-			generators.put(generatorLoc.getWorld().getName(), mm);
-
-			// Disable torches
-		} else if (inHand.getType() == Material.REDSTONE_TORCH_ON && !generators.get(placedBlock.getWorld().getName())
-				.getList(chunk).contains(placedBlock.getLocation())) {
-			placedBlock.setType(Material.REDSTONE_TORCH_OFF);
+				// Disable torches
+			} else if (inHand.getType() == Material.REDSTONE_TORCH_ON && !generators
+					.get(placedBlock.getWorld().getName()).getList(chunk).contains(placedBlock.getLocation())) {
+				placedBlock.setType(Material.REDSTONE_TORCH_OFF);
+			}
 		}
 	}
 
@@ -239,7 +246,7 @@ public class GeneratorListener implements Listener {
 								+ block.getLocation().getChunk().getZ();
 
 						mm.removeValue(chunks, block.getLocation());
-						
+
 						// Check if there is a geck in range and remove it
 						main.getGeckObjectManager().removeGeckLocation(block.getLocation());
 
@@ -270,7 +277,7 @@ public class GeneratorListener implements Listener {
 			public void run() {
 				player.sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " Generator deactivated!");
 				brokenBlock.setType(Material.AIR);
-				brokenBlock.getWorld().dropItemNaturally(brokenBlock.getLocation(), RecipeManager.getGenerator());
+				brokenBlock.getWorld().dropItemNaturally(brokenBlock.getLocation(), new ItemStack(Material.FURNACE));
 				inUse.remove(brokenBlock.getLocation());
 			}
 
@@ -336,15 +343,15 @@ public class GeneratorListener implements Listener {
 			event.setNewCurrent(0);
 		}
 	}
-	
+
 	public Map<String, ManyMap<String, Location>> getPowerable() {
 		return powerable;
 	}
-	
+
 	public Map<String, ManyMap<String, Location>> getGenerators() {
 		return generators;
 	}
-	
+
 	public List<Location> getInUse() {
 		return inUse;
 	}

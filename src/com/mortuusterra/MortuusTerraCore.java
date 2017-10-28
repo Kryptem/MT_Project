@@ -21,6 +21,7 @@ import com.mortuusterra.listeners.mob.MobListener;
 import com.mortuusterra.managers.DataManager;
 import com.mortuusterra.managers.GeckManager;
 import com.mortuusterra.managers.GeckObjectManager;
+import com.mortuusterra.managers.GeneratorManager;
 import com.mortuusterra.managers.MobManager;
 import com.mortuusterra.managers.PlayerManager;
 import com.mortuusterra.managers.RadiationManager;
@@ -67,6 +68,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	private SupplyDropManager supplyDropManager;
 	private DataManager dataManager;
 	private SupplyDropTimer supplyDropTimer;
+	private GeneratorManager generatorManager;
 
 	/*
 	 * These are all of the listeners
@@ -152,9 +154,6 @@ public class MortuusTerraCore extends JavaPlugin {
 		manager.registerEvents(new MobListener(), this);
 		manager.registerEvents(new GeckPowerListener(), this);
 		manager.registerEvents(new WorldListener(this), this);
-		// getServer().getPluginManager().registerEvents(new
-		// CellTowerBlockEvent(),
-		// this);
 		manager.registerEvents(genListener = new GeneratorListener(), this);
 	}
 
@@ -168,6 +167,7 @@ public class MortuusTerraCore extends JavaPlugin {
 		scoreboards = new CustomScoreboards();
 		dataManager = new DataManager(this);
 		supplyDropTimer = new SupplyDropTimer(this);
+		generatorManager = new GeneratorManager();
 	}
 
 	public static MortuusTerraCore getCore() {
@@ -176,6 +176,10 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	public FileManager getFileManager() {
 		return fileManager;
+	}
+	
+	public GeneratorManager getGeneratorManager() {
+		return generatorManager;
 	}
 
 	public SupplyDropTimer getSupplyDropTimer() {

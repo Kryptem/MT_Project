@@ -142,7 +142,6 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	private void registerRecipes() {
 		recipeManager = new RecipeManager();
-		recipeManager.setCellTowerRecipe();
 		recipeManager.setGeneratorRecipe();
 	}
 

@@ -130,6 +130,7 @@ public class GeneratorListener implements Listener {
 	}
 
 	// Called when a player places a generator
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Block placedBlock = event.getBlock();
@@ -141,9 +142,11 @@ public class GeneratorListener implements Listener {
 		if (placedBlock.getType() == Material.FURNACE) {
 			if (main.getGeneratorManager().isGeneratorBuildCorrect(placedBlock)) {
 
-				// if
-				// (!inHand.getItemMeta().getDisplayName().equalsIgnoreCase(RecipeManager.GENERATOR_NAME))
-				// return;
+				if (!inHand.hasItemMeta())
+					return;
+
+				if (!inHand.getItemMeta().getDisplayName().equalsIgnoreCase(RecipeManager.GENERATOR_NAME))
+					return;
 
 				// A generator was placed
 				inUse.add(placedBlock.getLocation());
@@ -166,20 +169,6 @@ public class GeneratorListener implements Listener {
 							mm.addValue(chunk, block.getLocation());
 							powerable.put(block.getLocation().getWorld().getName(), mm);
 
-							// Power redstone
-							// if (block.getType() ==
-							// Material.REDSTONE_TORCH_OFF)
-							// block.setType(Material.REDSTONE_TORCH_ON);
-							//
-							// Tries to update the wire. This doesn't work all
-							// the time.
-							// Sometimes a wire won't turn on eventhough it is
-							// powered by a torch for example.
-							// if (block.getType() == Material.REDSTONE_WIRE) {
-							// block.setData((byte) 1, true);
-							// block.setData((byte) 0, true);
-							// }
-
 						}
 
 						new BukkitRunnable() {
@@ -194,6 +183,20 @@ public class GeneratorListener implements Listener {
 					}
 				}.runTaskLaterAsynchronously(main, 10L); // It's a little too
 															// fast.
+				for (Block block : getNearbyBlocks(placedBlock, 15)) {
+					// Power redstone
+					if (block.getType() == Material.REDSTONE_TORCH_OFF)
+						block.setType(Material.REDSTONE_TORCH_ON);
+
+					// Tries to update the wire. This doesn't work all
+					// the time.
+					// Sometimes a wire won't turn on eventhough it is
+					// powered by a torch for example.
+					if (block.getType() == Material.REDSTONE_WIRE) {
+						block.setData((byte) 1, true);
+						block.setData((byte) 0, true);
+					}
+				}
 
 				Location generatorLoc = placedBlock.getLocation();
 
@@ -201,12 +204,12 @@ public class GeneratorListener implements Listener {
 				ManyMap<String, Location> mm = generators.get(generatorLoc.getWorld().getName());
 				mm.addValue(generatorLoc.getChunk().getX() + ";" + generatorLoc.getChunk().getZ(), generatorLoc);
 				generators.put(generatorLoc.getWorld().getName(), mm);
-
-				// Disable torches
-			} else if (inHand.getType() == Material.REDSTONE_TORCH_ON && !generators
-					.get(placedBlock.getWorld().getName()).getList(chunk).contains(placedBlock.getLocation())) {
-				placedBlock.setType(Material.REDSTONE_TORCH_OFF);
 			}
+
+			// Disable torches
+		} else if (inHand.getType() == Material.REDSTONE_TORCH_ON && !generators.get(placedBlock.getWorld().getName())
+				.getList(chunk).contains(placedBlock.getLocation())) {
+			placedBlock.setType(Material.REDSTONE_TORCH_OFF);
 		}
 	}
 
@@ -277,7 +280,8 @@ public class GeneratorListener implements Listener {
 			public void run() {
 				player.sendMessage(MortuusTerraCore.NOTI_PREFIX + ChatColor.RED + " Generator deactivated!");
 				brokenBlock.setType(Material.AIR);
-				brokenBlock.getWorld().dropItemNaturally(brokenBlock.getLocation(), new ItemStack(Material.FURNACE));
+				brokenBlock.getWorld().dropItemNaturally(brokenBlock.getLocation(),
+						new ItemStack(RecipeManager.getGenerator()));
 				inUse.remove(brokenBlock.getLocation());
 			}
 

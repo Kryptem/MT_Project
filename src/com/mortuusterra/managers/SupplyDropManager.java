@@ -113,6 +113,10 @@ public class SupplyDropManager {
 				inventory.setItem(slot, new ItemStack(content.getItemMaterial(), content.getItemAmount()));
 			}
 		}
+		
+		// A 5 % chance to add a Generator item
+		if (r.nextInt(100) < 5)
+			inventory.addItem(RecipeManager.getGenerator());
 
 		return inventory;
 	}

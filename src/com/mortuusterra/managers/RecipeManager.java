@@ -33,37 +33,10 @@ public class RecipeManager {
 		return generator;
 	}
 
-	public void setCellTowerRecipe() {
-		/*
-		ItemStack cellTower = new ItemStack(Material.DIAMOND_BLOCK);
-		ItemMeta cellTowerMeta = cellTower.getItemMeta();
-		String cellTowerName = "CellTower";
-		cellTowerMeta.setDisplayName(cellTowerName);
-		cellTower.setItemMeta(cellTowerMeta);
-
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-
-		ShapedRecipe cellTowerRecipe = new ShapedRecipe(cellTowerKey, cellTower);
-
-		cellTowerRecipe.shape("ddd", "drd", "ddd");
-		cellTowerRecipe.setIngredient('d', Material.DIAMOND);
-		cellTowerRecipe.setIngredient('r', Material.REDSTONE_BLOCK);
-
-		Bukkit.getServer().addRecipe(cellTowerRecipe);
-		**/
-	}
-
 	// Generator
 	public void setGeneratorRecipe() {
-		generator = new ItemStack(Material.IRON_BLOCK);
+		generator = new ItemStack(Material.FURNACE);
 
-		ItemStack generator = new ItemStack(Material.IRON_BLOCK);
 		ItemMeta generatorMeta = generator.getItemMeta();
 		generatorMeta.setDisplayName(GENERATOR_NAME);
 		generator.setItemMeta(generatorMeta);

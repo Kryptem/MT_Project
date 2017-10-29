@@ -37,8 +37,8 @@ public class WorldListener implements Listener {
 		Location loc = new Location(e.getWorld(), x + 8, y, z + 2);
 		Random r = new Random();
 
-		// 2% chance of spawning shelter on generating new chunks
-		if (r.nextInt(100) < 2) {
+		// 0.2% chance of spawning shelter on generating new chunks
+		if (r.nextInt(1000) < 2) {
 			FalloutShelter s = new FalloutShelter(loc.clone());
 			s.generateFalloutShelter();
 		}

@@ -14,7 +14,7 @@ import org.bukkit.entity.LivingEntity;
 public class MobManager {
 
 	/**
-	 * Loop over all entities and kill them if they are not a zombie, pig, enderman, cow or sheep.
+	 * Loop over all entities and kill them if they are not a zombie, pig, enderman, cow, squid or sheep.
 	 * @param loaded the chunk which was loaded
 	 */
 	public void clearUnwantedMobs(Chunk loaded){
@@ -22,7 +22,8 @@ public class MobManager {
                 (entity.getType().isAlive() && entity.getType() != EntityType.PLAYER
                 && entity.getType() != EntityType.ZOMBIE && entity.getType() != EntityType.ENDERMAN
                 && entity.getType() != EntityType.PIG && entity.getType() != EntityType.COW
-                && entity.getType() != EntityType.SHEEP)).forEach(entity -> ((LivingEntity)entity).damage(((LivingEntity) entity).getHealth() + 1));
+                && entity.getType() != EntityType.SHEEP && entity.getType() != EntityType.SQUID)
+                ).forEach(entity -> ((LivingEntity)entity).damage(((LivingEntity) entity).getHealth() + 1));
 	}
 
 }

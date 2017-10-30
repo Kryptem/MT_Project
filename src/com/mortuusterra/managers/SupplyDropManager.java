@@ -102,6 +102,7 @@ public class SupplyDropManager {
 	}
 
 	public Inventory fillSupplyDropContent(Inventory inventory) {
+		
 		Random r = new Random();
 		for (SupplyDropContent content : supplyContent) {
 			if (r.nextInt(100) < content.getItemChance()) {

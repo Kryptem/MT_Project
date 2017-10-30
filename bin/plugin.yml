@@ -23,5 +23,5 @@ description: >
                  - Spawn Control
 commands:
   supplydrop:
-    usage: /supplydrop drop
-    description: Drops a Supply Drop
+    usage: /supplydrop
+    description: Use /supplydrop for help.

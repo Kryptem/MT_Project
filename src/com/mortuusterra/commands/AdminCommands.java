@@ -11,15 +11,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mortuusterra.MortuusTerraCore;
+import com.mortuusterra.utils.others.StringUtilities;
 
 public class AdminCommands implements CommandExecutor {
 
 	private MortuusTerraCore main;
-	
+	private final String[] helpPage = StringUtilities.helpPage("supplydrop", "drop", "Forces a supplydrop");
+
 	public AdminCommands(MortuusTerraCore main) {
 		this.main = main;
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
@@ -31,11 +33,17 @@ public class AdminCommands implements CommandExecutor {
 
 		if (!p.isOp())
 			return true;
-		
+
+		if (args.length == 0) {
+			p.sendMessage(helpPage);
+			return true;
+		}
+
 		if (cmd.getName().equalsIgnoreCase("supplydrop")) {
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("drop")) {
 					main.getSupplyDropManager().deliverSupplyDrop(p.getWorld());
+
 				}
 			}
 		}

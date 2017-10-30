@@ -72,10 +72,11 @@ public class RadiationManager {
 		int z = playerLocation.getBlockZ();
 		List<Block> blocksAbovePlayer = new ArrayList<>();
 
+		// Add blocks above player to a list
 		for (int i = playerLocation.getBlockY() + 2; i < highestY; i++) {
 			blocksAbovePlayer.add(playerLocation.getWorld().getBlockAt(x, i, z));
 		}
-
+		
 		Block highestBlock = playerLocation.getWorld().getBlockAt(x, highestY, z);
 
 		// Check if the highest block is a leaf
@@ -83,7 +84,7 @@ public class RadiationManager {
 		// If theres only air or leaves above player, hes not covered
 		if (highestBlock.getType().name().contains("LEAVES")) {
 			for (Block b : blocksAbovePlayer) {
-				
+
 				if (b.getType() != Material.AIR && !b.getType().name().contains("LEAVES"))
 					return true;
 			}

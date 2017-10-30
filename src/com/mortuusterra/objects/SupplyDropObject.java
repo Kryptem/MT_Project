@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.mortuusterra.MortuusTerraCore;
 
 public class SupplyDropObject {
-	
+
 	private final MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	private Location dropLocation;
@@ -26,15 +26,18 @@ public class SupplyDropObject {
 		this.dropChest = dropChest;
 		this.dropInventory = dropInventory;
 		this.dropLocation = dropLocation;
-		
-		if (dropInventory != null)
-			fillChest();
+
+		if (dropInventory != null) {
+			if (main.getSupplyDropManager().isEmpty(dropLocation))
+				fillChest();
+		}
+
 	}
-	
+
 	public void fillChest() {
 		main.getSupplyDropManager().fillSupplyDropContent(dropInventory);
 	}
-	
+
 	public Inventory getDropInventory() {
 		return dropInventory;
 	}

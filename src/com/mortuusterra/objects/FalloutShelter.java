@@ -110,6 +110,7 @@ public class FalloutShelter {
 		Chest chest = (Chest) chestBlock.getState();
 		core.getSupplyDropManager().fillSupplyDropContent(chest.getBlockInventory());
 		
+		
 	}
 
 	private void setBedrock(List<Block> blocks) {

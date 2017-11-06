@@ -4,7 +4,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import com.mortuusterra.MortuusTerraCore;
+
 public class GeneratorManager {
+	private MortuusTerraCore main;
+	public GeneratorManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	public boolean isGeneratorBuildCorrect(Block furnace) {
 		BlockFace[] squareFaces = { BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH,

@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
 import com.mortuusterra.MortuusTerraCore;
@@ -20,18 +19,20 @@ import com.mortuusterra.MortuusTerraCore;
 public class PluginFile {
 
 	// Unsure how this was meant to be, changed so that it doesn't throw StackOverflows
-    private MortuusTerraCore core = JavaPlugin.getPlugin(MortuusTerraCore.class);
+    private MortuusTerraCore main;
 
     private String name;
     private File file;
 
     /**
      * Constructor
-     * @param name name of the file
-     * @param type type of the file
+     * @param core Core plugin
+     * @param name Name of the file
+     * @param type Type of the file
      */
-    public PluginFile(String name, FileType type) {
-        file = FileManager.createPluginFile(name, type);
+    public PluginFile(MortuusTerraCore core, String name, FileType type) {
+    	this.main = core;
+        file = main.getFileManager().createPluginFile(name, type);
         this.name = name;
 
     }
@@ -60,10 +61,10 @@ public class PluginFile {
     public void save(YamlConfiguration yamlConfiguration) {
         try {
             yamlConfiguration.save(file);
-            core.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
         } catch (IOException e) {
             e.printStackTrace();
-            core.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
         }
     }
 
@@ -81,7 +82,7 @@ public class PluginFile {
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-            core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
+            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
         }
     }
 
@@ -97,7 +98,7 @@ public class PluginFile {
             printWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-            core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
+            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "File could not be written to!");
         }
     }
 
@@ -124,7 +125,7 @@ public class PluginFile {
 	public void dispose() {
 		file.delete();
 		file = null;
-		core = null;
+		main = null;
 		name = null;
 	}
 }

@@ -13,12 +13,17 @@ import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.GeckObject;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
 import com.mortuusterra.utils.others.StringUtilities;
 
 public class GeckObjectManager {
+	private MortuusTerraCore main;
+	public GeckObjectManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	private PluginFile file;
 
@@ -64,7 +69,7 @@ public class GeckObjectManager {
 	}
 
 	public void loadGecksFromDisk() {
-		file = new PluginFile("gecks", FileType.YAML);
+		file = new PluginFile(main, "gecks", FileType.YAML);
 		YamlConfiguration config = file.returnYaml();
 
 		for (String locaString : config.getStringList("gecks")) {

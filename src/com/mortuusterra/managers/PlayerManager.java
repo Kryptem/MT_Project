@@ -12,12 +12,17 @@ import java.util.UUID;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.PKStates;
 import com.mortuusterra.objects.PlayerObject;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
 
 public class PlayerManager {
+	private MortuusTerraCore main;
+	public PlayerManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	private PluginFile file;
 
@@ -82,7 +87,7 @@ public class PlayerManager {
 	}
 
 	public void loadPlayersFromDisk() {
-		file = new PluginFile("players", FileType.YAML);
+		file = new PluginFile(main, "players", FileType.YAML);
 		YamlConfiguration config = file.returnYaml();
 
 		for (String key : config.getConfigurationSection("").getKeys(false)) {

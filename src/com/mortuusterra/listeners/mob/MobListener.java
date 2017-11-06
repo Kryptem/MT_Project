@@ -23,10 +23,13 @@ import com.mortuusterra.MortuusTerraCore;
 
 
 public class MobListener implements Listener {
+	private MortuusTerraCore main;
+	public MobListener(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	
 	private Random rand = new Random();
-	private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
 
 	// Changed to CreatureSpawnEvent 9/2/17
 	@EventHandler
@@ -58,8 +61,8 @@ public class MobListener implements Listener {
 	@EventHandler
 	public void onBurn(EntityCombustEvent e) {
 		if (e.getEntityType() == EntityType.ZOMBIE) {
-			
-			if (e.getEntity().getLocation().getBlock().getLightFromSky() == 15) {
+			long time = e.getEntity().getWorld().getTime();
+			if (e.getEntity().getLocation().getBlock().getLightFromSky() == 15 && time > 0 && time < 12000) {
 				e.getEntity().setFireTicks(0);
 				e.setDuration(0);
 				e.setCancelled(true);

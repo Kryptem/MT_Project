@@ -50,9 +50,12 @@ import com.mortuusterra.utils.others.WorldUtils;
  *
  */
 public class GeneratorListener implements Listener {
+	private MortuusTerraCore main;
+	public GeneratorListener(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	// Variables :D
-	private MortuusTerraCore main = MortuusTerraCore.getPlugin(MortuusTerraCore.class);
 	private PluginFile file;
 
 	// A special hierarchical map, in the order of World -> Chunk -> Location to
@@ -63,7 +66,7 @@ public class GeneratorListener implements Listener {
 
 	// Initailize file; lists from config. Called when server is starting
 	public void loadFile() {
-		file = new PluginFile("generators", FileType.YAML);
+		file = new PluginFile(main, "generators", FileType.YAML);
 		for (World w : Bukkit.getWorlds()) {
 			powerable.put(w.getName(), new ManyMap<>());
 			generators.put(w.getName(), new ManyMap<>());

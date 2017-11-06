@@ -8,16 +8,18 @@ package com.mortuusterra.utils.files;
 import com.mortuusterra.MortuusTerraCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 import java.io.IOException;
 
 public class FileManager {
+	private MortuusTerraCore main;
+
+	public FileManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	// Not exactly sure what this class was for; removed weird variables that
 	// would've thrown StackOverflows
-	private static MortuusTerraCore core = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	/**
 	 * Create PluginFile Method
@@ -30,14 +32,14 @@ public class FileManager {
 
 	// Obviously creates a PluginFile. ex: createPluginFile("config",
 	// FileType.YAML);
-	public static File createPluginFile(String name, FileType type) {
+	public File createPluginFile(String name, FileType type) {
 		switch (type) {
 		case YAML:
-			if (!core.getDataFolder().exists()) {
-				core.getDataFolder().mkdir();
+			if (!main.getDataFolder().exists()) {
+				main.getDataFolder().mkdir();
 			}
 
-			File file = new File(core.getDataFolder(), name + ".yml");
+			File file = new File(main.getDataFolder(), name + ".yml");
 
 			if (!file.exists()) {
 				try {
@@ -62,7 +64,7 @@ public class FileManager {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not create file!");
+				main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not create file!");
 			}
 			return jsonFile;
 		case TEXT:
@@ -75,7 +77,7 @@ public class FileManager {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				core.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to create file!");
+				main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to create file!");
 			}
 			return textFile;
 		default:
@@ -84,18 +86,18 @@ public class FileManager {
 	}
 
 	public void saveFiles() {
-		core.getPlayerManager().savePlayersToDisk();
-		core.getGeckObjectManager().saveGecksToDisk();
-		core.getGenListener().saveFile();
-		core.getSupplyDropManager().saveSupplyData();
+		main.getPlayerManager().savePlayersToDisk();
+		main.getGeckObjectManager().saveGecksToDisk();
+		main.getGenListener().saveFile();
+		main.getSupplyDropManager().saveSupplyData();
 	}
 
 	public void loadFiles() {
-		core.getPlayerManager().loadPlayersFromDisk();
-		core.getGeckObjectManager().loadGecksFromDisk();
-		core.getGenListener().loadFile();
-		core.getSupplyDropManager().loadSupplyData();
-		core.getDataManager().loadData();
+		main.getPlayerManager().loadPlayersFromDisk();
+		main.getGeckObjectManager().loadGecksFromDisk();
+		main.getGenListener().loadFile();
+		main.getSupplyDropManager().loadSupplyData();
+		main.getDataManager().loadData();
 	}
 
 }

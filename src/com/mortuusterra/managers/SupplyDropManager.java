@@ -123,7 +123,7 @@ public class SupplyDropManager {
 	}
 
 	public void loadSupplyData() {
-		file = new PluginFile("supplyDrops", FileType.YAML);
+		file = new PluginFile(main, "supplyDrops", FileType.YAML);
 		YamlConfiguration config = file.returnYaml();
 
 		// Supply content

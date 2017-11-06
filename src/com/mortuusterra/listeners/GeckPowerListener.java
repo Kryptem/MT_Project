@@ -21,11 +21,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class GeckPowerListener implements Listener {
+	private MortuusTerraCore main;
+	public GeckPowerListener(MortuusTerraCore main) {
+		this.main = main;
+	}
 
-	MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	// Every time a player interacts with a block
 	// Added disabled message. 9/3/17

@@ -13,14 +13,16 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.mortuusterra.MortuusTerraCore;
 
 public class RadiationManager {
+	private MortuusTerraCore main;
+	public RadiationManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
-	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	public void startPlayerRadiationDamage() {
 		new BukkitRunnable() {

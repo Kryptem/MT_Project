@@ -13,11 +13,15 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
+import com.mortuusterra.MortuusTerraCore;
+
 public class CustomScoreboards {
+	private MortuusTerraCore main;
 
 	private Scoreboard pkTeamsBoard;
 
-	public CustomScoreboards() {
+	public CustomScoreboards(MortuusTerraCore main) {
+		this.main = main;
 		ScoreboardManager manager = Bukkit.getScoreboardManager();
 
 		pkTeamsBoard = manager.getNewScoreboard();

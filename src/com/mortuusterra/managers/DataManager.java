@@ -15,7 +15,7 @@ import com.mortuusterra.utils.files.PluginFile;
 public class DataManager {
 	
 	private PluginFile file;
-	private MortuusTerraCore core;
+	private MortuusTerraCore main;
 	
 	private List<World> supplyDropWorlds;
 	
@@ -25,12 +25,12 @@ public class DataManager {
 	private int radiationDamageDelay;
 
 	public DataManager(MortuusTerraCore core) {
-		this.core = core;
+		this.main = core;
 		supplyDropWorlds = new ArrayList<>();
 	}
 	
 	public void loadData() {
-		file = new PluginFile("data", FileType.YAML);
+		file = new PluginFile(main, "data", FileType.YAML);
 		YamlConfiguration config = file.returnYaml();
 		
 		checkDefaults();
@@ -53,7 +53,7 @@ public class DataManager {
 	 */
 	private void checkDefaults() {
 		YamlConfiguration config = file.returnYaml();
-		core.getLogger().info("Checking for defaults inside data.yml");
+		main.getLogger().info("Checking for defaults inside data.yml");
 		
 		if (config.getStringList("supply-drops.enabled-worlds") == null || config.getStringList("supply-drops.enabled-worlds").isEmpty()) {
 			config.set("supply-drops.enabled-worlds", Arrays.asList("world"));
@@ -72,7 +72,7 @@ public class DataManager {
 			config.set("radiation.seconds-delay", 3);
 		
 		file.save(config);
-		core.getLogger().info("Saved defaults.");
+		main.getLogger().info("Saved defaults.");
 	}
 	
 	public List<World> getSupplyDropWorlds() {

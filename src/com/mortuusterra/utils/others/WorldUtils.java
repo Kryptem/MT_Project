@@ -43,8 +43,6 @@ public class WorldUtils {
 	 *            The center block.
 	 * @param radius
 	 *            The radius.
-	 * @param addAirBlocks
-	 *            If true, air blocks are added to the list.
 	 * @return A list containing all blocks.
 	 */
 	public static List<Block> getNearbyBlocks2D(Block center, int radius) {

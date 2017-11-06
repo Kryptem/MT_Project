@@ -43,8 +43,9 @@ public class MortuusTerraCore extends JavaPlugin {
 	 */
 
 	/*
-	 * Use getCore() to get this main class and all of its public methods. DO NOT
-	 * ACCESS BEFORE ONENABLE
+	 * Use getCore() to get this main class and all of its public methods. 
+	 * 
+	 * DO NOT ACCESS BEFORE ONENABLE
 	 **/
 	public static MortuusTerraCore core;
 
@@ -109,7 +110,7 @@ public class MortuusTerraCore extends JavaPlugin {
 		getCommand("supplydrop").setExecutor(new AdminCommands(this));
 
 		// Load files
-		fileManager = new FileManager();
+		fileManager = new FileManager(this);
 		getFileManager().loadFiles();
 		
 		// start radiation
@@ -141,32 +142,31 @@ public class MortuusTerraCore extends JavaPlugin {
 	}
 
 	private void registerRecipes() {
-		recipeManager = new RecipeManager();
-		recipeManager.setGeneratorRecipe();
+		recipeManager = new RecipeManager(this);
 	}
 
 	private void registerListeners() {
 		PluginManager manager = getServer().getPluginManager();
 
 		manager.registerEvents(new SupplyDropListener(this), this);
-		manager.registerEvents(new PlayerListener(), this);
-		manager.registerEvents(new MobListener(), this);
-		manager.registerEvents(new GeckPowerListener(), this);
+		manager.registerEvents(new PlayerListener(this), this);
+		manager.registerEvents(new MobListener(this), this);
+		manager.registerEvents(new GeckPowerListener(this), this);
 		manager.registerEvents(new WorldListener(this), this);
-		manager.registerEvents(genListener = new GeneratorListener(), this);
+		manager.registerEvents(genListener = new GeneratorListener(this), this);
 	}
 
 	private void initiateManagers() {
-		playerMan = new PlayerManager();
-		geckObjectManager = new GeckObjectManager();
-		geckManager = new GeckManager();
-		radMan = new RadiationManager();
-		mobManager = new MobManager();
+		playerMan = new PlayerManager(this);
+		geckObjectManager = new GeckObjectManager(this);
+		geckManager = new GeckManager(this);
+		radMan = new RadiationManager(this);
+		mobManager = new MobManager(this);
 		supplyDropManager = new SupplyDropManager(this);
-		scoreboards = new CustomScoreboards();
+		scoreboards = new CustomScoreboards(this);
 		dataManager = new DataManager(this);
 		supplyDropTimer = new SupplyDropTimer(this);
-		generatorManager = new GeneratorManager();
+		generatorManager = new GeneratorManager(this);
 	}
 
 	public static MortuusTerraCore getCore() {

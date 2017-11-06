@@ -12,15 +12,16 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.GeckObject;
 import com.mortuusterra.objects.PlayerObject;
 
 public class GeckManager {
+	private MortuusTerraCore main;
+	public GeckManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
-	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
 
 	/**
 	 * @param player

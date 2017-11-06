@@ -11,7 +11,13 @@ import org.bukkit.Chunk;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
+import com.mortuusterra.MortuusTerraCore;
+
 public class MobManager {
+	private MortuusTerraCore main;
+	public MobManager(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	/**
 	 * Loop over all entities and kill them if they are not a zombie, pig, enderman, cow, squid or sheep.

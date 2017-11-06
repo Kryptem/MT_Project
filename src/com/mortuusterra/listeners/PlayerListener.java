@@ -11,15 +11,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mortuusterra.MortuusTerraCore;
 import com.mortuusterra.objects.PKStates;
 import com.mortuusterra.objects.PlayerObject;
 
 public class PlayerListener implements Listener {
-
-	private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+	private MortuusTerraCore main;
+	public PlayerListener(MortuusTerraCore main) {
+		this.main = main;
+	}
 
 	// Disguise disguise = DisguiseAPI.constructDisguise(zombie);
 

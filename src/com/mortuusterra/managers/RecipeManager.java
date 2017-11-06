@@ -5,7 +5,6 @@
  */
 package com.mortuusterra.managers;
 
-import com.mortuusterra.MortuusTerraCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,20 +12,30 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.mortuusterra.MortuusTerraCore;
 
 public class RecipeManager {
 	
-	private final MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+	private MortuusTerraCore main;
+	public RecipeManager(MortuusTerraCore main) {
+		this.main = main;
+		setGeneratorRecipe();
+	}
+	
+	private final Plugin plugin = JavaPlugin.getPlugin(MortuusTerraCore.class);
 	
 	// Added this to remove deprecated code.
 	//private final NamespacedKey cellTowerKey = new NamespacedKey(main, "celltower");
-	private final NamespacedKey genKey = new NamespacedKey(main, "generator");
+	private final NamespacedKey genKey = new NamespacedKey(plugin, "generator");
 
 	// To prevent repition :)
 	public static final String GENERATOR_NAME = ChatColor.RED + "" + ChatColor.BOLD  + "Generator";
 	
 	private static ItemStack generator;
+	
 	
 	// Returns the generator item DO NOT MODIFY THIS
 	public static ItemStack getGenerator() {
@@ -34,7 +43,7 @@ public class RecipeManager {
 	}
 
 	// Generator
-	public void setGeneratorRecipe() {
+	private void setGeneratorRecipe() {
 		generator = new ItemStack(Material.FURNACE);
 
 		ItemMeta generatorMeta = generator.getItemMeta();

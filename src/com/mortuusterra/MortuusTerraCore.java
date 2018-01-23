@@ -38,7 +38,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	 * List of contributors Kadeska23 Shyos Horsey Andrewbow159
 	 */
 
-	private static final MortuusTerraCore core = new MortuusTerraCore();
+	private final MortuusTerraCore core = this;
 
 	/*
 	 * These are all of the managers

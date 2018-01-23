@@ -95,7 +95,7 @@ public class FileManager {
 	public void loadFiles() {
 		main.getPlayerManager().loadPlayersFromDisk();
 		main.getGeckObjectManager().loadGecksFromDisk();
-		main.getGenListener().loadFile();
+		main.getGenListener().loadFile(); // NPE here 
 		main.getSupplyDropManager().loadSupplyData();
 		main.getDataManager().loadData();
 	}

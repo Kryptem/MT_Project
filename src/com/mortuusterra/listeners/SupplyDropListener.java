@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import com.mortuusterra.MortuusTerraCore;
-import com.mortuusterra.objects.SupplyDropObject;
+import com.mortuusterra.objects.SupplyDrop;
 
 public class SupplyDropListener implements Listener {
 
@@ -22,7 +22,7 @@ public class SupplyDropListener implements Listener {
 
 	@EventHandler
 	public void onSupplyDropBreak(BlockBreakEvent e) {
-		SupplyDropObject sd = core.getSupplyDropManager().getSupplyDropByLocation(e.getBlock().getLocation());
+		SupplyDrop sd = core.getSupplyDropManager().getSupplyDropByLocation(e.getBlock().getLocation());
 
 		if (sd == null)
 			return;

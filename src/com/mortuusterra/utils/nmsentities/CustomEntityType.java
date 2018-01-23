@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.bukkit.entity.EntityType;
 
-import com.mortuusterra.objects.DayZombie;
+import com.mortuusterra.misc.DayZombie;
 
 import net.minecraft.server.v1_12_R1.BiomeBase;
 import net.minecraft.server.v1_12_R1.BiomeBase.BiomeMeta;

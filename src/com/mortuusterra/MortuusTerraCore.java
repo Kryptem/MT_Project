@@ -14,10 +14,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.mortuusterra.commands.AdminCommands;
 import com.mortuusterra.listeners.GeckPowerListener;
 import com.mortuusterra.listeners.GeneratorListener;
+import com.mortuusterra.listeners.MobListener;
 import com.mortuusterra.listeners.PlayerListener;
 import com.mortuusterra.listeners.SupplyDropListener;
 import com.mortuusterra.listeners.WorldListener;
-import com.mortuusterra.listeners.mob.MobListener;
 import com.mortuusterra.managers.DataManager;
 import com.mortuusterra.managers.GeckManager;
 import com.mortuusterra.managers.GeckObjectManager;
@@ -27,7 +27,7 @@ import com.mortuusterra.managers.PlayerManager;
 import com.mortuusterra.managers.RadiationManager;
 import com.mortuusterra.managers.RecipeManager;
 import com.mortuusterra.managers.SupplyDropManager;
-import com.mortuusterra.objects.CustomScoreboards;
+import com.mortuusterra.misc.CustomScoreboards;
 import com.mortuusterra.utils.files.FileManager;
 import com.mortuusterra.utils.nmsentities.CustomEntityType;
 import com.mortuusterra.utils.others.StringUtilities;
@@ -35,25 +35,10 @@ import com.mortuusterra.utils.others.SupplyDropTimer;
 
 public class MortuusTerraCore extends JavaPlugin {
 	/*
-	 * List of contributors 
-	 * Kadeska23 
-	 * Shyos 
-	 * Horsey 
-	 * Andrewbow159
+	 * List of contributors Kadeska23 Shyos Horsey Andrewbow159
 	 */
 
-	/*
-	 * Use getCore() to get this main class and all of its public methods. 
-	 * 
-	 * DO NOT ACCESS BEFORE ONENABLE
-	 **/
-	public static MortuusTerraCore core;
-
-	/*
-	 * Hook into the Disguise API. This is used for making infected players look
-	 * like a zombie.
-	 **/
-	// private DisguiseAPI disguiseAPI;
+	private static final MortuusTerraCore core = new MortuusTerraCore();
 
 	/*
 	 * These are all of the managers
@@ -88,11 +73,10 @@ public class MortuusTerraCore extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-
-		core = this;
 		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Starting Mortuus Terra.");
+		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "This plugin is in BETA");
 
 		// register/initiate listeners
 		registerListeners();
@@ -112,15 +96,14 @@ public class MortuusTerraCore extends JavaPlugin {
 		// Load files
 		fileManager = new FileManager(this);
 		getFileManager().loadFiles();
-		
+
 		// start radiation
 		getRadiationManager().startPlayerRadiationDamage();
-	
+
 		// Start supplydrops for enabled worlds
 		for (World world : getDataManager().getSupplyDropWorlds()) {
 			getSupplyDropTimer().startSupplyDropTimer(world);
 		}
-
 
 		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
@@ -153,7 +136,7 @@ public class MortuusTerraCore extends JavaPlugin {
 		manager.registerEvents(new MobListener(this), this);
 		manager.registerEvents(new GeckPowerListener(this), this);
 		manager.registerEvents(new WorldListener(this), this);
-		manager.registerEvents(genListener = new GeneratorListener(this), this);
+		manager.registerEvents(new GeneratorListener(this), this);
 	}
 
 	private void initiateManagers() {
@@ -176,7 +159,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	public FileManager getFileManager() {
 		return fileManager;
 	}
-	
+
 	public GeneratorManager getGeneratorManager() {
 		return generatorManager;
 	}
@@ -184,7 +167,7 @@ public class MortuusTerraCore extends JavaPlugin {
 	public SupplyDropTimer getSupplyDropTimer() {
 		return supplyDropTimer;
 	}
-	
+
 	public DataManager getDataManager() {
 		return dataManager;
 	}
@@ -224,8 +207,4 @@ public class MortuusTerraCore extends JavaPlugin {
 	public SupplyDropManager getSupplyDropManager() {
 		return supplyDropManager;
 	}
-
-	/**
-	 * public DisguiseAPI getDisguiseAPI() { return disguiseAPI; }
-	 **/
 }

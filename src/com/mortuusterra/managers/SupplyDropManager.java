@@ -18,8 +18,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.mortuusterra.MortuusTerraCore;
-import com.mortuusterra.objects.SupplyDropContent;
-import com.mortuusterra.objects.SupplyDropObject;
+import com.mortuusterra.misc.SupplyDropContent;
+import com.mortuusterra.objects.SupplyDrop;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
 import com.mortuusterra.utils.others.StringUtilities;
@@ -29,7 +29,7 @@ public class SupplyDropManager {
 	private MortuusTerraCore main;
 	private PluginFile file;
 
-	private List<SupplyDropObject> supplyDrops;
+	private List<SupplyDrop> supplyDrops;
 	private List<SupplyDropContent> supplyContent;
 
 	public SupplyDropManager(MortuusTerraCore main) {
@@ -54,7 +54,7 @@ public class SupplyDropManager {
 		dropLocation.getBlock().setType(Material.CHEST);
 		Chest dropChest = (Chest) dropLocation.getBlock().getState();
 
-		SupplyDropObject supplyDrop = new SupplyDropObject(dropLocation, dropChest, dropChest.getInventory());
+		SupplyDrop supplyDrop = new SupplyDrop(dropLocation, dropChest, dropChest.getInventory());
 		addSupplyDrop(supplyDrop);
 
 		for (Player p : world.getPlayers()) {
@@ -63,8 +63,8 @@ public class SupplyDropManager {
 		}
 	}
 
-	public SupplyDropObject getSupplyDropByLocation(Location location) {
-		for (SupplyDropObject sd : supplyDrops) {
+	public SupplyDrop getSupplyDropByLocation(Location location) {
+		for (SupplyDrop sd : supplyDrops) {
 			if (sd.getDropLocation().equals(location)) {
 				return sd;
 			}
@@ -73,7 +73,7 @@ public class SupplyDropManager {
 	}
 
 	public boolean isSupplyDrop(Location location) {
-		for (SupplyDropObject sd : supplyDrops) {
+		for (SupplyDrop sd : supplyDrops) {
 			if (sd.getDropLocation().equals(location)) {
 				return true;
 			}
@@ -81,7 +81,7 @@ public class SupplyDropManager {
 		return false;
 	}
 
-	public void addSupplyDrop(SupplyDropObject sd) {
+	public void addSupplyDrop(SupplyDrop sd) {
 		supplyDrops.add(sd);
 	}
 
@@ -90,7 +90,7 @@ public class SupplyDropManager {
 	}
 
 	public boolean isEmpty(Location location) {
-		SupplyDropObject sd = getSupplyDropByLocation(location);
+		SupplyDrop sd = getSupplyDropByLocation(location);
 		if (sd == null)
 			return true;
 
@@ -154,7 +154,7 @@ public class SupplyDropManager {
 
 			loc.getBlock().setType(Material.CHEST);
 			Chest chest = (Chest) loc.getBlock().getState();
-			supplyDrops.add(new SupplyDropObject(loc, chest, chest.getInventory()));
+			supplyDrops.add(new SupplyDrop(loc, chest, chest.getInventory()));
 		}
 	}
 
@@ -162,7 +162,7 @@ public class SupplyDropManager {
 		YamlConfiguration config = file.returnYaml();
 
 		List<String> locString = new ArrayList<>();
-		for (SupplyDropObject sd : supplyDrops) {
+		for (SupplyDrop sd : supplyDrops) {
 			locString.add(StringUtilities.locationToString(sd.getDropLocation()));
 		}
 
@@ -170,7 +170,7 @@ public class SupplyDropManager {
 		file.save(config);
 	}
 
-	public List<SupplyDropObject> getSupplyDrops() {
+	public List<SupplyDrop> getSupplyDrops() {
 		return supplyDrops;
 	}
 

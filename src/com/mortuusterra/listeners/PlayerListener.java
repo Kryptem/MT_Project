@@ -7,13 +7,14 @@ package com.mortuusterra.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import com.mortuusterra.MortuusTerraCore;
-import com.mortuusterra.objects.PKStates;
-import com.mortuusterra.objects.PlayerObject;
+import com.mortuusterra.misc.PKStates;
+import com.mortuusterra.objects.MTPlayer;
 
 public class PlayerListener implements Listener {
 	private MortuusTerraCore main;
@@ -41,7 +42,7 @@ public class PlayerListener implements Listener {
 
 		// Check if the target is dead
 		if (target.getHealth() - e.getDamage() <= 0) {
-			PlayerObject killerObject = main.getPlayerManager().getMortuusPlayer(killer.getUniqueId());
+			MTPlayer killerObject = main.getPlayerManager().getMortuusPlayer(killer.getUniqueId());
 
 			// Sets the time in SECONDS.
 			killerObject.setLastPlayerKillTime(System.currentTimeMillis() / 1000);
@@ -57,10 +58,10 @@ public class PlayerListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
-		PlayerObject pObject = main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
+		MTPlayer pObject = main.getPlayerManager().getMortuusPlayer(p.getUniqueId());
 
 		// if 25 minutes have passed since the last kill set to neutral.
 		// The time is in SECONDS.

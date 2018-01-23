@@ -19,10 +19,10 @@ import com.mortuusterra.MortuusTerraCore;
 
 public class RadiationManager {
 	private MortuusTerraCore main;
+
 	public RadiationManager(MortuusTerraCore main) {
 		this.main = main;
 	}
-
 
 	public void startPlayerRadiationDamage() {
 		new BukkitRunnable() {
@@ -78,7 +78,7 @@ public class RadiationManager {
 		for (int i = playerLocation.getBlockY() + 2; i < highestY; i++) {
 			blocksAbovePlayer.add(playerLocation.getWorld().getBlockAt(x, i, z));
 		}
-		
+
 		Block highestBlock = playerLocation.getWorld().getBlockAt(x, highestY, z);
 
 		// Check if the highest block is a leaf

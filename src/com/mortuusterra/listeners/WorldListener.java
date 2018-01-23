@@ -14,14 +14,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 import com.mortuusterra.MortuusTerraCore;
-import com.mortuusterra.objects.FalloutShelter;
+import com.mortuusterra.misc.FalloutShelter;
 
 public class WorldListener implements Listener {
 
-//	private MortuusTerraCore core;
+	private MortuusTerraCore core;
 
 	public WorldListener(MortuusTerraCore core) {
-//		this.core = core;
+		this.core = core;
 	}
 
 	@EventHandler
@@ -39,7 +39,7 @@ public class WorldListener implements Listener {
 
 		// 0.2% chance of spawning shelter on generating new chunks
 		if (r.nextInt(1000) < 2) {
-			FalloutShelter s = new FalloutShelter(loc.clone());
+			FalloutShelter s = new FalloutShelter(core, loc.clone());
 			s.generateFalloutShelter();
 		}
 	}

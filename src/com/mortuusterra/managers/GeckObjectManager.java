@@ -14,26 +14,27 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.mortuusterra.MortuusTerraCore;
-import com.mortuusterra.objects.GeckObject;
+import com.mortuusterra.objects.Geck;
 import com.mortuusterra.utils.files.FileType;
 import com.mortuusterra.utils.files.PluginFile;
 import com.mortuusterra.utils.others.StringUtilities;
 
 public class GeckObjectManager {
 	private MortuusTerraCore main;
+
 	public GeckObjectManager(MortuusTerraCore main) {
 		this.main = main;
 	}
 
 	private PluginFile file;
 
-	private Map<Location, GeckObject> gecklocationMap = new HashMap<>();
+	private Map<Location, Geck> gecklocationMap = new HashMap<>();
 
-	public Map<Location, GeckObject> getGecklocationMap() {
+	public Map<Location, Geck> getGecklocationMap() {
 		return gecklocationMap;
 	}
 
-	public GeckObject getGeckObject(Location geckLocation) {
+	public Geck getGeckObject(Location geckLocation) {
 		return gecklocationMap.get(geckLocation);
 	}
 
@@ -41,7 +42,7 @@ public class GeckObjectManager {
 		if (containsGeckLocation(geckLocation)) {
 			return;
 		}
-		gecklocationMap.put(geckLocation, new GeckObject(geckLocation));
+		gecklocationMap.put(geckLocation, new Geck(geckLocation));
 	}
 
 	public void removeGeckLocation(Location geckLocation) {
@@ -57,9 +58,9 @@ public class GeckObjectManager {
 
 	public void saveGecksToDisk() {
 		YamlConfiguration config = file.returnYaml();
-		
 		List<String> toSave = new ArrayList<>();
-		for (GeckObject geck : gecklocationMap.values()) {
+
+		for (Geck geck : gecklocationMap.values()) {
 			toSave.add(StringUtilities.locationToString(geck.getGeckLocation()));
 		}
 
@@ -74,10 +75,9 @@ public class GeckObjectManager {
 
 		for (String locaString : config.getStringList("gecks")) {
 			Location loc = StringUtilities.stringToLocation(locaString);
-			GeckObject geck = new GeckObject(loc);
+			Geck geck = new Geck(loc);
 			geck.setCorrect(true);
 			geck.setPowered(true);
-			
 			gecklocationMap.put(loc, geck);
 		}
 	}

@@ -131,28 +131,30 @@ public class MortuusTerraCore extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager manager = getServer().getPluginManager();
 
-		manager.registerEvents(new SupplyDropListener(this), this);
 		manager.registerEvents(new PlayerListener(this), this);
 		manager.registerEvents(new MobListener(this), this);
-		manager.registerEvents(new GeckPowerListener(this), this);
 		manager.registerEvents(new WorldListener(this), this);
 		manager.registerEvents(new GeneratorListener(this), this);
+		manager.registerEvents(new GeckPowerListener(this), this);
+		manager.registerEvents(new SupplyDropListener(this), this);
 	}
 
 	private void initiateManagers() {
+		dataManager = new DataManager(this);
 		playerMan = new PlayerManager(this);
+		mobManager = new MobManager(this);
+		radMan = new RadiationManager(this);
 		geckObjectManager = new GeckObjectManager(this);
 		geckManager = new GeckManager(this);
-		radMan = new RadiationManager(this);
-		mobManager = new MobManager(this);
-		supplyDropManager = new SupplyDropManager(this);
-		scoreboards = new CustomScoreboards(this);
-		dataManager = new DataManager(this);
-		supplyDropTimer = new SupplyDropTimer(this);
 		generatorManager = new GeneratorManager(this);
+		
+		scoreboards = new CustomScoreboards(this);
+		
+		supplyDropManager = new SupplyDropManager(this);
+		supplyDropTimer = new SupplyDropTimer(this);
 	}
 
-	public static MortuusTerraCore getCore() {
+	public MortuusTerraCore getCore() {
 		return core;
 	}
 

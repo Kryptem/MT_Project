@@ -65,7 +65,7 @@ public class GeneratorListener implements Listener {
 	private List<Location> inUse = new ArrayList<>();
 
 	// Initailize file; lists from config. Called when server is starting
-	public void loadFile() {
+	public void loadFile() { // Something in here is throwing a NPE 
 		file = new PluginFile(main, "generators", FileType.YAML);
 		for (World w : Bukkit.getWorlds()) {
 			powerable.put(w.getName(), new ManyMap<>());

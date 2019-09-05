@@ -1,9 +1,14 @@
-## MT_Project
-#### Zombie Apocalypse plugin for Minecraft Spigot 1.12.x
+Copyright (C) 2017   Mortuss Terra Team
 
- ##### This plugin is in progress and is still in Pre-alpha, and will be making small and big updates throughout the Pre-alpha stage, so be on the lookout for any updates that we make becasue it might be a performance fix or a new feature that was added.
+You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://github.com/kadeska/MT_Core/blob/master/LICENSE>.
+    
+## MT_Core
+#### Zombie Apocalypse core plugin for Minecraft Spigot 1.12.x
+
+ ##### This plugin is in progress and is still in Alpha, and will be making small and big updates throughout the Alpha stage, so be on the lookout for any updates that we make because it might be a performance fix or a new feature that was added.
  
- ##### NOTE: This code is the live uploaded code of the plugin. [Here](https://github.com/kadeska/Morrtus_Terra_Plugin) is the link to all of the MortuusTerra plugins. MortuusTerraCore_STABLE_ALPHA is the most reciant stable alpha build of the Mortuus Terra Core. MortuusTerraCore_ALPHA is the live alpha-test build of the Mortuus Terra Core. MortuusTerraCommunication_ALPHA is the live alpha-test build of the Mortuus Terra Communication add-on. MortuusTerraCommunication_STABLE_ALPHA is the stable alpha build of the Mortuus Terra Communication add-on. All of the builds including stable can have stability issues, if there is an issue that you found then please post the issue in the appropriate github issue tracker. [MortuusTerra_Core Issues](https://github.com/kadeska/MT_Project/issues), [MortuusTerra_Communication Issues](https://github.com/kadeska/MT_Communication/issues). Thank you.
+ ##### NOTE: This code is the live uploaded code of the plugin. [Here](https://github.com/kadeska/Morrtus_Terra_Plugin) is the link to all of the MortuusTerra plugins. MortuusTerraCore_STABLE_ALPHA is the most recent stable alpha build of the Mortuus Terra Core. MortuusTerraCore_ALPHA is the live alpha-test build of the Mortuus Terra Core. MortuusTerraCommunication_ALPHA is the live alpha-test build of the Mortuus Terra Communication add-on. MortuusTerraCommunication_STABLE_ALPHA is the stable alpha build of the Mortuus Terra Communication add-on. All of the builds including stable can have stability issues, if there is an issue that you found then please post the issue in the appropriate github issue tracker. [MortuusTerra_Core Issues](https://github.com/kadeska/MT_Project/issues), [MortuusTerra_Communication Issues](https://github.com/kadeska/MT_Communication/issues). Thank you.
  
  
  * If you would like to be a part of this project then you can shoot us a E-mail at mortuusterra15@gmail.com, and one of our chief staff will respond within 48 hours. 

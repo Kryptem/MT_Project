@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2017 Mortuss Terra Team
+ * You should have received a copy of the GNU General Public License along with this program. 
+ * If not, see https://github.com/kadeska/MT_Core/blob/master/LICENSE.
+ */
 package com.mortuusterra.utils.nmsentities;
 
 import java.lang.reflect.Field;
@@ -6,7 +11,8 @@ import java.util.List;
 
 import org.bukkit.entity.EntityType;
 
-import com.mortuusterra.objects.mobs.DayZombie;
+import com.mortuusterra.misc.DayZombie;
+
 import net.minecraft.server.v1_12_R1.BiomeBase;
 import net.minecraft.server.v1_12_R1.BiomeBase.BiomeMeta;
 import net.minecraft.server.v1_12_R1.EntityInsentient;

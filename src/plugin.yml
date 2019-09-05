@@ -22,3 +22,6 @@ description: >
                  - World Bordering
                  - Spawn Control
 commands:
+  supplydrop:
+    usage: /supplydrop
+    description: Use /supplydrop for help.

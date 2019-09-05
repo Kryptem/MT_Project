@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2017 Mortuss Terra Team
+ * You should have received a copy of the GNU General Public License along with this program. 
+ * If not, see https://github.com/kadeska/MT_Core/blob/master/LICENSE.
+ */
 package com.mortuusterra.utils.files;
 
 import java.io.File;
@@ -7,7 +12,6 @@ import java.io.PrintWriter;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
 import com.mortuusterra.MortuusTerraCore;
@@ -15,18 +19,20 @@ import com.mortuusterra.MortuusTerraCore;
 public class PluginFile {
 
 	// Unsure how this was meant to be, changed so that it doesn't throw StackOverflows
-    private MortuusTerraCore main = JavaPlugin.getPlugin(MortuusTerraCore.class);
+    private MortuusTerraCore main;
 
     private String name;
     private File file;
 
     /**
      * Constructor
-     * @param name name of the file
-     * @param type type of the file
+     * @param core Core plugin
+     * @param name Name of the file
+     * @param type Type of the file
      */
-    public PluginFile(String name, FileType type) {
-        file = FileManager.createPluginFile(name, type);
+    public PluginFile(MortuusTerraCore core, String name, FileType type) {
+    	this.main = core;
+        file = main.getFileManager().createPluginFile(name, type);
         this.name = name;
 
     }
@@ -55,10 +61,10 @@ public class PluginFile {
     public void save(YamlConfiguration yamlConfiguration) {
         try {
             yamlConfiguration.save(file);
-            main.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Successfully saved file!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.GREEN + "Successfully saved file " + name + "!");
         } catch (IOException e) {
             e.printStackTrace();
-            main.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to save file!");
+            main.getServer().getConsoleSender().sendMessage(MortuusTerraCore.MTC_PREFIX + ChatColor.RED + "Failed to save file " + name + "!");
         }
     }
 

@@ -1,121 +1,185 @@
-package com.mortuusterra;
-
-/**
- * Created by Kadeska23
+/*
+ * Copyright (C) 2017 Mortuss Terra Team
+ * You should have received a copy of the GNU General Public License along with this program. 
+ * If not, see https://github.com/kadeska/MT_Core/blob/master/LICENSE.
  */
 
-import com.mortuusterra.listeners.generator.GenListener;
-import com.mortuusterra.utils.nmsentities.CustomEntityType;
-import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
+package com.mortuusterra;
 
-import com.mortuusterra.events.block.CellTowerBlockEvent;
-import com.mortuusterra.listeners.player.PlayerListener;
-import com.mortuusterra.listeners.radiation.GeckPowerListener;
-import com.mortuusterra.listeners.spawn.MobListener;
-import com.mortuusterra.managers.Geck.GeckRangeManager;
-import com.mortuusterra.managers.crafting.RecipeManager;
-import com.mortuusterra.managers.mob.MobManager;
-import com.mortuusterra.managers.player.PlayerManager;
-import com.mortuusterra.managers.radiation.GeckObjectManager;
-import com.mortuusterra.managers.radiation.RadiationManager;
+import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.mortuusterra.commands.AdminCommands;
+import com.mortuusterra.listeners.GeckPowerListener;
+import com.mortuusterra.listeners.GeneratorListener;
+import com.mortuusterra.listeners.MobListener;
+import com.mortuusterra.listeners.PlayerListener;
+import com.mortuusterra.listeners.SupplyDropListener;
+import com.mortuusterra.listeners.WorldListener;
+import com.mortuusterra.managers.DataManager;
+import com.mortuusterra.managers.GeckManager;
+import com.mortuusterra.managers.GeckObjectManager;
+import com.mortuusterra.managers.GeneratorManager;
+import com.mortuusterra.managers.MobManager;
+import com.mortuusterra.managers.PlayerManager;
+import com.mortuusterra.managers.RadiationManager;
+import com.mortuusterra.managers.RecipeManager;
+import com.mortuusterra.managers.SupplyDropManager;
+import com.mortuusterra.misc.CustomScoreboards;
+import com.mortuusterra.utils.files.FileManager;
+import com.mortuusterra.utils.nmsentities.CustomEntityType;
+import com.mortuusterra.utils.others.StringUtilities;
+import com.mortuusterra.utils.others.SupplyDropTimer;
 
 public class MortuusTerraCore extends JavaPlugin {
-	
-	public final MortuusTerraCore main = this;
+	/*
+	 * List of contributors Kadeska23 Shyos Horsey Andrewbow159
+	 */
 
-	// private DisguiseAPI disguiseAPI;
-	
+	private final MortuusTerraCore core = this;
 
+	/*
+	 * These are all of the managers
+	 **/
+	private CustomScoreboards scoreboards;
+	private FileManager fileManager;
 	private PlayerManager playerMan;
 	private RadiationManager radMan;
-	// private CellTowerManager cellTowerManager;
 	private GeckObjectManager geckObjectManager;
-	private GeckRangeManager geckRangeManager;
+	private GeckManager geckManager;
 	private MobManager mobManager;
-
-	// Just a fancy prefix looks like "[!]"
-	public static final String NOTI_PREFIX = ChatColor.translateAlternateColorCodes('&', "&7&l[&b&l!&7&l]");
-
-	//private SupplyDropManager supplyDropManager;
-
-	private GeckPowerListener geckPowerListener;
-	private MobListener mobListener;
-	private PlayerListener playerListener;
-
-    private GenListener genListener;
-	
-	//private PlayerChat playerChatListener;
-
-
 	private RecipeManager recipeManager;
+	private SupplyDropManager supplyDropManager;
+	private DataManager dataManager;
+	private SupplyDropTimer supplyDropTimer;
+	private GeneratorManager generatorManager;
 
-	private BukkitTask radTimer;
-	// private BukkitTask supplyDropTimer;
+	/*
+	 * These are all of the listeners
+	 **/
+	private GeneratorListener genListener;
+
+	/*
+	 * These are all of the prefixes
+	 **/
+	// looks like "[MTCore]"
+	public static final String MTC_PREFIX = StringUtilities.color("&7&l[&b&lMTCore&7&l]");
+	// looks like "[!]"
+	public static final String NOTI_PREFIX = StringUtilities.color("&7&l[&b&l!&7&l] ");
+	// looks like "[Alert!]"
+	public static final String ALERT_PREFIX = StringUtilities.color("&7&l[&c&lAlert!&7&l] ");
 
 	@Override
 	public void onEnable() {
+		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-		registerRecipes();
+		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Starting Mortuus Terra.");
+		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "This plugin is in BETA");
+
+		// register/initiate listeners
 		registerListeners();
+
+		// register/initiate managers
 		initiateManagers();
-		registerRadiationTimer();
 
-		// Register the zombie.
-        CustomEntityType.DAY_ZOMBIE.registerEntity();
+		// register/initiate recipes
+		registerRecipes();
 
+		// register custom Zombie
+		CustomEntityType.DAY_ZOMBIE.registerEntity();
+
+		// register/initiate Commands
+		getCommand("supplydrop").setExecutor(new AdminCommands(this));
+
+		// Load files
+		fileManager = new FileManager(this);
+		getFileManager().loadFiles();
+
+		// start radiation
+		getRadiationManager().startPlayerRadiationDamage();
+
+		// Start supplydrops for enabled worlds
+		for (World world : getDataManager().getSupplyDropWorlds()) {
+			getSupplyDropTimer().startSupplyDropTimer(world);
+		}
+
+		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra ready.");
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
 	@Override
 	public void onDisable() {
+		// Console sender
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-		// getFileManager().saveFiles();
-        genListener.saveFile();
-		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
-	}
+		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Stoping Mortuus Terra.");
 
-	private void registerRadiationTimer() {
-		// We aren't using this rn. this.supplyDropTimer = new
-		// SupplyDropTimer().runTaskTimer(this, 1L, 500L);
+		// Save every file to disk.
+		getFileManager().saveFiles();
+
+		// Console sender
+		getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "Mortuus Terra stopped.");
+		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "|----------|");
 	}
 
 	private void registerRecipes() {
-		recipeManager = new RecipeManager();
-		recipeManager.setCellTowerRecipe();
-		recipeManager.setGeneratorRecipe();
+		recipeManager = new RecipeManager(this);
 	}
 
 	private void registerListeners() {
-		playerListener = new PlayerListener();
-		mobListener = new MobListener();
-		geckPowerListener = new GeckPowerListener();
+		PluginManager manager = getServer().getPluginManager();
 
-		getServer().getPluginManager().registerEvents(this.playerListener, this);
-		getServer().getPluginManager().registerEvents(this.mobListener, this);
-		getServer().getPluginManager().registerEvents(this.geckPowerListener, this);
-		getServer().getPluginManager().registerEvents(new CellTowerBlockEvent(), this);
-		getServer().getPluginManager().registerEvents(genListener = new GenListener(), this);
+		manager.registerEvents(new PlayerListener(this), this);
+		manager.registerEvents(new MobListener(this), this);
+		manager.registerEvents(new WorldListener(this), this);
+		manager.registerEvents(new GeneratorListener(this), this);
+		manager.registerEvents(new GeckPowerListener(this), this);
+		manager.registerEvents(new SupplyDropListener(this), this);
 	}
 
 	private void initiateManagers() {
-		playerMan = new PlayerManager();
-		geckObjectManager = new GeckObjectManager();
-		// cellTowerManager = new CellTowerManager();
-		geckRangeManager = new GeckRangeManager();
-		radMan = new RadiationManager();
-		mobManager = new MobManager();
-		// supplyDropManager = new SupplyDropManager();
-	}
-	
-	public MortuusTerraCore getCore() {
-		return main;
+		dataManager = new DataManager(this);
+		playerMan = new PlayerManager(this);
+		mobManager = new MobManager(this);
+		radMan = new RadiationManager(this);
+		geckObjectManager = new GeckObjectManager(this);
+		geckManager = new GeckManager(this);
+		generatorManager = new GeneratorManager(this);
+		
+		scoreboards = new CustomScoreboards(this);
+		
+		supplyDropManager = new SupplyDropManager(this);
+		supplyDropTimer = new SupplyDropTimer(this);
 	}
 
-	public MobListener getMobListener() {
-		return mobListener;
+	public MortuusTerraCore getCore() {
+		return core;
+	}
+
+	public FileManager getFileManager() {
+		return fileManager;
+	}
+
+	public GeneratorManager getGeneratorManager() {
+		return generatorManager;
+	}
+
+	public SupplyDropTimer getSupplyDropTimer() {
+		return supplyDropTimer;
+	}
+
+	public DataManager getDataManager() {
+		return dataManager;
+	}
+
+	public CustomScoreboards getScoreboards() {
+		return scoreboards;
+	}
+
+	public GeneratorListener getGenListener() {
+		return genListener;
 	}
 
 	public MobManager getMobManager() {
@@ -134,41 +198,15 @@ public class MortuusTerraCore extends JavaPlugin {
 		return recipeManager;
 	}
 
-	/**
-	 * public CellTowerManager getCellTowerManager() { return cellTowerManager; }
-	 **/
-
-	/**
-	 * public PlayerChatListener getPlayerChatListener() { return
-	 * playerChatListener; }
-	 **/
-
 	public GeckObjectManager getGeckObjectManager() {
 		return geckObjectManager;
 	}
 
-	public GeckPowerListener getGeckPowerListener() {
-		return geckPowerListener;
+	public GeckManager getGeckManager() {
+		return geckManager;
 	}
 
-	public GeckRangeManager getGeckRangeManager() {
-		return geckRangeManager;
+	public SupplyDropManager getSupplyDropManager() {
+		return supplyDropManager;
 	}
-
-	/*
-	 * public SupplyDropManager getSupplyDropManager() { return supplyDropManager; }
-	 */
-	public BukkitTask getRadTimer() {
-		return radTimer;
-	}
-
-	/**
-	 * public BukkitTask getSupplyDropTimer() { return supplyDropTimer; }
-	 **/
-	public PlayerListener getPlayerListener() {
-		return playerListener;
-	}
-	/**
-	 * public DisguiseAPI getDisguiseAPI() { return disguiseAPI; }
-	 **/
 }
